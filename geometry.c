@@ -1,34 +1,36 @@
 //
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "./src/geometry.h"
 
 const char* place_to_string(enum color_t c, enum sort_t s){
-  char* color;
-  char* sort;
-  if(c == 0){
-    color = "NO_COLOR";
+  if(c == 0 && s == 0){
+    return "NO_COLOR and NO_SORT";
   }
-  if(c == 1){
-    color = "BLACK";
+  if(c == 1 && s == 0){
+    return "BLACK and NO_SORT";
   }
-  if(c == 2){
-    color = "WHITE";
+  if(c == 2 && s == 0){
+    return "WHITE and NO_SORT";
   }
-  else{
-    return "INVALID_COLOR";
+  if(c == 0 && s == 1){
+    return "NO_COLOR and PAWN";
   }
-  if(s == 0){
-    sort = "NO_SORT";
+  if(c == 1 && s == 1){
+    return "BLACK PAWN";
   }
-  if(s == 1){
-    sort = "PAWN";
+  if(c == 2 && s == 1){
+    return "WHITE PAWN";
   }
   else{
-    return "INVALID_SORT";
+    return "BAD ARGUMENT";
   }
-  return strcat(color, sort);
 }
+ 
 
+int main(int argc, char *argv[]){
+  printf("%s\n", place_to_string(atoi(argv[1]),atoi(argv[2])));
+}
 
 
