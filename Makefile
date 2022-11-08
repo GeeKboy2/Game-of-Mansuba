@@ -8,11 +8,11 @@ all: project
 %.o: %.c
 	gcc -c $(CFLAGS) $<
 
-project: # (Add your dependency here, e.g "project.o")
-	# (Add your compile command here, e.g "gcc $(CFLAGS) project.o -o project")
+project: project.o 
+	gcc $(CFLAGS) project.o -o project 
 
-test_project: # (Add your dependency here, e.g "test.o")
-	# (Add your compile command here, e.g "gcc $(CFLAGS) test.o -o test_project")
+test_project: test.o 
+	gcc $(CFLAGS) test.o -o test_project
 
 clean:
-	rm -f *.o *~
+	rm -f project test_project *.o *~
