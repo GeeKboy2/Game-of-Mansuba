@@ -30,9 +30,9 @@ const char* place_to_string(enum color_t c, enum sort_t s){
 }
  
 
-int main(int argc, char *argv[]){
-  printf("%s\n", place_to_string(atoi(argv[1]),atoi(argv[2])));
-}
+/* int main(int argc, char *argv[]){ */
+/*   printf("%s\n", place_to_string(atoi(argv[1]),atoi(argv[2]))); */
+/* } */
 
 
 
