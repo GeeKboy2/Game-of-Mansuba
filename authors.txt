@@ -1,1 +1,8 @@
-DENOCE Allan adenoce@bordeaux-inp.fr
+Nom : DENOCE 
+Prénom : Allan 
+Email : adenoce@bordeaux-inp.fr
+
+Nom : KHERRAZ
+Prénom : Mohamed Aymane
+Email : mkherraz001@bordeaux-inp.fr
+
