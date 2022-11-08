@@ -1,56 +1,26 @@
-#ifndef __GEOMETRY_H__
-#define __GEOMETRY_H__
+#ifndef __WORLD_H__
+#define __WORLD_H__
 
-/** The width (number of columns) of the world */
-#ifndef WIDTH
-  #define WIDTH 10
-#endif
-/** The height (number of rows) of the world */
-#ifndef HEIGHT
-  #define HEIGHT 10
-#endif
+#include "geometry.h"
 
-/** The number of possible places in the world */
-#define WORLD_SIZE (WIDTH*HEIGHT)
+/** Abstract struct representing the possible places in the world
+    These places are indexed from 0 to WORLD_SIZE-1 */
+struct world_t;
 
-/** The number of players in a game */
-#define MAX_PLAYERS 2
+/** Initializes a world (NO_COLOR, NO_SORT everywhere)
+    Always returns the same pointer */
+struct world_t* world_init();
 
-/** Enum defining the possible colors in the world */
-enum color_t {
-  NO_COLOR  = 0,  // Default color, used to initialize worlds
-  BLACK     = 1,
-  WHITE     = 2,
-  MAX_COLOR = 3,  // Total number of different colors
-};
+/** Return the color at a place */
+enum color_t world_get(const struct world_t* b, unsigned int idx);
 
-/** Enum defining the possible sorts of pieces in the world */
-enum sort_t {
-  NO_SORT  = 0,   // Default sort (i.e nothing)
-  PAWN     = 1,
-  MAX_SORT = 2,   // Total number of different sorts
-};
+/** Sets the color at a place */
+void world_set(struct world_t* b, unsigned int idx, enum color_t c);
 
-/** Enum defining the possible directions in the world
- Opposite directions correspond to opposite integers
- The directions are all consecutive */
-enum dir_t {
-  NO_DIR  = 0,    // Default dir (i.e unset)
-  EAST    = 1,
-  NEAST   = 2,
-  NORTH   = 3,
-  NWEST   = 4,
-  WEST    = -1,
-  SWEST   = -2,
-  SOUTH   = -3,
-  SEAST   = -4,
-  MAX_DIR = 9,    // Total number of different directions
-};
+/** Return the sort at a place */
+enum sort_t world_get_sort(const struct world_t* b, unsigned int idx);
 
-/** Return a string describing the color `c` and sort `s` */
-const char* place_to_string(enum color_t c, enum sort_t s);
+/** Sets the sort at a place */
+void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c);
 
-/** Return a string describing the direction `d` */
-const char* dir_to_string(enum dir_t d);
-
-#endif // __GEOMETRY_H__
+#endif // __WORLD_H__
