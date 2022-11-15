@@ -37,15 +37,4 @@ void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c){
   b -> point[idx].s = c;
 }
 
-int main(int argc, char *argv[]){
-  struct world_t* b= world_init();
-  for(int i=12;i<35;i++){
-    enum color_t c = world_get(b,i);
-    world_set(b,i,c);
-  }
-  for(int i = 0; i < WORLD_SIZE; i++){
-    printf("i = %d --> %d, %d\n",i,b -> point[i].c, b -> point[i].s);
-  }
-  return 0;
-}
 
