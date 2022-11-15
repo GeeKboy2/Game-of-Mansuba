@@ -1,13 +1,11 @@
+#include "./src/neighbors.h"
 #include <stdio.h>
-#include "geometry.h"
-
-void init_neighbors(unsigned int seed);
-{
-  
-}
+#include "./src/geometry.h"
 
 
-unsigned int get_neighbor(unsigned int idx, enum dir_t d);
+
+
+unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 {
     if (idx>(HEIGHT*WIDTH) || idx<0)
     {
@@ -18,9 +16,8 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d);
     //idx = q*n + r
     unsigned int n=WIDTH;
     unsigned int q=idx/n;
-    unsigned int r=idx-(q*n);
+    unsigned int r=idx%n;
     // la ligne est q & la collone est r
-    unsigned int i=0;
     if (d==0)
       {
 	return idx;
@@ -66,16 +63,130 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d);
         printf("INVALID DIRECTION");
         return UINT_MAX;
     }
-    return q*n+r
+    return q*n+r;
 }
 
 
 
 
+/*
 
 
-struct neighbors_t get_neighbors(unsigned int idx);
+struct neighbors_t get_neighbors(unsigned int idx)
 {
-  struct neighbours_t neighbous;
-  return neighbors
+  struct neighbors_t neighbors; 
+  unsigned int q=idx/WIDTH;
+  unsigned int r=idx%WIDTH;
+  unsigned int l=q;
+  unsigned int j=r;
+  unsigned int k=0;
+  j++;
+  if(j>=0 && j<=WIDTH)
+    {
+      neighbors.n[k].i=l*WIDTH+j;
+      neighbors.n[k].d=1;
+      k++;
+    }
+  j=q;
+  l--;
+  j++;
+  if(j>=0 && j<=WIDTH)
+    {
+      if(l>=0 && l<=HEIGHT)
+	{
+	  neighbors.n[k].i=l*WIDTH+j;
+	  k++;
+	}
+    }
+  l=q;
+  j=r;
+  l--;
+  if(j>=0 && j<=WIDTH)
+    {
+      neighbors.n[k].i=l*WIDTH+j;
+      k++;
+    }
+  l=q;
+  l--;
+  j--;
+  if(j>=0 && j<=WIDTH)
+    {
+      if(l>=0 && l<=HEIGHT)
+	{
+	  neighbors.n[k].i=l*WIDTH+j;
+	  k++;
+	}
+    }
+  l=q;
+  j=r;
+  j--;
+  if(j>=0 && j<=WIDTH)
+    {
+      neighbors.n[k].i=l*WIDTH+j;
+      k++;
+    }
+  j=r;
+  l++;
+  j--;
+  if(j>=0 && j<=WIDTH)
+    {
+      if(l>=0 && l<=HEIGHT)
+	{
+	  neighbors.n[k].i=l*WIDTH+j;
+	  k++;
+	}
+    }
+  l=q;
+  j=r;
+  l++;
+  if(l>=0 && l<=HEIGHT)
+    {
+      neighbors.n[k].i=l*WIDTH+j;
+      k++;
+    }
+  l=q;
+  l++;
+  j++;
+  if(j>=0 && j<=WIDTH)
+    {
+      if(l>=0 && l<=HEIGHT)
+	{
+	  neighbors.n[k].i=l*WIDTH+j;
+	  k++;
+	}
+    }
+  neighbors.n[k].i=UINT_MAX;
+  k++;
+  while(k<MAX_NEIGHBORS)
+    {
+      neighbors.n[k].i=0;
+      k++;
+    }
+  return neighbors;
+}
+*/
+
+
+struct neighbors_t get_neighbors(unsigned int idx)
+{
+  struct neighbors_t neighbors; 
+  int d;
+  int k=0;
+  for(d = 0; d< MAX_DIR; d++)
+  {
+    int ind=get_neighbor(idx,d);
+    if(ind!=UINT_MAX)
+    {
+      neighbors.n[k].i=ind;
+      neighbors.n[k].d=d;
+      k++;
+    }
+  }
+  neighbors.n[k].i=UINT_MAX;
+  while(k<MAX_NEIGHBORS)
+  {
+    neighbors.n[k].i=0;
+    k++;
+  }
+  return neighbors;
 }
