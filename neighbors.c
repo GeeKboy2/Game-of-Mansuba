@@ -1,6 +1,8 @@
 #include "./src/neighbors.h"
 #include <stdio.h>
 #include "./src/geometry.h"
+#include "./src/world.h"
+#include <limits.h>
 
 
 
@@ -189,4 +191,36 @@ struct neighbors_t get_neighbors(unsigned int idx)
     k++;
   }
   return neighbors;
+}
+
+
+
+int mouvements(const struct world_t* b ,unsigned int idx)
+{
+    struct neighbors_t voisins=get_neighbors(idx);
+    int i=0;
+    struct vector_t voisin;
+    int couleur=world_get(b,idx);
+    int nombre_mouvement=0;
+    enum dir_t direction_saut=0;
+    int indice_voisin_saut;
+    while(i<MAX_NEIGHBORS)
+    {
+        voisin=voisins.n[i];
+        if(world_get_sort(b,voisin.i)==0)
+        {
+            nombre_mouvement++;
+        }else{
+            if(world_get(b,voisin.i)!=couleur)
+            {
+                indice_voisin_saut=get_neighbor(voisin.i,direction_saut);
+                if(world_get_sort(b,indice_voisin_saut)==0)
+                {
+                    nombre_mouvement++;
+                }
+            }
+        }
+        i++;
+    }
+    return nombre_mouvement;
 }
