@@ -29,6 +29,45 @@ void position_init(struct world_t* world){
   }
 }
 
+int ConditionVictoire(struct piece piece,char *type_victoire){
+  if(MAX_TURN == TURN){
+    printf("Nombre de tour maximum atteint, pas de vainqueur")
+      }
+  if(type_victoire == s){
+    for(int i = 0; i<HEIGHT;i++){
+      if(piece.blanc[i]%WIDTH==0){
+	printf("Victoire simple des blancs");
+	return 0;
+      }
+      if(piece.noir[i]%WIDTH==WIDTH-1){
+	printf("Victoire simple des noirs");
+	return 0;
+      }
+    }
+  }
+  int compteur_blanc = 0;
+  int compteur_noir = 0;
+  if(type_victoire == c){
+    for(int i = 0; i<HEIGHT;i++){
+      if(piece.blanc[i]%WIDTH==0){
+	compteur_blanc++;
+      }
+      if(piece.noir[i]%WIDTH==WIDTH-1){
+	compteur_noir++;
+      }
+    }
+    if (compteur_blanc == HEIGHT){
+      printf("Victoire complexe des blancs");
+      return 0;
+    }
+    if(compteur_noir == HEIGHT){
+      printf("Victoire complexe des noirs");
+      return 0;
+    }
+  }
+  return 0;
+}
+
 /* int main(int argc,char *argv[]){ */
 /*   struct world_t* world = world_init(); */
 /*   position_init(world); */

@@ -225,41 +225,5 @@ int mouvements(const struct world_t* b ,unsigned int idx)
     return nombre_mouvement;
 }
 
-#define MAX_TURN (2*WORLD_SIZE)
-/*
-int ConditionVictoire(struct piece piece){
-  if(MAX_TURN == TURN){
-    printf("Nombre de tour maximum atteint, pas de vainqueur")
-  }
-  for(int i = 0; i<HEIGHT;i++){
-      if(piece.blanc[i]%WIDTH==0){
-	printf("Victoire simple des blancs");
-	return 0;
-      }
-      if(piece.noir[i]%WIDTH==WIDTH-1){
-	printf("Victoire simple des noirs");
-	return 0;
-      }
-  }
-  int compteur_blanc = 0;
-  int compteur_noir = 0;
-  for(int i = 0; i<HEIGHT;i++){
-    if(piece.blanc[i]%WIDTH==0){
-      compteur_blanc++;
-    }
-    if(piece.noir[i]%WIDTH==WIDTH-1){
-      compteur_noir++;
-    }
-  }
-  if (compteur_blanc == HEIGHT){
-    printf("Victoire complexe des blancs");
-    return 0;
-  }
-  if(compteur_noir == HEIGHT){
-    printf("Victoire complexe des noirs");
-    return 0;
-  }
-  return 0;
-}
-*/
+
 
