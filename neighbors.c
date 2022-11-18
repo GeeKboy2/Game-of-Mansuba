@@ -224,3 +224,10 @@ int mouvements(const struct world_t* b ,unsigned int idx)
     }
     return nombre_mouvement;
 }
+
+
+
+int main(int argc, char* argv[])
+{
+  return 0;
+}

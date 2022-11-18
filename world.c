@@ -38,3 +38,7 @@ void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c){
 }
 
 
+int main(int argc,char* argv[])
+{
+  return 0;
+}
