@@ -1,7 +1,7 @@
-#include "./src/world.h"
+#include "./world.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "./src/geometry.h"
+#include "./geometry.h"
 
 struct pion{
   enum color_t c;
