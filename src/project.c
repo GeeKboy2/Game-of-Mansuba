@@ -10,18 +10,20 @@
 #define MAX_TURNS (2*WORLD_SIZE)
 #endif
 */
-#define TURN 0
+//#define TURN 0
 
 // Créé le monde et set les différents pions dans leur position initiale
 
 int main(int argc,char *argv[]){
   char* type_victoire="c";
   int RNG=2; //initialisation random
+  int MAX_TURNS=2*WORLD_SIZE;
 
   if(argc>1){
   type_victoire= argv[6];
-  int MAX_TURNS=atoi(argv[4]);
+  MAX_TURNS=atoi(argv[4]);
   RNG=atoi(argv[2]);
+
   (void) type_victoire;
   (void) MAX_TURNS;
   (void) RNG;
