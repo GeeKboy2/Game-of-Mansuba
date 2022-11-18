@@ -1,9 +1,9 @@
-#include "./src/neighbors.h"
+#include "./neighbors.h"
 #include <stdio.h>
-#include "./src/geometry.h"
-#include "./src/world.h"
+#include "./geometry.h"
+#include "./world.h"
 #include <limits.h>
-
+#include "rules.c"
 
 
 
@@ -226,7 +226,7 @@ int mouvements(const struct world_t* b ,unsigned int idx)
 }
 
 #define MAX_TURN (2*WORLD_SIZE)
-
+/*
 int ConditionVictoire(struct piece piece){
   if(MAX_TURN == TURN){
     printf("Nombre de tour maximum atteint, pas de vainqueur")
@@ -261,3 +261,5 @@ int ConditionVictoire(struct piece piece){
   }
   return 0;
 }
+*/
+
