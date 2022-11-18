@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "./src/geometry.h"
-#include "./src/world.h"
-#include "world.c"
+#include "./geometry.h"
+#include "./world.h"
+#include "./world.c"
 
 struct piece{
   int blanc[HEIGHT];
