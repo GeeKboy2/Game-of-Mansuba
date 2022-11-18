@@ -195,7 +195,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
 
 
 
-int mouvements(const struct world_t* b ,unsigned int idx)
+int nombre_mouvements(const struct world_t* b ,unsigned int idx)
 {
     struct neighbors_t voisins=get_neighbors(idx);
     int i=0;
@@ -226,4 +226,54 @@ int mouvements(const struct world_t* b ,unsigned int idx)
 }
 
 
+
+
+
+
+struct couple
+{
+  int mouvement;
+  int nombre_piece_mangee;
+}
+
+
+struct deplacements{
+  struct couple position[MAX_NEIGHBORS]; // [(mvt,nbr_manger), ...]
+};
+
+
+struct deplacements deplacement(struct world_t, int idx)
+{
+  struct mouvements mouvements;
+
+  struct neighbors_t voisins=get_neighbors(idx);
+  int i=0;
+
+  struct vector_t voisin;
+  int couleur=world_get(b,idx);
+  enum dir_t direction_saut=0;
+  int indice_voisin_saut;
+  while(i<MAX_NEIGHBORS)
+    {
+      voisin=voisins.n[i];
+      if(world_get_sort(b,voisin.i)==0)
+        {
+	  //case vide donc on peut se déplacer
+	  
+        }else{
+	if(world_get(b,voisin.i)!=couleur)
+	  {
+	    indice_voisin_saut=get_neighbor(voisin.i,direction_saut);
+	    if(world_get_sort(b,indice_voisin_saut)==0)
+	      {
+		//case apres un saut
+		nombre_mouvement++;
+	      }
+	  }
+      }
+      i++;
+    }
+  return mouvements
+    }
+ 
 
