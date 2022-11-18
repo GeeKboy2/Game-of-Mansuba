@@ -29,20 +29,20 @@ void position_init(struct world_t* world){
   }
 }
 
-int main(int argc,char *argv[]){
-  struct world_t* world = world_init();
-  position_init(world);
-  for(int i = 0; i <WORLD_SIZE ; i++){
-    if(i%WIDTH == 0){
-      printf("|");
-    }
-    printf("%d,%d|",world ->point[i].c,world->point[i].s);
-    if(i%WIDTH == WIDTH-1){
-      printf("\n");
-    }    
-  }
-  return 0;
-}
+/* int main(int argc,char *argv[]){ */
+/*   struct world_t* world = world_init(); */
+/*   position_init(world); */
+/*   for(int i = 0; i <WORLD_SIZE ; i++){ */
+/*     if(i%WIDTH == 0){ */
+/*       printf("|"); */
+/*     } */
+/*     printf("%d,%d|",world ->point[i].c,world->point[i].s); */
+/*     if(i%WIDTH == WIDTH-1){ */
+/*       printf("\n"); */
+/*     }     */
+/*   } */
+/*   return 0; */
+/* } */
 
 /*
 // Règle de base : Noir à gauche, Blanc à droite

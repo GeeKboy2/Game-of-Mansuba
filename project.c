@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include "geometry.c"
-#include "world.c"
-#include "neighbors.c"
+#include "./src/geometry.h"
+#include "./src/world.h"
+#include "./src/neighbors.h"
 #include "rules.c"
 
 // Créé le monde et set les différents pions dans leur position initiale
