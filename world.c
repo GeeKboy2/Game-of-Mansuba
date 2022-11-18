@@ -36,5 +36,3 @@ enum sort_t world_get_sort(const struct world_t* b, unsigned int idx){
 void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c){
   b -> point[idx].s = c;
 }
-
-
