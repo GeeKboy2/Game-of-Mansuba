@@ -1,11 +1,11 @@
 WIDTH ?= 5
 HEIGHT ?= 4
 MANSUBA_FLAGS = -DWIDTH=$(WIDTH) -DHEIGHT=$(HEIGHT)
-CFLAGS = -Wall -Wextra -std=c99 -g3 $(MANSUBA_FLAGS)
+CFLAGS = -Wall -Wextra -std=c99 -Ig3 $(MANSUBA_FLAGS)
 
 all: project
 
-%.o: %.c
+%.o: src/%.c
 	gcc -c $(CFLAGS) $<
 
 project: project.o 
