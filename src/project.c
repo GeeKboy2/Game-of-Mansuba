@@ -12,6 +12,24 @@
 */
 //#define TURN 0
 
+int choose_random_piece_belonging_to(struct world_t* world, enum color_t current_player){
+  int compteur = 0;
+  for(int i = 0; i<WORLD_SIZE; i++){
+    if(world -> point[i].c == current_player){
+      compteur++;
+    }
+  }
+  int pos = rand()%compteur;
+  int num = -1;
+  int i = 0;
+  while(num != pos){
+    if(world -> point[i].c == current_player){
+      num++;
+    }
+    i++;
+  }
+  return i;
+}
 // Créé le monde et set les différents pions dans leur position initiale
 
 int main(int argc,char *argv[]){
@@ -30,6 +48,7 @@ int main(int argc,char *argv[]){
   }
   struct world_t* world = world_init();
   position_init(world);
+  /*
   for(int i = 0; i <WORLD_SIZE ; i++){
     if(i%WIDTH == 0){
       printf("|");
@@ -39,6 +58,8 @@ int main(int argc,char *argv[]){
       printf("\n");
     }    
   }
-  
+  */
+  int r = choose_random_piece_belonging_to(world,0);
+  printf("%d\n",r);
   return 0;
 }
