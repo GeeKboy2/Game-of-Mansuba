@@ -24,6 +24,31 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
       {
 	return idx;
       }
+    if(idx%WIDTH == 0){
+       if (d==4 || d== -2 || d== -1)
+	 {
+	   return UINT_MAX;
+	 }
+    }
+    if(idx%WIDTH == WIDTH - 1){
+      if(d == 2 || d== 1 || d == -4){
+	return UINT_MAX;
+      }
+    }
+    if (d==4)
+	 {
+	   q--;
+	   r--;
+	 }
+    if (d==-2)
+	 {
+	   r--;
+	   q++;
+	 }
+    if (d==-1)
+	 {
+	   r--;
+	 }
     if (d==1)
     {
         r++;
@@ -31,42 +56,33 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     if (d==2)
     {
         r++;
-        q++;
+        q--;
     }
     if (d==3)
     {
-        q++;
-    }
-    if (d==4)
-    {
-        q++;
-        r--;
-    }
-    if (d==-1)
-    {
-        r--;
-    }
-    if (d==-2)
-    {
-        r--;
         q--;
     }
     if (d==-3)
     {
-        q--;
+        q++;
     }
     if (d==-4)
-    {
-        q--;
+    { 
+        q++;
         r++;
     }
     if (d>4 || d<-4)
     {
-        printf("INVALID DIRECTION");
+      printf("INVALID DIRECTION %d",d);
         return UINT_MAX;
     }
-    return q*n+r;
+    int index=q*n+r;
+    if (index<0 || index > WORLD_SIZE - 1){
+      return UINT_MAX;
+    }
+    return index;
 }
+
 
 
 
@@ -169,12 +185,13 @@ struct neighbors_t get_neighbors(unsigned int idx)
 */
 
 
+
 struct neighbors_t get_neighbors(unsigned int idx)
 {
   struct neighbors_t neighbors; 
   int d;
   int k=0;
-  for(d = 0; d< MAX_DIR; d++)
+  for(d = -4; d<=4; d++)
   {
     int ind=get_neighbor(idx,d);
     if(ind!=UINT_MAX)
@@ -192,7 +209,6 @@ struct neighbors_t get_neighbors(unsigned int idx)
   }
   return neighbors;
 }
-
 
 
 int nombre_mouvements(const struct world_t* b ,unsigned int idx)
