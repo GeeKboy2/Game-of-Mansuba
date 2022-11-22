@@ -69,106 +69,6 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 }
 
 
-
-
-/*
-
-
-struct neighbors_t get_neighbors(unsigned int idx)
-{
-  struct neighbors_t neighbors; 
-  unsigned int q=idx/WIDTH;
-  unsigned int r=idx%WIDTH;
-  unsigned int l=q;
-  unsigned int j=r;
-  unsigned int k=0;
-  j++;
-  if(j>=0 && j<=WIDTH)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      neighbors.n[k].d=1;
-      k++;
-    }
-  j=q;
-  l--;
-  j++;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  l=q;
-  j=r;
-  l--;
-  if(j>=0 && j<=WIDTH)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      k++;
-    }
-  l=q;
-  l--;
-  j--;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  l=q;
-  j=r;
-  j--;
-  if(j>=0 && j<=WIDTH)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      k++;
-    }
-  j=r;
-  l++;
-  j--;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  l=q;
-  j=r;
-  l++;
-  if(l>=0 && l<=HEIGHT)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      k++;
-    }
-  l=q;
-  l++;
-  j++;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  neighbors.n[k].i=UINT_MAX;
-  k++;
-  while(k<MAX_NEIGHBORS)
-    {
-      neighbors.n[k].i=0;
-      k++;
-    }
-  return neighbors;
-}
-*/
-
-
 struct neighbors_t get_neighbors(unsigned int idx)
 {
   struct neighbors_t neighbors; 
@@ -195,7 +95,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
 
 
 
-int mouvements(const struct world_t* b ,unsigned int idx)
+int nombre_mouvements(const struct world_t* b ,unsigned int idx)
 {
     struct neighbors_t voisins=get_neighbors(idx);
     int i=0;
@@ -225,9 +125,51 @@ int mouvements(const struct world_t* b ,unsigned int idx)
     return nombre_mouvement;
 }
 
-
-
-void switch_player()
+/*
+struct couple
 {
-  
+  int mouvement;
+  int nombre_piece_mangee;
 }
+
+
+struct deplacements{
+  struct couple position[MAX_NEIGHBORS]; // [(mvt,nbr_manger), ...]
+};
+
+
+struct deplacements deplacement(struct world_t, int idx)
+{
+  struct mouvements mouvements;
+
+  struct neighbors_t voisins=get_neighbors(idx);
+  int i=0;
+
+  struct vector_t voisin;
+  int couleur=world_get(b,idx);
+  enum dir_t direction_saut=0;
+  int indice_voisin_saut;
+  while(i<MAX_NEIGHBORS)
+    {
+      voisin=voisins.n[i];
+      if(world_get_sort(b,voisin.i)==0)
+        {
+	  //case vide donc on peut se déplacer
+	  
+        }else{
+	if(world_get(b,voisin.i)!=couleur)
+	  {
+	    indice_voisin_saut=get_neighbor(voisin.i,direction_saut);
+	    if(world_get_sort(b,indice_voisin_saut)==0)
+	      {
+		//case apres un saut
+		nombre_mouvements++;
+	      }
+	  }
+      }
+      i++;
+    }
+  return mouvements;
+    }
+ 
+*/

@@ -51,6 +51,26 @@ enum color_t next_player(enum color_t current_player)
 
 }
 
+
+int choose_random_piece_belonging_to(struct world_t* world, enum color_t current_player){
+  int compteur = 0;
+  for(int i = 0; i<WORLD_SIZE; i++){
+    if(world -> point[i].c == current_player){
+      compteur++;
+    }
+  }
+  int pos = rand()%compteur;
+  int num = -1;
+  int i = 0;
+  while(num != pos){
+    if(world -> point[i].c == current_player){
+      num++;
+    }
+    i++;
+  }
+  return i;
+}
+
 // Créé le monde et set les différents pions dans leur position initiale
 
 int main(int argc,char *argv[]){
@@ -72,11 +92,14 @@ int main(int argc,char *argv[]){
   show_world(world);
   init_neighbors(0); // Use seed 0 at the beginning of a game
   enum color_t current_player = get_random_player();
+  int p;
+  int m;
   while(ConditionVictoire(piece,type_victoire,MAX_TURNS)!=0);
     p = choose_random_piece_belonging_to(world, current_player);
     m = choose_random_move_for_piece(world, p);
     move_piece(world, m);
     current_player = next_player(current_player);
-  
+  int r = choose_random_piece_belonging_to(world,0);
+  printf("%d\n",r);
   return 0;
 }
