@@ -33,7 +33,7 @@ void position_init(struct world_t* world){
 int ConditionVictoire(struct piece piece,char *type_victoire,int MAX_TURNS){
   if(MAX_TURNS == TURN){
     printf("Nombre de tour maximum atteint, pas de vainqueur");
-      }
+  }
   if(type_victoire[0] == 's'){
     for(int i = 0; i<HEIGHT;i++){
       if(piece.blanc[i]%WIDTH==0){
