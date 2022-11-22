@@ -66,7 +66,7 @@ int ConditionVictoire(struct piece piece,char *type_victoire,int MAX_TURNS){
       return 0;
     }
   }
-  return 0;
+  return -1;
 }
 
 /* int main(int argc,char *argv[]){ */
