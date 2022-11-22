@@ -193,7 +193,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
   return neighbors;
 }
 
-
+/*
 
 int nombre_mouvements(const struct world_t* b ,unsigned int idx)
 {
@@ -226,9 +226,9 @@ int nombre_mouvements(const struct world_t* b ,unsigned int idx)
 }
 
 
+*/
 
-
-
+/*
 
 struct couple
 {
@@ -276,4 +276,4 @@ struct deplacements deplacement(struct world_t, int idx)
   return mouvements
     }
  
-
+*/
