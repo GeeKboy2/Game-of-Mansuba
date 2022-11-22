@@ -227,3 +227,7 @@ int mouvements(const struct world_t* b ,unsigned int idx)
 
 
 
+void switch_player()
+{
+  
+}
