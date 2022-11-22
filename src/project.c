@@ -105,11 +105,13 @@ int main(int argc,char *argv[]){
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
-  while(ConditionVictoire(piece,type_victoire,MAX_TURNS)!=0);
+  while(condition_victoire(piece,type_victoire,MAX_TURNS)!=0)
+  {
     index_pion = choose_random_piece_belonging_to(world, current_player);
     move = choose_random_move_for_piece(world, p);
     move_piece(world, move);
     current_player = next_player(current_player);
+  }
   int r = choose_random_piece_belonging_to(world,0);
   printf("%d\n",r);
   return 0;
