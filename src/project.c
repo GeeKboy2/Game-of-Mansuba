@@ -5,7 +5,7 @@
 #include "./world.h"
 #include "./neighbors.h"
 #include <unistd.h>
-
+#include <time.h>
 /*
 #ifndef MAX_TURNS
 #define MAX_TURNS (2*WORLD_SIZE)
@@ -53,25 +53,27 @@ enum color_t next_player(enum color_t current_player)
 
 }
 
-
 int choose_random_piece_belonging_to(struct world_t* world, enum color_t current_player){
   int compteur = 0;
   for(int i = 0; i<WORLD_SIZE; i++){
-    if(world -> point[i].c == current_player){
+    if(world_get(world,i) == current_player){
       compteur++;
     }
   }
+  srand(time(NULL));
   int pos = rand()%compteur;
-  int num = -1;
+  int num = 0;
   int i = 0;
-  while(num != pos){
-    if(world -> point[i].c == current_player){
+  while(num <= pos){
+    if(world_get(world,i) == current_player){
       num++;
     }
     i++;
   }
+  i--;
   return i;
 }
+
 
 int choose_random_move_for_piece(struct world_t *world,int index_pion)
 {
