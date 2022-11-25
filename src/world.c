@@ -1,6 +1,6 @@
-#include "./world.h"
-#include <stdio.h>
-#include <stdlib.h>
+//#include "./world.h"
+//#include <stdio.h>
+//#include <stdlib.h>
 #include "./geometry.h"
 
 struct pion{
@@ -14,6 +14,7 @@ struct world_t{
 
 struct world_t p;
 struct world_t* world_init(){
+  //struct world_t* world;
   for(int i = 0; i < WORLD_SIZE; i++){
     p.point[i].c = 0;
     p.point[i].s = 0;

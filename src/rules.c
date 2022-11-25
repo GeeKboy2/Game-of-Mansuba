@@ -1,7 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "./geometry.h"
-#include "./world.h"
+
+//#include "./geometry.h"
+//#include "./world.h"
 #include "./world.c"
 
 struct piece{

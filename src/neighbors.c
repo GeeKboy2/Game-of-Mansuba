@@ -1,15 +1,15 @@
-#include "./neighbors.h"
+#include "neighbors.h"
 #include <stdio.h>
-#include "./geometry.h"
-#include "./world.h"
+#include "geometry.h"
+#include "world.h"
 #include <limits.h>
-#include "rules.c"
+//#include "rules.c"
 
-
+//#define UINT_MAX -1
 
 unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 {
-    if (idx>(HEIGHT*WIDTH) || idx<0)
+    if (idx>(HEIGHT*WIDTH))
     {
         printf("INVALID INDEX");
         return UINT_MAX;
@@ -85,107 +85,6 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 
 
 
-
-
-/*
-
-
-struct neighbors_t get_neighbors(unsigned int idx)
-{
-  struct neighbors_t neighbors; 
-  unsigned int q=idx/WIDTH;
-  unsigned int r=idx%WIDTH;
-  unsigned int l=q;
-  unsigned int j=r;
-  unsigned int k=0;
-  j++;
-  if(j>=0 && j<=WIDTH)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      neighbors.n[k].d=1;
-      k++;
-    }
-  j=q;
-  l--;
-  j++;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  l=q;
-  j=r;
-  l--;
-  if(j>=0 && j<=WIDTH)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      k++;
-    }
-  l=q;
-  l--;
-  j--;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  l=q;
-  j=r;
-  j--;
-  if(j>=0 && j<=WIDTH)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      k++;
-    }
-  j=r;
-  l++;
-  j--;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  l=q;
-  j=r;
-  l++;
-  if(l>=0 && l<=HEIGHT)
-    {
-      neighbors.n[k].i=l*WIDTH+j;
-      k++;
-    }
-  l=q;
-  l++;
-  j++;
-  if(j>=0 && j<=WIDTH)
-    {
-      if(l>=0 && l<=HEIGHT)
-	{
-	  neighbors.n[k].i=l*WIDTH+j;
-	  k++;
-	}
-    }
-  neighbors.n[k].i=UINT_MAX;
-  k++;
-  while(k<MAX_NEIGHBORS)
-    {
-      neighbors.n[k].i=0;
-      k++;
-    }
-  return neighbors;
-}
-*/
-
-
-
 struct neighbors_t get_neighbors(unsigned int idx)
 {
   struct neighbors_t neighbors; 
@@ -193,7 +92,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
   int k=0;
   for(d = -4; d<=4; d++)
   {
-    int ind=get_neighbor(idx,d);
+    unsigned int ind=get_neighbor(idx,d);
     if(ind!=UINT_MAX)
     {
       neighbors.n[k].i=ind;
@@ -210,35 +109,57 @@ struct neighbors_t get_neighbors(unsigned int idx)
   return neighbors;
 }
 
+//int saut_simple(struct world_t *world,int current_index)
+//{
+//  if(saut_simple)
 
-int nombre_mouvements(const struct world_t* b ,unsigned int idx)
+//  return 
+//}
+
+int nombre_mouvements(struct world_t* world ,unsigned int idx,int mvt_seed,int new_index)
 {
     struct neighbors_t voisins=get_neighbors(idx);
     int i=0;
     struct vector_t voisin;
-    enum color_t couleur=world_get(b,idx);
+    enum color_t couleur=world_get(world,idx);
     int nombre_mouvement=0;
     enum dir_t direction_saut=0;
     int indice_voisin_saut;
     while(i<MAX_NEIGHBORS)
-    {
+    {   
+        //parcour de tous les voisins proches
         voisin=voisins.n[i];
-        if(world_get_sort(b,voisin.i)==0)
+        if(world_get_sort(world,voisin.i)==0)
         {
             nombre_mouvement++;
-        }else{
-            if(world_get(b,voisin.i)!=couleur)
+            if(nombre_mouvement==mvt_seed)
+            {
+              world_set(world,idx,0);
+              world_set_sort(world,idx,0);
+              new_index=get_neighbor(idx,voisin.d);
+            }
+            // case vide a coté = deplacement
+        }else{ // si case proche contient noir 
+            if(world_get(world,voisin.i)!=couleur)
             {
                 indice_voisin_saut=get_neighbor(voisin.i,direction_saut);
-                if(world_get_sort(b,indice_voisin_saut)==0)
+                if(world_get_sort(world,indice_voisin_saut)==0)//et celle d'apres est vide.
                 {
                     nombre_mouvement++;
+                    //saut_simple();
+                    if(nombre_mouvement==mvt_seed)
+                    {
+                      printf("%d\n",mvt_seed);
+                      world_set(world,voisin.i,0);// supprime le pion noir sauté.
+                      world_set_sort(world,voisin.i,0);
+                      new_index=indice_voisin_saut;
+                    }
                 }
             }
         }
         i++;
     }
-    return nombre_mouvement;
+  return nombre_mouvement;
 }
 
 

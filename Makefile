@@ -1,18 +1,44 @@
+CC=gcc
 WIDTH ?= 5
 HEIGHT ?= 4
 MANSUBA_FLAGS = -DWIDTH=$(WIDTH) -DHEIGHT=$(HEIGHT)
-CFLAGS = -Wall -Wextra -std=c99 -Ig3 $(MANSUBA_FLAGS)
+CFLAGS = -Wall -Wextra -std=c99 -g3 $(MANSUBA_FLAGS)
+#-g3 sert au debuggage
+# Utiliser $(CFLAGS) pour avoir tjs les mêmes flags et memes definitions de width et height dans tout les .o
 
 all: project
 
-%.o: src/%.c
-	gcc -c $(CFLAGS) $<
 
-project: project.o 
-	gcc $(CFLAGS) project.o -o project 
+%.o: %.c
+	$(CC) -c $(CFLAGS) $<
 
-test_project: test.o 
-	gcc $(CFLAGS) test.o -o test_project
+project: geometry.o world.o neighbors.o project.o # (Add your dependency here, e.g "project.o")
+	$(CC) $(CFLAGS) geometry.o world.o neighbors.o project.o -o project
+
+#un seul .c pour faire un .o
+
+
+world.o: src/world.c
+	$(CC) $(CFLAGS) src/world.c -c -o world.o
+
+geometry.o: src/geometry.c
+	$(CC) $(CFLAGS) src/geometry.c -c -o geometry.o
+
+neighbors.o: src/neighbors.c
+	$(CC) $(CFLAGS) src/neighbors.c -c -o neighbors.o
+
+project: # (Add your dependency here, e.g "test.o")
+	$(CC) $(CFLAGS) src/project.c -c -o project.o
+
+test.o: tst/test.c
+	$(CC) $(CFLAGS) $^ -o $@
+
+#nom: dépendances (hors .h)
+# commandes à executer
+
+test:
+	./src/project
 
 clean:
-	rm -f project test_project *.o *~
+	rm -f *.o *~ project
+#utiliser avec :~/$ make clean
