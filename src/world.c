@@ -1,6 +1,6 @@
 #include "world.h"
 #include <stdio.h>
-#include "geometry.h"
+//#include "geometry.h"
 
 struct pion{
   enum color_t c;

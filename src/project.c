@@ -74,12 +74,8 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   return i;
 }
 
-<<<<<<< HEAD
-void choose_random_move_for_piece(struct world_t *world,int index_pion)
-=======
 
-int choose_random_move_for_piece(struct world_t *world,int index_pion)
->>>>>>> origin/master
+void choose_random_move_for_piece(struct world_t *world,int index_pion)
 {
   /*
   int mvt=-1;

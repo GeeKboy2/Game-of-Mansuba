@@ -4,7 +4,7 @@
 #include "world.h"
 #include <limits.h>
 #include <time.h>
-//#include "rules.c"
+
 
 //#define UINT_MAX -1
 
