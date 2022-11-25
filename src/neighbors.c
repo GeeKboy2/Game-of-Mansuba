@@ -20,10 +20,6 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     unsigned int q=idx/n;
     unsigned int r=idx%n;
     // la ligne est q & la collone est r
-    if (d==0)
-      {
-	return idx;
-      }
     if(idx%WIDTH == 0){
        if (d==4 || d== -2 || d== -1)
 	 {
@@ -113,20 +109,60 @@ struct neighbors_t get_neighbors(unsigned int idx)
 }
 
 
-//Regarde les mouvements réalisables
+//Regarde les déplacements simples réalisables
+struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx){
+  int k = 0;
+  int j =0;
+  struct neighbors_t neighbors = get_neighbors(idx);
+  struct neighbors_t deplacement_simple;
+  while(neighbors.n[k].i != UINT_MAX){
+    if(world->point[neighbors.n[k].i].s == 0){
+      deplacement_simple.n[j].i = neighbors.n[k].i;
+      deplacement_simple.n[j].d = neighbors.n[k].d;
+      j++;
+    }
+    k++;
+  }
+  deplacement_simple.n[j].i=UINT_MAX;
+  deplacement_simple.n[j].d=0;
+  j++;
+  while(j<MAX_NEIGHBORS)
+  {
+    deplacement_simple.n[j].i=0;
+    deplacement_simple.n[j].d=0;
+    j++;
+  }
+  return deplacement_simple;
+}
 
-enum mouvement{
-   NON_MOUVEMENT = 0,
-   DEPLACEMENT_SIMPLE = 1,
-   SAUT_SIMPLE = 2,
-   SAUT_MULTIPLE = 3,
-};
-
-struct mouvement_t{
-  int indexav;
-  int indexap;
-  enum mouvement m;
-};
+//Regarde les sauts simple réalisables
+struct neighbors_t saut_simple(struct world_t* world, unsigned int idx){
+  int k = 0;
+  int j = 0;
+  struct neighbors_t neighbors = get_neighbors(idx);
+  struct neighbors_t saut_simple; //Structure à retouner pour voir les directions et index des sauts 
+  while(neighbors.n[k].i != UINT_MAX){
+    if(world_get_sort(world,neighbors.n[k].i) == 1){
+      unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
+      if(world_get_sort(world,position) == 0){
+      saut_simple.n[j].i = neighbors.n[k].i;
+      saut_simple.n[j].d = neighbors.n[k].d;
+      j++;
+      }
+    }
+    k++;
+  }
+  saut_simple.n[j].i=UINT_MAX;
+  saut_simple.n[j].d=0;
+  j++;
+  while(j<MAX_NEIGHBORS)
+  {
+    saut_simple.n[j].i=0;
+    saut_simple.n[j].d=0;
+    j++;
+  }
+  return saut_simple;
+}
 
 /*
 struct mouvement_t mouvement_possible(struct world_t* world,unsigned int idx){
