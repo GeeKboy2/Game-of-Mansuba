@@ -3,6 +3,7 @@
 #include "geometry.h"
 #include "world.h"
 #include <limits.h>
+#include <time.h>
 //#include "rules.c"
 
 //#define UINT_MAX -1
@@ -158,6 +159,24 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx){
     j++;
   }
   return saut_simple;
+}
+
+//Compte le nombre de mouvement possible pour une position idx
+int nombre_mouvements(struct world_t* world, unsigned int idx){
+  struct neighbors_t mouvement1 = deplacement_simple(world,idx);
+  struct neighbors_t mouvement2 = saut_simple(world,idx);
+  int compteur = 0;
+  int i = 0;
+  while (mouvement1.n[i].i != UINT_MAX){
+    compteur++;
+    i++;
+  }
+  i = 0;
+  while(mouvement2.n[i].i != UINT_MAX){
+    compteur++;
+    i++;
+  }
+  return compteur;
 }
 
 /*
