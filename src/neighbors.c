@@ -105,6 +105,76 @@ struct neighbors_t get_neighbors(unsigned int idx)
   return neighbors;
 }
 
+//Regarde les déplacements simples réalisables
+struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx){
+  int k = 0;
+  int j =0;
+  struct neighbors_t neighbors = get_neighbors(idx);
+  struct neighbors_t deplacement_simple;
+  while(neighbors.n[k].i != UINT_MAX){
+    if(world_get_sort(world,neighbors.n[k].i)== 0){
+      deplacement_simple.n[j].i = neighbors.n[k].i;
+      deplacement_simple.n[j].d = neighbors.n[k].d;
+      j++;
+    }
+    k++;
+  }
+  deplacement_simple.n[j].i=UINT_MAX;
+  deplacement_simple.n[j].d=0;
+  j++;
+  while(j<MAX_NEIGHBORS)
+  {
+    deplacement_simple.n[j].i=0;
+    deplacement_simple.n[j].d=0;
+    j++;
+  }
+  return deplacement_simple;
+}
+
+//Regarde les sauts simple réalisables
+struct neighbors_t saut_simple(struct world_t* world, unsigned int idx){
+  int k = 0;
+  int j = 0;
+  struct neighbors_t neighbors = get_neighbors(idx);
+  struct neighbors_t saut_simple; //Structure à retouner pour voir les directions et index des sauts 
+  while(neighbors.n[k].i != UINT_MAX){
+    if(world_get_sort(world,neighbors.n[k].i) == 1){
+      unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
+      if(world_get_sort(world,position) == 0){
+      saut_simple.n[j].i = neighbors.n[k].i;
+      saut_simple.n[j].d = neighbors.n[k].d;
+      j++;
+      }
+    }
+    k++;
+  }
+  saut_simple.n[j].i=UINT_MAX;
+  saut_simple.n[j].d=0;
+  j++;
+  while(j<MAX_NEIGHBORS)
+  {
+    saut_simple.n[j].i=0;
+    saut_simple.n[j].d=0;
+    j++;
+  }
+  return saut_simple;
+}
+
+/*
+struct mouvement_t mouvement_possible(struct world_t* world,unsigned int idx){
+  struct mouvement_t mouvement;
+  for 
+}
+*/
+/*
+bool saut_simple_test(unsigned int idx,const struct world_t* b){
+  enum color_t color = world_get(b,idx);
+  for(int i = -4; i < 5; i++){
+    if(get_neighbor(idx,i)==
+  }
+}
+*/		      
+
 //int saut_simple(struct world_t *world,int current_index)
 //{
 //  if(saut_simple)
