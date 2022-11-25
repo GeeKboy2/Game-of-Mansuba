@@ -120,8 +120,9 @@ int main(int argc,char *argv[]){
   world_set(world,19,2);
   condition_victoire(world,"c",20);
   */
-
-
+  world_set(world,1,1);
+  struct neighbors_t neig=deplacement_simple(world,0);
+  //printf("le voisin à sauter %d avec direction %d\n",neig.n[0].i,neig.n[0].d);
 
 
   ///////////////////////////////////////////////////////////test_fin
