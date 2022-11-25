@@ -80,8 +80,6 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     return index;
 }
 
-
-
 struct neighbors_t get_neighbors(unsigned int idx)
 {
   struct neighbors_t neighbors; 
@@ -112,12 +110,11 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx){
   int j =0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t deplacement_simple;
-  while(neighbors.n[k].i != UINT_MAX){
+  while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS){
     if(world_get_sort(world,neighbors.n[k].i)== 0){
       deplacement_simple.n[j].i = neighbors.n[k].i;
       deplacement_simple.n[j].d = neighbors.n[k].d;
       j++;
-    }
     k++;
   }
   deplacement_simple.n[j].i=UINT_MAX;
@@ -132,13 +129,14 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx){
   return deplacement_simple;
 }
 
+
 //Regarde les sauts simple réalisables
 struct neighbors_t saut_simple(struct world_t* world, unsigned int idx){
   int k = 0;
   int j = 0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t saut_simple; //Structure à retouner pour voir les directions et index des sauts 
-  while(neighbors.n[k].i != UINT_MAX){
+  while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS){
     if(world_get_sort(world,neighbors.n[k].i) == 1){
       unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
       if(world_get_sort(world,position) == 0){
@@ -160,6 +158,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx){
   }
   return saut_simple;
 }
+
 
 //Compte le nombre de mouvement possible pour une position idx
 int nombre_mouvements(struct world_t* world, unsigned int idx){

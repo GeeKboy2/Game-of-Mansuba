@@ -121,6 +121,7 @@ int main(int argc,char *argv[]){
   world_set(world,19,2);
   condition_victoire(world,"c",20);
   */
+
   
   int i = 0;
   while(i < WORLD_SIZE){
@@ -134,7 +135,6 @@ int main(int argc,char *argv[]){
     i = i + 10;
   }
  
-
   ///////////////////////////////////////////////////////////test_fin
   show_world(world);
   printf("############################\n");

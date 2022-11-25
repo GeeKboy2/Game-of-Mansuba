@@ -2,6 +2,7 @@
 #define __NEIGHBORS_H__
 
 #include "geometry.h"
+#include "world.h"
 
 /** The number of relations in the code */
 #define MAX_RELATIONS 1
@@ -37,4 +38,7 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d);
     by UINT_MAX.  */
 struct neighbors_t get_neighbors(unsigned int idx);
 
+struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx);
+
+struct neighbors_t saut_simple(struct world_t* world, unsigned int idx);
 #endif // __NEIGHBORS_H__
