@@ -194,7 +194,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
   for(d = -4; d<=4; d++)
   {
     int ind=get_neighbor(idx,d);
-    if(ind!=UINT_MAX)
+    if(ind!=UINT_MAX && d != 0)
     {
       neighbors.n[k].i=ind;
       neighbors.n[k].d=d;
@@ -202,15 +202,46 @@ struct neighbors_t get_neighbors(unsigned int idx)
     }
   }
   neighbors.n[k].i=UINT_MAX;
+  neighbors.n[k].d=0;
+  k++;
   while(k<MAX_NEIGHBORS)
   {
     neighbors.n[k].i=0;
+    neighbors.n[k].d=0;
     k++;
   }
   return neighbors;
 }
 
+//Regarde les mouvements réalisables
 
+enum mouvement{
+   NON_MOUVEMENT = 0,
+   DEPLACEMENT_SIMPLE = 1,
+   SAUT_SIMPLE = 2,
+   SAUT_MULTIPLE = 3,
+};
+
+struct mouvement_t{
+  int indexav;
+  int indexap;
+  enum mouvement m;
+};
+
+/*
+struct mouvement_t mouvement_possible(struct world_t* world,unsigned int idx){
+  struct mouvement_t mouvement;
+  for 
+}
+*/
+/*
+bool saut_simple_test(unsigned int idx,const struct world_t* b){
+  enum color_t color = world_get(b,idx);
+  for(int i = -4; i < 5; i++){
+    if(get_neighbor(idx,i)==
+  }
+}
+*/		      
 int nombre_mouvements(const struct world_t* b ,unsigned int idx)
 {
     struct neighbors_t voisins=get_neighbors(idx);
