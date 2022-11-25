@@ -122,19 +122,26 @@ int main(int argc,char *argv[]){
   condition_victoire(world,"c",20);
   */
 
-  
+  /*
   int i = 0;
   while(i < WORLD_SIZE){
-    struct neighbors_t* dpl = &deplacement_simple(world,i);
+    struct neighbors_t dpl = deplacement_simple(world,i);
     printf("%d :\n", i);
     int j = 0;
-    while(dpl->n[j].i != UINT_MAX){
-      printf("%d\n", dpl->n[j].i);
+    while(dpl.n[j].i != UINT_MAX){
+      printf("%d\n", dpl.n[j].i);
       j++;
     }
     i = i + 10;
   }
- 
+  */
+  world_set(world,1,1);
+  world_set_sort(world,1,1);
+  //world_set(world,2,1);
+  //world_set_sort(world,2,1);
+  world_set(world,6,1);
+  world_set_sort(world,6,1);
+  printf("%d\n",nombre_mouvements(world,0));
   ///////////////////////////////////////////////////////////test_fin
   show_world(world);
   printf("############################\n");
