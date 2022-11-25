@@ -13,7 +13,7 @@ all: project
 	$(CC) -c $(CFLAGS) $<
 
 project: geometry.o world.o neighbors.o project.o # (Add your dependency here, e.g "project.o")
-	$(CC) $(CFLAGS) geometry.o world.o neighbors.o project.o -o project.exe
+	$(CC) $(CFLAGS) geometry.o world.o neighbors.o project.o -o project
 
 #un seul .c pour faire un .o
 
@@ -37,7 +37,7 @@ test.o: tst/test.c
 # commandes à executer
 
 test:
-	./project.exe
+	./project
 
 clean:
 	rm -f *.o *~ project

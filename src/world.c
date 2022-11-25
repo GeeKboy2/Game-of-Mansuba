@@ -1,6 +1,5 @@
 #include "world.h"
 #include <stdio.h>
-//#include <stdlib.h>
 #include "geometry.h"
 
 struct pion{
