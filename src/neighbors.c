@@ -20,10 +20,6 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     unsigned int q=idx/n;
     unsigned int r=idx%n;
     // la ligne est q & la collone est r
-    if (d==0)
-      {
-	return idx;
-      }
     if(idx%WIDTH == 0){
        if (d==4 || d== -2 || d== -1)
 	 {
@@ -93,7 +89,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
   for(d = -4; d<=4; d++)
   {
     unsigned int ind=get_neighbor(idx,d);
-    if(ind!=UINT_MAX && d != 0)
+    if(ind!=UINT_MAX)
     {
       neighbors.n[k].i=ind;
       neighbors.n[k].d=d;
@@ -101,47 +97,13 @@ struct neighbors_t get_neighbors(unsigned int idx)
     }
   }
   neighbors.n[k].i=UINT_MAX;
-  neighbors.n[k].d=0;
-  k++;
   while(k<MAX_NEIGHBORS)
   {
     neighbors.n[k].i=0;
-    neighbors.n[k].d=0;
     k++;
   }
   return neighbors;
 }
-
-
-//Regarde les mouvements réalisables
-
-enum mouvement{
-   NON_MOUVEMENT = 0,
-   DEPLACEMENT_SIMPLE = 1,
-   SAUT_SIMPLE = 2,
-   SAUT_MULTIPLE = 3,
-};
-
-struct mouvement_t{
-  int indexav;
-  int indexap;
-  enum mouvement m;
-};
-
-/*
-struct mouvement_t mouvement_possible(struct world_t* world,unsigned int idx){
-  struct mouvement_t mouvement;
-  for 
-}
-*/
-/*
-bool saut_simple_test(unsigned int idx,const struct world_t* b){
-  enum color_t color = world_get(b,idx);
-  for(int i = -4; i < 5; i++){
-    if(get_neighbor(idx,i)==
-  }
-}
-*/		      
 
 //int saut_simple(struct world_t *world,int current_index)
 //{
@@ -149,7 +111,7 @@ bool saut_simple_test(unsigned int idx,const struct world_t* b){
 
 //  return 
 //}
-
+/*
 int nombre_mouvements(struct world_t* world ,unsigned int idx,int mvt_seed,int new_index)
 {
     struct neighbors_t voisins=get_neighbors(idx);
@@ -197,7 +159,7 @@ int nombre_mouvements(struct world_t* world ,unsigned int idx,int mvt_seed,int n
 }
 
 
-
+*/
 
 /*
 

@@ -1,45 +1,48 @@
 
-//#include "./geometry.h"
-//#include "./world.h"
-#include "./world.c"
+#include <stdio.h>
+#include "geometry.h"
+#include "world.h"
+#include "neighbors.h"
+//#include "world.c"
 
 struct piece{
   int blanc[HEIGHT];
   int noir[HEIGHT];
 };
 
-struct piece piece;
-void position_init(struct world_t* world){
+//struct piece piece;
+int position_init(struct world_t* world){
   int b = 0;
   int n = 0;
   for(int i = 0; i< WORLD_SIZE; i++){
     if(i%WIDTH==0){
-      piece.noir[n]=i;
+      //piece.noir[n]=i;
       world_set(world,i,2);
       world_set_sort(world,i,1);
       n++;
     }
     if(i%WIDTH==WIDTH-1){
-      piece.blanc[b]=i;
+      //piece.blanc[b]=i;
       world_set(world,i,1);
       world_set_sort(world,i,1);
       b++;
     }
   }
+  return 0;
 }
 
 #define TURN 0
-int condition_victoire(struct piece piece,char *type_victoire,int MAX_TURNS){
+int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS){
   if(MAX_TURNS == TURN){
     printf("Nombre de tour maximum atteint, pas de vainqueur");
   }
   if(type_victoire[0] == 's'){
     for(int i = 0; i<HEIGHT;i++){
-      if(piece.blanc[i]%WIDTH==0){
-	printf("Victoire simple des blancs");
+      if(world_get(world,i)%WIDTH==0){
+	    printf("Victoire simple des blancs");
 	return 0;
       }
-      if(piece.noir[i]%WIDTH==WIDTH-1){
+      if(world_get(world,i)%WIDTH==WIDTH-1){
 	printf("Victoire simple des noirs");
 	return 0;
       }
@@ -49,10 +52,10 @@ int condition_victoire(struct piece piece,char *type_victoire,int MAX_TURNS){
   int compteur_noir = 0;
   if(type_victoire[0] == 'c'){
     for(int i = 0; i<HEIGHT;i++){
-      if(piece.blanc[i]%WIDTH==0){
+      if(world_get(world,i)%WIDTH==0){
 	compteur_blanc++;
       }
-      if(piece.noir[i]%WIDTH==WIDTH-1){
+      if(world_get(world,i)%WIDTH==WIDTH-1){
 	compteur_noir++;
       }
     }

@@ -1,9 +1,9 @@
-//#include <stdio.h>
-//#include <string.h>
-//#include <stdlib.h>
-//#include "./geometry.h"
-#include "./world.h"
-#include "./neighbors.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "geometry.h"
+#include "world.h"
+#include "neighbors.h"
 #include <unistd.h>
 
 /*
@@ -17,15 +17,15 @@
 void show_world(struct world_t* world)
 {
   for(int i = 0; i <WORLD_SIZE ; i++){
-    if(world ->point[i].c ==2)
+    if(world_get(world,i)==2)
       {
 	printf("%s"," ⛀ ");
       }
-    if(world ->point[i].c==1)
+    if(world_get(world,i)==1)
       {
 	printf("%s"," ⛂ ");
       }
-    if(world ->point[i].c==0)
+    if(world_get(world,i)==0)
       {
 	printf(" . ");
       }
@@ -57,7 +57,7 @@ enum color_t next_player(enum color_t current_player)
 int choose_random_piece_belonging_to(struct world_t* world, enum color_t current_player){
   int compteur = 0;
   for(int i = 0; i<WORLD_SIZE; i++){
-    if(world -> point[i].c == current_player){
+    if(world_get(world,i)== current_player){
       compteur++;
     }
   }
@@ -65,7 +65,7 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   int num = -1;
   int i = 0;
   while(num != pos){
-    if(world -> point[i].c == current_player){
+    if(world_get(world,i)== current_player){
       num++;
     }
     i++;
@@ -73,19 +73,21 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   return i;
 }
 
-int choose_random_move_for_piece(struct world_t *world,int index_pion)
+void choose_random_move_for_piece(struct world_t *world,int index_pion)
 {
+  /*
   int mvt=-1;
   int nombre_mvt=nombre_mouvements(world,index_pion,mvt,index_pion);
   mvt=rand()%nombre_mvt;
   nombre_mvt=nombre_mouvements(world,index_pion,mvt,index_pion);
   return index_pion;
+  */
 }
 
 void move_piece(struct world_t* world,int index_arrivee)
 {
-  world_set(world,index_arrivee,world->point[index_arrivee].c);
-  world_set_sort(world,index_arrivee,world->point[index_arrivee].s);
+  world_set(world,index_arrivee,world_get(world,index_arrivee));
+  world_set_sort(world,index_arrivee,world_get_sort(world,index_arrivee));
 }
 
 // Créé le monde et set les différents pions dans leur position initiale
@@ -100,8 +102,8 @@ int main(int argc,char *argv[]){
   MAX_TURNS=atoi(argv[4]);
   RNG=atoi(argv[2]);
 
-  //(void) type_victoire;
-  //(void) MAX_TURNS;
+  (void) type_victoire;
+  (void) MAX_TURNS;
   (void) RNG;
   }
   struct world_t* world=world_init();
@@ -109,14 +111,22 @@ int main(int argc,char *argv[]){
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
+  /*
+  world_set(world,4,2);
+  world_set(world,9,2);
+  world_set(world,14,2);
+  world_set(world,19,2);
+  condition_victoire(world,"c",20);
+  */
 
   
+
 
   ///////////////////////////////////////////////////////////test_fin
   show_world(world);
   printf("############################\n");
   //init_neighbors(0); // Use seed 0 at the beginning of a game
-  
+  /*
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
@@ -131,6 +141,6 @@ int main(int argc,char *argv[]){
     sleep(2);
   }
   
-  
+*/
   return 0;
 }
