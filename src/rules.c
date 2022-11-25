@@ -1,7 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "./geometry.h"
-#include "./world.h"
+
+//#include "./geometry.h"
+//#include "./world.h"
 #include "./world.c"
 
 struct piece{
@@ -30,7 +29,7 @@ void position_init(struct world_t* world){
 }
 
 #define TURN 0
-int ConditionVictoire(struct piece piece,char *type_victoire,int MAX_TURNS){
+int condition_victoire(struct piece piece,char *type_victoire,int MAX_TURNS){
   if(MAX_TURNS == TURN){
     printf("Nombre de tour maximum atteint, pas de vainqueur");
   }

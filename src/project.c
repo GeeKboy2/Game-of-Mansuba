@@ -1,17 +1,18 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "./geometry.h"
+//#include <stdio.h>
+//#include <string.h>
+//#include <stdlib.h>
+//#include "./geometry.h"
 #include "./world.h"
 #include "./neighbors.h"
-#include "./rules.c"
+#include <unistd.h>
+
 /*
 #ifndef MAX_TURNS
 #define MAX_TURNS (2*WORLD_SIZE)
 #endif
 */
 //#define TURN 0
-#define UINT_MAX 0
+//#define UINT_MAX 0
 
 void show_world(struct world_t* world)
 {
@@ -72,9 +73,14 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   return i;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////////
+int choose_random_move_for_piece(struct world_t *world,int index_pion)
+{
+  int mvt=-1;
+  int nombre_mvt=nombre_mouvements(world,index_pion,mvt,index_pion);
+  mvt=rand()%nombre_mvt;
+  nombre_mvt=nombre_mouvements(world,index_pion,mvt,index_pion);
+  return index_pion;
+}
 
 void move_piece(struct world_t* world,int index_arrivee)
 {
@@ -98,19 +104,33 @@ int main(int argc,char *argv[]){
   //(void) MAX_TURNS;
   (void) RNG;
   }
-  struct world_t* world = world_init();
+  struct world_t* world=world_init();
   position_init(world);
+  ///////////////////////////////////////////////////////////test
+  //int neigh=get_neighbor(10,-2);
+  //printf("%d\n",neigh);
+
+  
+
+  ///////////////////////////////////////////////////////////test_fin
   show_world(world);
-  init_neighbors(0); // Use seed 0 at the beginning of a game
+  printf("############################\n");
+  //init_neighbors(0); // Use seed 0 at the beginning of a game
+  
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
-  while(ConditionVictoire(piece,type_victoire,MAX_TURNS)!=0);
+  while(condition_victoire(piece,type_victoire,MAX_TURNS)!=0)
+  {
     index_pion = choose_random_piece_belonging_to(world, current_player);
-    move = choose_random_move_for_piece(world, p);
+    move = choose_random_move_for_piece(world, index_pion);
     move_piece(world, move);
     current_player = next_player(current_player);
-  int r = choose_random_piece_belonging_to(world,0);
-  printf("%d\n",r);
+    show_world(world);
+    printf("############################\n");
+    sleep(2);
+  }
+  
+  
   return 0;
 }
