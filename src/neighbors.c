@@ -29,7 +29,18 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     }
     if(idx%WIDTH == WIDTH - 1){
       if(d == 2 || d== 1 || d == -4){
-	return UINT_MAX;
+	    return UINT_MAX;
+      }
+    }
+    if(idx%HEIGHT == 0){
+      if(d==2 || d== 3 || d==4){
+        return UINT_MAX;
+      }
+    }
+    if(idx%HEIGHT == HEIGHT - 1){
+      if(d==-2 || d==-3 || d==-4 )
+      {
+        return UINT_MAX;
       }
     }
     if (d==4)
@@ -88,7 +99,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
   for(d = -4; d<=4; d++)
   {
     unsigned int ind=get_neighbor(idx,d);
-    if(ind!=UINT_MAX)
+    if(ind<UINT_MAX)
     {
       neighbors.n[k].i=ind;
       neighbors.n[k].d=d;
@@ -112,7 +123,7 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   int j =0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t deplacement_smpl;
-  while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS)
+  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS)
   {
     if(world_get_sort(world,neighbors.n[k].i)== 0)
     {
@@ -141,16 +152,21 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   int j = 0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t saut_simp; //Structure à retouner pour voir les directions et index des sauts 
-  while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS)
+  unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
+  k++;
+  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS)
   {
     if(world_get_sort(world,neighbors.n[k].i) == 1)
     {
-      unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
-      if(world_get_sort(world,position) == 0)
+      position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
+      if(position<UINT_MAX)
       {
-        saut_simp.n[j].i = neighbors.n[k].i;
-        saut_simp.n[j].d = neighbors.n[k].d;
-        j++;
+        if(world_get_sort(world,position) == 0)
+        {
+          saut_simp.n[j].i = neighbors.n[k].i;
+          saut_simp.n[j].d = neighbors.n[k].d;
+          j++;
+        }
       }
     }
     k++;
