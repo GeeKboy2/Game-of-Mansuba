@@ -48,9 +48,11 @@ enum color_t next_player(enum color_t current_player)
 {
   if(current_player==0)
   {
-    return current_player++;
+    current_player++;
+    return current_player;
   }else{
-    return current_player--;
+    current_player--;
+    return current_player;
   }
 
 }
@@ -91,7 +93,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
   }
   int rand_mvt=rand()%nombre_mvt;
   int somme=0;
-  while(ds.n[compteur_ds].i!=UINT_MAX)
+  while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
   {
     if(somme==rand_mvt)
     {
@@ -115,7 +117,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     }
     */
   }
-  while (ss.n[compteur_ss].i!=UINT_MAX)
+  while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
   {
     if(somme==rand_mvt)
     {
@@ -128,10 +130,12 @@ int choose_random_move_for_piece(struct world_t *world,int index)
 
 }
 
-void move_piece(struct world_t* world,int index_arrivee)
+void move_piece(struct world_t* world,int index_arrivee, int index_depart)
 {
-  world_set(world,index_arrivee,world_get(world,index_arrivee));
-  world_set_sort(world,index_arrivee,world_get_sort(world,index_arrivee));
+  world_set(world,index_arrivee,world_get(world,index_depart));
+  world_set_sort(world,index_arrivee,world_get_sort(world,index_depart));
+  world_set(world,index_depart,0);
+  world_set_sort(world,index_depart,0);
 }
 
 // Créé le monde et set les différents pions dans leur position initiale
@@ -186,7 +190,7 @@ int main(int argc,char *argv[]){
   printf("%d\n",nombre_mouvements(world,0));
   */
   ///////////////////////////////////////////////////////////test_fin
-  /*
+ 
   show_world(world);
   printf("############################\n");
   //init_neighbors(0); // Use seed 0 at the beginning of a game
@@ -197,12 +201,11 @@ int main(int argc,char *argv[]){
   {
     index_pion = choose_random_piece_belonging_to(world, current_player);
     move = choose_random_move_for_piece(world, index_pion);
-    move_piece(world, move);
+    move_piece(world, move,index_pion);
     current_player = next_player(current_player);
     show_world(world);
     printf("############################\n");
     sleep(2);
   }
-  */
   return 0;
 }
