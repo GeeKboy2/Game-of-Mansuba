@@ -43,14 +43,15 @@ enum color_t get_random_player()
   return rand()%2;
 }
 
-
 enum color_t next_player(enum color_t current_player)
 {
   if(current_player==0)
   {
-    return current_player++;
+    current_player++;
+    return current_player;
   }else{
-    return current_player--;
+    current_player--;
+    return current_player;
   }
 
 }
@@ -76,7 +77,6 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   return i;
 }
 
-
 int choose_random_move_for_piece(struct world_t *world,int index)
 {
   struct neighbors_t ds=deplacement_simple(world,index);
@@ -91,7 +91,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
   }
   int rand_mvt=rand()%nombre_mvt;
   int somme=0;
-  while(ds.n[compteur_ds].i!=UINT_MAX)
+  while(ds.n[compteur_ds].i!=UINT_MAX && ss.n[compteur_ss].i<MAX_NEIGHBORS)
   {
     if(somme==rand_mvt)
     {
@@ -115,7 +115,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     }
     */
   }
-  while (ss.n[compteur_ss].i!=UINT_MAX)
+  while (ss.n[compteur_ss].i!=UINT_MAX && ss.n[compteur_ss].i<MAX_NEIGHBORS)
   {
     if(somme==rand_mvt)
     {
@@ -146,8 +146,8 @@ int main(int argc,char *argv[]){
   MAX_TURNS=atoi(argv[4]);
   RNG=atoi(argv[2]);
 
-  //(void) type_victoire;
-  //(void) MAX_TURNS;
+  (void) type_victoire;
+  (void) MAX_TURNS;
   (void) RNG;
   }
   struct world_t* world=world_init();
@@ -181,14 +181,18 @@ int main(int argc,char *argv[]){
   world_set_sort(world,1,1);
   //world_set(world,2,1);
   //world_set_sort(world,2,1);
+  //printf("%d\n",next_player(1));
+
   world_set(world,6,1);
   world_set_sort(world,6,1);
   printf("%d\n",nombre_mouvements(world,0));
+  printf("%d\n",choose_random_move_for_piece(world,0));
   */
   ///////////////////////////////////////////////////////////test_fin
-  /*
+  
   show_world(world);
   printf("############################\n");
+  
   //init_neighbors(0); // Use seed 0 at the beginning of a game
   enum color_t current_player = get_random_player();
   int index_pion;
@@ -203,6 +207,5 @@ int main(int argc,char *argv[]){
     printf("############################\n");
     sleep(2);
   }
-  */
   return 0;
 }
