@@ -39,6 +39,9 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     }
     if(idx%HEIGHT == HEIGHT - 1){
       if(d==-2 || d==-3 || d==-4 )
+      {
+        return UINT_MAX;
+      }
     }
     if (d==4)
 	 {
