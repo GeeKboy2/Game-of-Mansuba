@@ -39,6 +39,7 @@ void show_world(struct world_t* world)
 
 enum color_t get_random_player()
 {
+  srand(time(NULL));
   return rand()%2;
 }
 
@@ -76,15 +77,55 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
 }
 
 
-void choose_random_move_for_piece(struct world_t *world,int index_pion)
+int choose_random_move_for_piece(struct world_t *world,int index)
 {
-  /*
-  int mvt=-1;
-  int nombre_mvt=nombre_mouvements(world,index_pion,mvt,index_pion);
-  mvt=rand()%nombre_mvt;
-  nombre_mvt=nombre_mouvements(world,index_pion,mvt,index_pion);
-  return index_pion;
-  */
+  struct neighbors_t ds=deplacement_simple(world,index);
+  struct neighbors_t ss=saut_simple(world,index);
+  int compteur_ds=0;
+  int compteur_ss=0;
+  int nombre_mvt=nombre_mouvements(world,index);
+  srand(time(NULL));
+  if (nombre_mvt==0)
+  {
+    return index;
+  }
+  int rand_mvt=rand()%nombre_mvt;
+  int somme=0;
+  while(ds.n[compteur_ds].i!=UINT_MAX)
+  {
+    if(somme==rand_mvt)
+    {
+      return ds.n[compteur_ds].i;
+    }
+    compteur_ds++;
+    somme++;
+    
+    /*
+    if(ds.n[compteur_ds].i==UINT_MAX)
+    {
+      compteur_ss++;
+    }else{
+      compteur_ds++;
+    }
+    if(ds.n[compteur_ds].i==UINT_MAX)
+    {
+
+    }else{
+      return ds.n[compteur_ds].i;
+    }
+    */
+  }
+  while (ss.n[compteur_ss].i!=UINT_MAX)
+  {
+    if(somme==rand_mvt)
+    {
+      return get_neighbor(ss.n[compteur_ss].i,ss.n[compteur_ss].d);
+    }
+    compteur_ss++;
+    somme++;
+  }
+  
+
 }
 
 void move_piece(struct world_t* world,int index_arrivee)
@@ -105,8 +146,8 @@ int main(int argc,char *argv[]){
   MAX_TURNS=atoi(argv[4]);
   RNG=atoi(argv[2]);
 
-  (void) type_victoire;
-  (void) MAX_TURNS;
+  //(void) type_victoire;
+  //(void) MAX_TURNS;
   (void) RNG;
   }
   struct world_t* world=world_init();
@@ -135,6 +176,7 @@ int main(int argc,char *argv[]){
     i = i + 10;
   }
   */
+ /*
   world_set(world,1,1);
   world_set_sort(world,1,1);
   //world_set(world,2,1);
@@ -142,15 +184,16 @@ int main(int argc,char *argv[]){
   world_set(world,6,1);
   world_set_sort(world,6,1);
   printf("%d\n",nombre_mouvements(world,0));
+  */
   ///////////////////////////////////////////////////////////test_fin
+  /*
   show_world(world);
   printf("############################\n");
   //init_neighbors(0); // Use seed 0 at the beginning of a game
-  /*
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
-  while(condition_victoire(piece,type_victoire,MAX_TURNS)!=0)
+  while(condition_victoire(world,type_victoire,MAX_TURNS)!=0)
   {
     index_pion = choose_random_piece_belonging_to(world, current_player);
     move = choose_random_move_for_piece(world, index_pion);
@@ -160,7 +203,6 @@ int main(int argc,char *argv[]){
     printf("############################\n");
     sleep(2);
   }
-  
-*/
+  */
   return 0;
 }

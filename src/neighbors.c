@@ -133,7 +133,6 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   return deplacement_smpl;
 }
 
-
 //Regarde les sauts simple réalisables
 struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
 {
@@ -166,9 +165,6 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   }
   return saut_simp;
 }
-
-
-
 
 //Compte le nombre de mouvement possible pour une position idx
 int nombre_mouvements(struct world_t* world, unsigned int idx)
