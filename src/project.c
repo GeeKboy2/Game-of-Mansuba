@@ -20,15 +20,15 @@ void show_world(struct world_t* world)
   for(int i = 0; i <WORLD_SIZE ; i++){
     if(world_get(world,i)==2)
       {
-	printf("%s"," ⛀ ");
+	printf("%s%3d"," ⛀ ",i);
       }
     if(world_get(world,i)==1)
       {
-	printf("%s"," ⛂ ");
+	printf("%s%3d"," ⛂ ",i);
       }
     if(world_get(world,i)==0)
       {
-	printf(" . ");
+	printf(" . %3d",i);
       }
     if(i%WIDTH == WIDTH-1){
       printf("\n");
@@ -40,20 +40,22 @@ void show_world(struct world_t* world)
 enum color_t get_random_player()
 {
   srand(time(NULL));
-  return rand()%2;
+  return rand()%2+1;
 }
-
 
 enum color_t next_player(enum color_t current_player)
 {
-  if(current_player==0)
+  if(current_player==1)
   {
     current_player++;
     return current_player;
-  }else{
+  }
+  if(current_player==2)
+  {
     current_player--;
     return current_player;
   }
+    
 
 }
 
@@ -68,9 +70,13 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   int pos = rand()%compteur;
   int num = 0;
   int i = 0;
-  while(num <= pos){
+  while(num <= compteur){
     if(world_get(world,i) == current_player){
       num++;
+    }
+    if(num==pos)
+    {
+      return i;
     }
     i++;
   }
@@ -78,20 +84,24 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   return i;
 }
 
-
 int choose_random_move_for_piece(struct world_t *world,int index)
 {
+  printf("marche");
   struct neighbors_t ds=deplacement_simple(world,index);
+  printf("probleme deplacement simple");
   struct neighbors_t ss=saut_simple(world,index);
-  int compteur_ds=0;
-  int compteur_ss=0;
-  int nombre_mvt=nombre_mouvements(world,index);
+  printf("saut simple");
+  unsigned int compteur_ds=0;
+  unsigned int compteur_ss=0;
+  unsigned int nombre_mvt=nombre_mouvements(world,index);
+  printf("nombre mvt = %d\n",nombre_mvt);
   srand(time(NULL));
   if (nombre_mvt==0)
   {
     return index;
   }
   int rand_mvt=rand()%nombre_mvt;
+  printf("rand = %d\n",rand_mvt);
   int somme=0;
   while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
   {
@@ -149,8 +159,8 @@ int main(int argc,char *argv[]){
   MAX_TURNS=atoi(argv[4]);
   RNG=atoi(argv[2]);
 
-  //(void) type_victoire;
-  //(void) MAX_TURNS;
+  (void) type_victoire;
+  (void) MAX_TURNS;
   (void) RNG;
   }
   struct world_t* world=world_init();
@@ -179,32 +189,45 @@ int main(int argc,char *argv[]){
     i = i + 10;
   }
   */
- /*
+  /*
   world_set(world,1,1);
   world_set_sort(world,1,1);
-  //world_set(world,2,1);
-  //world_set_sort(world,2,1);
+  world_set(world,2,1);
+  world_set_sort(world,2,1);
+  */
+ /*
+  printf("%ud",UINT_MAX);
+  printf("voisin de 0 %d\n",get_neighbor(0,3));
+  //printf("%d\n",next_player(1));
+  */
+  /*
   world_set(world,6,1);
   world_set_sort(world,6,1);
-  printf("%d\n",nombre_mouvements(world,0));
+  printf("avant exemple nbr mvt\n");
+  printf("nombre mvt = %d\n",nombre_mouvements(world,0));
+  printf("avant choose random\n");
+  printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
   ///////////////////////////////////////////////////////////test_fin
- 
   show_world(world);
   printf("############################\n");
+
   //init_neighbors(0); // Use seed 0 at the beginning of a game
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
   while(condition_victoire(world,type_victoire,MAX_TURNS)!=0)
   {
+    printf("c'est le tour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
+    printf("la piece en mvt est %d\n",index_pion);
     move = choose_random_move_for_piece(world, index_pion);
+    printf("elle va se deplacer vers %d\n",move);
     move_piece(world, move,index_pion);
     current_player = next_player(current_player);
     show_world(world);
     printf("############################\n");
-    sleep(2);
+    sleep(0.5);
   }
   return 0;
 }
