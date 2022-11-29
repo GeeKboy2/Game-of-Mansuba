@@ -29,8 +29,16 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     }
     if(idx%WIDTH == WIDTH - 1){
       if(d == 2 || d== 1 || d == -4){
-	return UINT_MAX;
+	    return UINT_MAX;
       }
+    }
+    if(idx%HEIGHT == 0){
+      if(d==2 || d== 3 || d==4){
+        return UINT_MAX;
+      }
+    }
+    if(idx%HEIGHT == HEIGHT - 1){
+      if(d==-2 || d==-3 || d==-4 )
     }
     if (d==4)
 	 {
@@ -96,6 +104,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
     }
   }
   neighbors.n[k].i=UINT_MAX;
+  k++;
   while(k<MAX_NEIGHBORS)
   {
     neighbors.n[k].i=0;

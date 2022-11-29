@@ -126,8 +126,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     compteur_ss++;
     somme++;
   }
-  
-
+  return index;
 }
 
 void move_piece(struct world_t* world,int index_arrivee, int index_depart)
