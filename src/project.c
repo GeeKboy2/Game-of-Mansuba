@@ -79,19 +79,24 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
 
 int choose_random_move_for_piece(struct world_t *world,int index)
 {
+  printf("marche");
   struct neighbors_t ds=deplacement_simple(world,index);
+  printf("probleme deplacement simple");
   struct neighbors_t ss=saut_simple(world,index);
-  int compteur_ds=0;
-  int compteur_ss=0;
-  int nombre_mvt=nombre_mouvements(world,index);
+  printf("saut simple");
+  unsigned int compteur_ds=0;
+  unsigned int compteur_ss=0;
+  unsigned int nombre_mvt=nombre_mouvements(world,index);
+  printf("nombre mvt = %d\n",nombre_mvt);
   srand(time(NULL));
   if (nombre_mvt==0)
   {
     return index;
   }
   int rand_mvt=rand()%nombre_mvt;
+  printf("rand = %d\n",rand_mvt);
   int somme=0;
-  while(ds.n[compteur_ds].i!=UINT_MAX && ss.n[compteur_ss].i<MAX_NEIGHBORS)
+  while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
   {
     if(somme==rand_mvt)
     {
@@ -115,7 +120,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     }
     */
   }
-  while (ss.n[compteur_ss].i!=UINT_MAX && ss.n[compteur_ss].i<MAX_NEIGHBORS)
+  while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
   {
     if(somme==rand_mvt)
     {
@@ -124,14 +129,15 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     compteur_ss++;
     somme++;
   }
-  
-
+  return index;
 }
 
-void move_piece(struct world_t* world,int index_arrivee)
+void move_piece(struct world_t* world,int index_arrivee, int index_depart)
 {
-  world_set(world,index_arrivee,world_get(world,index_arrivee));
-  world_set_sort(world,index_arrivee,world_get_sort(world,index_arrivee));
+  world_set(world,index_arrivee,world_get(world,index_depart));
+  world_set_sort(world,index_arrivee,world_get_sort(world,index_depart));
+  world_set(world,index_depart,0);
+  world_set_sort(world,index_depart,0);
 }
 
 // Créé le monde et set les différents pions dans leur position initiale
@@ -179,17 +185,18 @@ int main(int argc,char *argv[]){
  /*
   world_set(world,1,1);
   world_set_sort(world,1,1);
-  //world_set(world,2,1);
-  //world_set_sort(world,2,1);
+  world_set(world,2,1);
+  world_set_sort(world,2,1);
   //printf("%d\n",next_player(1));
-
+  
   world_set(world,6,1);
   world_set_sort(world,6,1);
-  printf("%d\n",nombre_mouvements(world,0));
+  printf("avant exemple nbr mvt\n");
+  printf("nombre mvt = %d\n",nombre_mouvements(world,0));
+  printf("avant choose random\n");
   printf("%d\n",choose_random_move_for_piece(world,0));
   */
   ///////////////////////////////////////////////////////////test_fin
-  
   show_world(world);
   printf("############################\n");
   
@@ -201,11 +208,12 @@ int main(int argc,char *argv[]){
   {
     index_pion = choose_random_piece_belonging_to(world, current_player);
     move = choose_random_move_for_piece(world, index_pion);
-    move_piece(world, move);
+    move_piece(world, move,index_pion);
     current_player = next_player(current_player);
     show_world(world);
     printf("############################\n");
     sleep(2);
   }
+  
   return 0;
 }

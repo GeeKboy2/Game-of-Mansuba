@@ -96,6 +96,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
     }
   }
   neighbors.n[k].i=UINT_MAX;
+  k++;
   while(k<MAX_NEIGHBORS)
   {
     neighbors.n[k].i=0;
@@ -167,22 +168,22 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
 }
 
 //Compte le nombre de mouvement possible pour une position idx
-int nombre_mouvements(struct world_t* world, unsigned int idx)
+unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
 {
   struct neighbors_t mouvement1 = deplacement_simple(world,idx);
   struct neighbors_t mouvement2 = saut_simple(world,idx);
-  int compteur = 0;
-  int i = 0;
-  while (mouvement1.n[i].i != UINT_MAX && i<MAX_NEIGHBORS)
+  unsigned int compteur = 0;
+  int j = 0;
+  while (mouvement1.n[j].i < UINT_MAX && j<MAX_NEIGHBORS)
   {
-    compteur++;
-    i++;
+    compteur+=1;
+    j++;
   }
-  i = 0;
-  while(mouvement2.n[i].i != UINT_MAX && i<MAX_NEIGHBORS)
+  j = 0;
+  while(mouvement2.n[j].i < UINT_MAX && j<MAX_NEIGHBORS)
   {
-    compteur++;
-    i++;
+    compteur+=1;
+    j++;
   }
   return compteur;
 }
