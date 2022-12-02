@@ -1,3 +1,7 @@
+#include "geometry.h"
+#include "world.h"
+#include "neighbors.h"
+
 struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx);
 
 struct neighbors_t saut_simple(struct world_t* world, unsigned int idx);
