@@ -141,10 +141,11 @@ int choose_random_move_for_piece(struct world_t *world,int index)
 
 void move_piece(struct world_t* world,int index_arrivee, int index_depart)
 {
-  world_set(world,index_arrivee,world_get(world,index_depart));
-  world_set_sort(world,index_arrivee,world_get_sort(world,index_depart));
   world_set(world,index_depart,0);
   world_set_sort(world,index_depart,0);
+  world_set(world,index_arrivee,world_get(world,index_depart));
+  world_set_sort(world,index_arrivee,world_get_sort(world,index_depart));
+
 }
 
 // Créé le monde et set les différents pions dans leur position initiale
