@@ -23,3 +23,6 @@ struct ensemble_t get_neighbors_3(unsigned int idx);
 struct ensemble_t deplacement_simple_3(struct world_t* world, unsigned int idx);
 
 unsigned int nombre_semidiag(struct world_t*world,unsigned int index);
+
+struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx);
+

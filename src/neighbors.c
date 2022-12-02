@@ -250,7 +250,8 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   return saut_simp;
 }
 
-struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
+struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
+{
   unsigned int ancienne_position[WORLD_SIZE];
   for(int i = 0;i<WORLD_SIZE;i++){
     ancienne_position[i] = UINT_MAX;
@@ -292,38 +293,6 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
 }
 
 
-
-
-/*
-struct neighbors_t semi_diag(world,index)
-{
-  unsigned int k = 0;
-  unsigned int j =0;
-  struct neighbors_t neighbors = get_neighbors(index);
-  struct neighbors_t deplacement_smpl;
-  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
-  {
-    if(world_get_sort(world,neighbors.n[k].i)== 0)
-    {
-      deplacement_smpl.n[j].i = neighbors.n[k].i;
-      deplacement_smpl.n[j].d = neighbors.n[k].d;
-      j++;
-    }
-    k++;
-  }
-  deplacement_smpl.n[j].i=UINT_MAX;
-  deplacement_smpl.n[j].d=0;
-  j++;
-  while(j<MAX_NEIGHBORS+1)
-  {
-    deplacement_smpl.n[j].i=0;
-    deplacement_smpl.n[j].d=0;
-    j++;
-  }
-  return deplacement_smpl;
-}
-*/
-
 unsigned int nombre_semidiag(struct world_t*world,unsigned int index)
 {
   struct ensemble_t mouvement1 = deplacement_simple_3(world,index);
@@ -335,6 +304,22 @@ unsigned int nombre_semidiag(struct world_t*world,unsigned int index)
     j++;
   }
   return compteur;
+}
+
+//Déplacement de la tour
+struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx){
+  struct neighbors_t mvt_tour;
+  int j = 0;
+  for(int i = -3;i < 4; i = i + 2){
+    if(world_get_sort(world, get_neighbor(idx,i)) == 0){
+      mvt_tour.n[j].i = get_neighbor(idx,i);
+      mvt_tour.n[j].d = i;
+      j++; 
+    }
+  }
+  mvt_tour.n[j].i = UINT_MAX;
+  mvt_tour.n[j].d = 0;
+  return mvt_tour;
 }
 
 //Compte le nombre de mouvement possible pour une position idx

@@ -169,7 +169,27 @@ int choose_random_move_for_piece(struct world_t *world,int index)
   }
   if(world_get_sort(world,index)==2)
   {
-
+    struct neighbors_t tour = translation_cardinale(world,index);
+    if(tour.n[0].i == UINT_MAX){
+      return index;
+    }
+    int nbre_mvt = 0;
+    for(int j = 0; tour.n[j].i != UINT_MAX; j++){
+      nbre_mvt = j+1;
+    }
+    srand(time(NULL));
+    int rand_dir = rand()%nbre_mvt;
+    int compteur_case = 0;
+    unsigned int pos = get_neighbor(index,tour.n[rand_dir].d);
+    while(world_get_sort(world,pos) == 0){
+      compteur_case++;
+      pos = get_neighbor(pos,tour.n[rand_dir].d);
+    }
+    int rand_mvt = rand()%compteur_case;
+    for(int k = 0; k < rand_mvt; k++){
+      index = get_neighbor(index,tour.n[rand_dir].d);
+    }
+  return index;
   }
   if(world_get_sort(world,index)==3)
   {
@@ -412,6 +432,7 @@ int main(int argc,char *argv[]){
   world_set(world,0,0);
   world_set_sort(world,0,0);
   */
+  world_set_sort(world,0,2);
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
