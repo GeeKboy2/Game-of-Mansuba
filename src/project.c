@@ -136,7 +136,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     compteur_ss++;
     somme++;
   }
-  if(somme == rand_mvt){
+  if(somme == rand_mvt && sm.n[0].i != UINT_MAX){
     return get_neighbor(sm.n[0].i,sm.n[0].d);
   }
   return index;
@@ -144,13 +144,16 @@ int choose_random_move_for_piece(struct world_t *world,int index)
 
 void move_piece(struct world_t* world,int index_arrivee, int index_depart)
 {
+  if(index_arrivee == -1){
+  }
+  else{
   enum color_t color=world_get(world,index_depart);
   enum sort_t sort=world_get_sort(world,index_depart);
   world_set(world,index_depart,0);
   world_set_sort(world,index_depart,0);
   world_set(world,index_arrivee,color);
   world_set_sort(world,index_arrivee,sort);
-
+  }
 }
 
 
