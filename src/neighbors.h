@@ -22,7 +22,7 @@ struct vector_t {
     { .n = { 2, 3, UINT_MAX, 0, 0, 0, 0, 0 } }
 */
 struct neighbors_t {
-  struct vector_t n[MAX_NEIGHBORS];
+  struct vector_t n[MAX_NEIGHBORS+1];
 };
 
 /** Initializes the relation between the neighbors, based on an

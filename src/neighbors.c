@@ -6,7 +6,7 @@
 #include <time.h>
 
 
-//#define UINT_MAX -1
+
 
 unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 {
@@ -21,6 +21,7 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     unsigned int q=idx/n;
     unsigned int r=idx%n;
     // la ligne est q & la collone est r
+    
     if(idx%WIDTH == 0){
        if (d==4 || d== -2 || d== -1)
 	 {
@@ -32,17 +33,18 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 	    return UINT_MAX;
       }
     }
-    if(idx%HEIGHT == 0){
+    if(idx/WIDTH == 0){
       if(d==2 || d== 3 || d==4){
         return UINT_MAX;
       }
     }
-    if(idx%HEIGHT == HEIGHT - 1){
+    if(idx/WIDTH == WIDTH-2){
       if(d==-2 || d==-3 || d==-4 )
       {
         return UINT_MAX;
       }
     }
+    
     if (d==4)
 	 {
 	   q--;
@@ -79,13 +81,13 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
         q++;
         r++;
     }
-    if (d>4 || d<-4)
+    if (d>4 || d<-4 || d==0 )
     {
       printf("INVALID DIRECTION %d",d);
         return UINT_MAX;
     }
-    int index=q*n+r;
-    if (index<0 || index > WORLD_SIZE - 1){
+    unsigned int index=q*n+r;
+    if (index > WORLD_SIZE - 1){
       return UINT_MAX;
     }
     return index;
@@ -94,8 +96,8 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 struct neighbors_t get_neighbors(unsigned int idx)
 {
   struct neighbors_t neighbors; 
-  int d;
-  int k=0;
+  enum dir_t d;
+  unsigned int k=0;
   for(d = -4; d<=4; d++)
   {
     unsigned int ind=get_neighbor(idx,d);
@@ -108,7 +110,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
   }
   neighbors.n[k].i=UINT_MAX;
   k++;
-  while(k<MAX_NEIGHBORS)
+  while(k<MAX_NEIGHBORS+1)
   {
     neighbors.n[k].i=0;
     k++;
@@ -119,11 +121,11 @@ struct neighbors_t get_neighbors(unsigned int idx)
 //Regarde les déplacements simples réalisables
 struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
 {
-  int k = 0;
-  int j =0;
+  unsigned int k = 0;
+  unsigned int j =0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t deplacement_smpl;
-  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS)
+  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
   {
     if(world_get_sort(world,neighbors.n[k].i)== 0)
     {
@@ -136,7 +138,7 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   deplacement_smpl.n[j].i=UINT_MAX;
   deplacement_smpl.n[j].d=0;
   j++;
-  while(j<MAX_NEIGHBORS)
+  while(j<MAX_NEIGHBORS+1)
   {
     deplacement_smpl.n[j].i=0;
     deplacement_smpl.n[j].d=0;
@@ -148,13 +150,13 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
 //Regarde les sauts simple réalisables
 struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
 {
-  int k = 0;
-  int j = 0;
+  unsigned int k = 0;
+  unsigned int j = 0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t saut_simp; //Structure à retouner pour voir les directions et index des sauts 
   unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
   k++;
-  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS)
+  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
   {
     if(world_get_sort(world,neighbors.n[k].i) == 1)
     {
@@ -174,7 +176,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   saut_simp.n[j].i=UINT_MAX;
   saut_simp.n[j].d=0;
   j++;
-  while(j<MAX_NEIGHBORS)
+  while(j<MAX_NEIGHBORS+1)
   {
     saut_simp.n[j].i=0;
     saut_simp.n[j].d=0;
@@ -190,14 +192,14 @@ unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
   struct neighbors_t mouvement1 = deplacement_simple(world,idx);
   struct neighbors_t mouvement2 = saut_simple(world,idx);
   unsigned int compteur = 0;
-  int j = 0;
-  while (mouvement1.n[j].i < UINT_MAX && j<MAX_NEIGHBORS)
+  unsigned int j = 0;
+  while (mouvement1.n[j].i < UINT_MAX && j<MAX_NEIGHBORS+1)
   {
     compteur+=1;
     j++;
   }
   j = 0;
-  while(mouvement2.n[j].i < UINT_MAX && j<MAX_NEIGHBORS)
+  while(mouvement2.n[j].i < UINT_MAX && j<MAX_NEIGHBORS+1)
   {
     compteur+=1;
     j++;

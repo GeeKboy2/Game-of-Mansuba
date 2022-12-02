@@ -55,8 +55,7 @@ enum color_t next_player(enum color_t current_player)
     current_player--;
     return current_player;
   }
-    
-
+  return current_player;
 }
 
 int choose_random_piece_belonging_to(struct world_t* world, enum color_t current_player){
@@ -151,7 +150,7 @@ void move_piece(struct world_t* world,int index_arrivee, int index_depart)
 // Créé le monde et set les différents pions dans leur position initiale
 
 int main(int argc,char *argv[]){
-  char* type_victoire="c";
+  char* type_victoire="s";
   int RNG=2; //initialisation random
   int MAX_TURNS=2*WORLD_SIZE;
 
@@ -170,10 +169,10 @@ int main(int argc,char *argv[]){
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
   /*
-  world_set(world,4,2);
-  world_set(world,9,2);
-  world_set(world,14,2);
-  world_set(world,19,2);
+  world_set(world,6,2);
+  world_set(world,13,2);
+  //world_set(world,14,2);
+  //world_set(world,19,2);
   condition_victoire(world,"c",20);
   */
 
@@ -191,13 +190,20 @@ int main(int argc,char *argv[]){
   }
   */
   /*
-  world_set(world,1,1);
-  world_set_sort(world,1,1);
-  world_set(world,2,1);
-  world_set_sort(world,2,1);
+  world_set(world,6,1);
+  world_set_sort(world,6,1);
+  world_set(world,13,2);
+  world_set_sort(world,13,2);
+  struct neighbors_t neigh=get_neighbors(7);
+  for(int j=0;j<MAX_NEIGHBORS+1;j++)
+  {
+    printf("voisin %u de direction %u\n",neigh.n[j].i,neigh.n[j].d);
+    //printf("voisin %u\n",get_neighbor(7,j-4));
+  }
   */
- /*
-  printf("%ud",UINT_MAX);
+ 
+  //printf("%d",MAX_NEIGHBORS);
+  /*
   printf("voisin de 0 %d\n",get_neighbor(0,3));
   //printf("%d\n",next_player(1));
   */
@@ -228,7 +234,8 @@ int main(int argc,char *argv[]){
     current_player = next_player(current_player);
     show_world(world);
     printf("############################\n");
-    sleep(0.5);
+    sleep(0.1);
   }
+  
   return 0;
 }
