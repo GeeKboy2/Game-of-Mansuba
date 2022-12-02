@@ -190,7 +190,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
 struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
   unsigned int ancienne_position[WORLD_SIZE];
   for(int i = 0;i<WORLD_SIZE;i++){
-    ancienne_position[i] = -1;
+    ancienne_position[i] = UINT_MAX;
   }
   struct neighbors_t saut_simp = saut_simple(world,idx);
   if(saut_simp.n[0].i == UINT_MAX){
@@ -203,7 +203,7 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
     int saut_possible[MAX_NEIGHBORS];
     for(int j = 0; saut_simp.n[j].i != UINT_MAX; j++){ //Boucle pour voir les sauts possibles et éviter les retours en arrières
       int test = 1;
-      for(int k = 0; ancienne_position[k] != -1; k++){
+      for(int k = 0; ancienne_position[k] != UINT_MAX; k++){
         if(ancienne_position[k] == saut_simp.n[j].i){
           test = 0;
         }
