@@ -2,7 +2,6 @@
 #define __NEIGHBORS_H__
 
 #include "geometry.h"
-#include "world.h"
 
 /** The number of relations in the code */
 #define MAX_RELATIONS 1
@@ -16,10 +15,10 @@ struct vector_t {
   enum dir_t d;   // the direction towards this place
 };
 
-/** A list of neighbors, terminated by UINT_MAX
+/** A list of neighbors, terminated by {UINT_MAX,NO_DIR}
 
-    For example, the list of neighbors { 2, 3 } can be written as
-    { .n = { 2, 3, UINT_MAX, 0, 0, 0, 0, 0 } }
+    For example, the list of neighbors { 2↑, 3↓ } can be written as
+    { .n = { {2, NORTH}, {3, SOUTH}, {UINT_MAX, NO_DIR} } }
 */
 struct neighbors_t {
   struct vector_t n[MAX_NEIGHBORS+1];
@@ -40,6 +39,5 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d);
 /** Returns the list of the neighbors of the place `idx`, terminated
     by UINT_MAX.  */
 struct neighbors_t get_neighbors(unsigned int idx);
-
 
 #endif // __NEIGHBORS_H__
