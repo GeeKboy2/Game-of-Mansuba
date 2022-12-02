@@ -188,7 +188,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
 
 
 struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
-  int ancienne_position[WORLD_SIZE];
+  unsigned int ancienne_position[WORLD_SIZE];
   for(int i = 0;i<WORLD_SIZE;i++){
     ancienne_position[i] = -1;
   }
