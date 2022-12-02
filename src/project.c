@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <time.h>
 #include "limits.h"
+#include "project.h"
 /*
 #ifndef MAX_TURNS
 #define MAX_TURNS (2*WORLD_SIZE)
@@ -225,6 +226,13 @@ int main(int argc,char *argv[]){
   //printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
+  world_set(world,1,2);
+  world_set_sort(world,1,2);
+  world_set(world,3,2);
+  world_set_sort(world,3,2);
+
+  world_set(world,0,0);
+  world_set_sort(world,0,0);
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
