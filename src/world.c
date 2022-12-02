@@ -37,8 +37,6 @@ void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c){
   b -> point[idx].s = c;
 }
 
-
-
 struct piece{
   int blanc[HEIGHT];
   int noir[HEIGHT];
@@ -65,20 +63,21 @@ int position_init(struct world_t* world){
   return 0;
 }
 
-#define TURN 0
-int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS){
-  if(MAX_TURNS == TURN){
+
+int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN){
+  if(MAX_TURNS <= TURN){
     printf("Nombre de tour maximum atteint, pas de vainqueur\n");
+    return 0;
   }
   if(type_victoire[0] == 's'){
     for(int i = 0; i<WORLD_SIZE;i++){
       if(world_get(world,i)==1 && i%WIDTH==0){
 	      printf("Victoire simple des blancs\n");
-	return 0;
+	      return 0;
       }
       if(world_get(world,i)==2 && i%WIDTH==WIDTH-1){
       	printf("Victoire simple des noirs\n");
-	return 0;
+	      return 0;
       }
     }
   }

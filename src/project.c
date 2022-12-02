@@ -15,20 +15,30 @@
 //#define TURN 0
 //#define UINT_MAX 0
 
+int position_init(struct world_t* world);
+
+int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
+
+struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx);
+
+struct neighbors_t saut_simple(struct world_t* world, unsigned int idx);
+
+unsigned int nombre_mouvements(struct world_t* world, unsigned int idx);
+
 void show_world(struct world_t* world)
 {
   for(int i = 0; i <WORLD_SIZE ; i++){
     if(world_get(world,i)==2)
       {
-	printf("%s%3d"," ⛀ ",i);
+	printf("%s"," ⛀ ");
       }
     if(world_get(world,i)==1)
       {
-	printf("%s%3d"," ⛂ ",i);
+	printf("%s"," ⛂ ");
       }
     if(world_get(world,i)==0)
       {
-	printf(" . %3d",i);
+	printf(" . ");
       }
     if(i%WIDTH == WIDTH-1){
       printf("\n");
@@ -69,7 +79,7 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   int pos = rand()%compteur;
   int num = 0;
   int i = 0;
-  while(num <= compteur){
+  while(num <= compteur && i< WORLD_SIZE){
     if(world_get(world,i) == current_player){
       num++;
     }
@@ -85,23 +95,23 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
 
 int choose_random_move_for_piece(struct world_t *world,int index)
 {
-  printf("marche");
+  //printf("marche");
   struct neighbors_t ds=deplacement_simple(world,index);
-  printf("probleme deplacement simple");
+  //printf("probleme deplacement simple");
   struct neighbors_t ss=saut_simple(world,index);
-  printf("saut simple");
   struct neighbors_t sm = saut_multiple(world,index);
+  //printf("saut simple");
   unsigned int compteur_ds=0;
   unsigned int compteur_ss=0;
   unsigned int nombre_mvt=nombre_mouvements(world,index);
-  printf("nombre mvt = %d\n",nombre_mvt);
+  //printf("nombre mvt = %d\n",nombre_mvt);
   srand(time(NULL));
   if (nombre_mvt==0)
   {
     return index;
   }
   int rand_mvt=rand()%nombre_mvt;
-  printf("rand = %d\n",rand_mvt);
+  //printf("rand = %d\n",rand_mvt);
   int somme=0;
   while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
   {
@@ -144,10 +154,12 @@ int choose_random_move_for_piece(struct world_t *world,int index)
 
 void move_piece(struct world_t* world,int index_arrivee, int index_depart)
 {
+  enum color_t color=world_get(world,index_depart);
+  enum sort_t sort=world_get_sort(world,index_depart);
   world_set(world,index_depart,0);
   world_set_sort(world,index_depart,0);
-  world_set(world,index_arrivee,world_get(world,index_depart));
-  world_set_sort(world,index_arrivee,world_get_sort(world,index_depart));
+  world_set(world,index_arrivee,color);
+  world_set_sort(world,index_arrivee,sort);
 
 }
 
@@ -163,8 +175,8 @@ int main(int argc,char *argv[]){
   MAX_TURNS=atoi(argv[4]);
   RNG=atoi(argv[2]);
 
-  (void) type_victoire;
-  (void) MAX_TURNS;
+  //(void) type_victoire;
+  //(void) MAX_TURNS;
   (void) RNG;
   }
   struct world_t* world=world_init();
@@ -220,14 +232,15 @@ int main(int argc,char *argv[]){
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
   ///////////////////////////////////////////////////////////test_fin
-  show_world(world);
-  printf("############################\n");
+  //show_world(world);
+  //printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
-  while(condition_victoire(world,type_victoire,MAX_TURNS)!=0)
+  int nbr_turns=0;
+  while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
     printf("c'est le tour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
@@ -235,9 +248,10 @@ int main(int argc,char *argv[]){
     move = choose_random_move_for_piece(world, index_pion);
     printf("elle va se deplacer vers %d\n",move);
     move_piece(world, move,index_pion);
+    nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    printf("############################\n");
+    printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }
   

@@ -84,8 +84,8 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     }
     if (d>4 || d<-4 || d==0 )
     {
-      printf("INVALID DIRECTION %d",d);
-        return UINT_MAX;
+      //printf("INVALID DIRECTION %d",d);
+      return UINT_MAX;
     }
     unsigned int index=q*n+r;
     if (index > WORLD_SIZE - 1){
@@ -186,6 +186,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   return saut_simp;
 }
 
+
 struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
   int ancienne_position[WORLD_SIZE];
   for(int i = 0;i<WORLD_SIZE;i++){
@@ -226,6 +227,7 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
   saut_simp.n[1].i = UINT_MAX;
   return saut_simp;
 }
+
 //Compte le nombre de mouvement possible pour une position idx
 unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
 {
