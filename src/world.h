@@ -23,7 +23,5 @@ enum sort_t world_get_sort(const struct world_t* b, unsigned int idx);
 /** Sets the sort at a place */
 void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c);
 
-int position_init(struct world_t* world);
 
-int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
 #endif // __WORLD_H__
