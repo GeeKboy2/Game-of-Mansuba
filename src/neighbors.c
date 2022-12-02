@@ -119,6 +119,70 @@ struct neighbors_t get_neighbors(unsigned int idx)
   return neighbors;
 }
 
+struct ensemble_t{
+  struct vector_t n[12+1];
+};
+
+struct ensemble_t get_neighbors_3(unsigned int idx)
+{
+  struct ensemble_t neighbors; 
+  enum dir_t d;
+  enum dir_t r;
+  unsigned int k=0;
+  unsigned int ind;
+  unsigned int ind1;
+  for(d = -3; d<=4; d+=2)
+  {
+    ind=get_neighbor(idx,d);
+    for(r = -3; r<=4; r+=2)
+    {
+    ind1=get_neighbor(ind,r);
+    if(ind1<UINT_MAX && idx!=ind1)
+    {
+      neighbors.n[k].i=ind1;
+      neighbors.n[k].d=r;
+      k++;
+    }
+    }
+  }
+  neighbors.n[k].i=UINT_MAX;
+  k++;
+  while(k<13)
+  {
+    neighbors.n[k].i=0;
+    k++;
+  }
+  return neighbors;
+}
+
+struct ensemble_t deplacement_simple_3(struct world_t* world, unsigned int idx)
+{
+  unsigned int k = 0;
+  unsigned int j =0;
+  struct ensemble_t neighbors = get_neighbors_3(idx);
+  struct ensemble_t deplacement_smpl;
+  while(neighbors.n[k].i < UINT_MAX && k<13)
+  {
+    if(world_get_sort(world,neighbors.n[k].i)== 0)
+    {
+      deplacement_smpl.n[j].i = neighbors.n[k].i;
+      deplacement_smpl.n[j].d = neighbors.n[k].d;
+      j++;
+    }
+    k++;
+  }
+  deplacement_smpl.n[j].i=UINT_MAX;
+  deplacement_smpl.n[j].d=0;
+  j++;
+  while(j<13)
+  {
+    deplacement_smpl.n[j].i=0;
+    deplacement_smpl.n[j].d=0;
+    j++;
+  }
+  return deplacement_smpl;
+}
+
 //Regarde les déplacements simples réalisables
 struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
 {
@@ -186,8 +250,8 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   return saut_simp;
 }
 
-
-struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
+struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
+{
   unsigned int ancienne_position[WORLD_SIZE];
   for(int i = 0;i<WORLD_SIZE;i++){
     ancienne_position[i] = UINT_MAX;
@@ -226,6 +290,20 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
   saut_simp.n[0].d = 0;
   saut_simp.n[1].i = UINT_MAX;
   return saut_simp;
+}
+
+
+unsigned int nombre_semidiag(struct world_t*world,unsigned int index)
+{
+  struct ensemble_t mouvement1 = deplacement_simple_3(world,index);
+  unsigned int compteur = 0;
+  unsigned int j = 0;
+  while (mouvement1.n[j].i < UINT_MAX && j<13)
+  {
+    compteur+=1;
+    j++;
+  }
+  return compteur;
 }
 
 //Déplacement de la tour
