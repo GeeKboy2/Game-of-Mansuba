@@ -15,6 +15,10 @@
 //#define TURN 0
 //#define UINT_MAX 0
 
+int position_init(struct world_t* world);
+
+int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
+
 void show_world(struct world_t* world)
 {
   for(int i = 0; i <WORLD_SIZE ; i++){
