@@ -85,97 +85,109 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
 
 int choose_random_move_for_piece(struct world_t *world,int index)
 {
-  //printf("marche");
-  struct neighbors_t ds=deplacement_simple(world,index);
-  //printf("probleme deplacement simple");
-  struct neighbors_t ss=saut_simple(world,index);
-  struct neighbors_t sm = saut_multiple(world,index);
-  //printf("saut simple");
-  unsigned int compteur_ds=0;
-  unsigned int compteur_ss=0;
-  unsigned int nombre_mvt=nombre_mouvements(world,index);
-  //printf("nombre mvt = %d\n",nombre_mvt);
-  srand(time(NULL));
-  if (nombre_mvt==0)
+  if(world_get_sort(world,index)==1)
   {
+    //printf("marche");
+    struct neighbors_t ds=deplacement_simple(world,index);
+    //printf("probleme deplacement simple");
+    struct neighbors_t ss=saut_simple(world,index);
+    struct neighbors_t sm = saut_multiple(world,index);
+    //printf("saut simple");
+    unsigned int compteur_ds=0;
+    unsigned int compteur_ss=0;
+    unsigned int nombre_mvt=nombre_mouvements(world,index);
+    //printf("nombre mvt = %d\n",nombre_mvt);
+    srand(time(NULL));
+    if (nombre_mvt==0)
+    {
+      return index;
+    }
+    int rand_mvt=rand()%nombre_mvt;
+    //printf("rand = %d\n",rand_mvt);
+    int somme=0;
+    while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
+    {
+      if(somme==rand_mvt)
+      {
+        return ds.n[compteur_ds].i;
+      }
+      compteur_ds++;
+      somme++;
+      
+      /*
+      if(ds.n[compteur_ds].i==UINT_MAX)
+      {
+        compteur_ss++;
+      }else{
+        compteur_ds++;
+      }
+      if(ds.n[compteur_ds].i==UINT_MAX)
+      {
+
+      }else{
+        return ds.n[compteur_ds].i;
+      }
+      */
+    }
+    while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
+    {
+      if(somme==rand_mvt)
+      {
+        return get_neighbor(ss.n[compteur_ss].i,ss.n[compteur_ss].d);
+      }
+      compteur_ss++;
+      somme++;
+    }
+    if(somme == rand_mvt && sm.n[0].i != UINT_MAX){
+      return get_neighbor(sm.n[0].i,sm.n[0].d);
+    }
     return index;
   }
-  int rand_mvt=rand()%nombre_mvt;
-  //printf("rand = %d\n",rand_mvt);
-  int somme=0;
-  while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
+  if(world_get_sort(world,index)==2)
   {
-    if(somme==rand_mvt)
-    {
-      return ds.n[compteur_ds].i;
-    }
-    compteur_ds++;
-    somme++;
+
+  }
+  if(world_get_sort(world,index)==3)
+  {
     
-    /*
-    if(ds.n[compteur_ds].i==UINT_MAX)
-    {
-      compteur_ss++;
-    }else{
-      compteur_ds++;
-    }
-    if(ds.n[compteur_ds].i==UINT_MAX)
-    {
-
-    }else{
-      return ds.n[compteur_ds].i;
-    }
-    */
   }
-  while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
+}
+
+
+  void move_piece(struct world_t* world,int index_arrivee, int index_depart)
   {
-    if(somme==rand_mvt)
-    {
-      return get_neighbor(ss.n[compteur_ss].i,ss.n[compteur_ss].d);
+    if(index_arrivee == -1){
     }
-    compteur_ss++;
-    somme++;
-  }
-  if(somme == rand_mvt && sm.n[0].i != UINT_MAX){
-    return get_neighbor(sm.n[0].i,sm.n[0].d);
-  }
-  return index;
-}
-
-void move_piece(struct world_t* world,int index_arrivee, int index_depart)
-{
-  if(index_arrivee == -1){
-  }
-  else{
-  enum color_t color=world_get(world,index_depart);
-  enum sort_t sort=world_get_sort(world,index_depart);
-  world_set(world,index_depart,0);
-  world_set_sort(world,index_depart,0);
-  world_set(world,index_arrivee,color);
-  world_set_sort(world,index_arrivee,sort);
-  }
-}
-
-
-//struct piece piece;
-int position_init(struct world_t* world){
-  int b = 0;
-  int n = 0;
-  for(int i = 0; i< WORLD_SIZE; i++){
-    if(i%WIDTH==0){
-      //piece.noir[n]=i;
-      world_set(world,i,2);
-      world_set_sort(world,i,1);
-      n++;
-    }
-    if(i%WIDTH==WIDTH-1){
-      //piece.blanc[b]=i;
-      world_set(world,i,1);
-      world_set_sort(world,i,1);
-      b++;
+    else{
+    enum color_t color=world_get(world,index_depart);
+    enum sort_t sort=world_get_sort(world,index_depart);
+    world_set(world,index_depart,0);
+    world_set_sort(world,index_depart,0);
+    world_set(world,index_arrivee,color);
+    world_set_sort(world,index_arrivee,sort);
     }
   }
-  return 0;
+
+
+  //struct piece piece;
+  int position_init(struct world_t* world){
+    int b = 0;
+    int n = 0;
+    for(int i = 0; i< WORLD_SIZE; i++){
+      if(i%WIDTH==0){
+        //piece.noir[n]=i;
+        world_set(world,i,2);
+        world_set_sort(world,i,1);
+        n++;
+      }
+      if(i%WIDTH==WIDTH-1){
+        //piece.blanc[b]=i;
+        world_set(world,i,1);
+        world_set_sort(world,i,1);
+        b++;
+      }
+    }
+    return 0;
 }
 
 
