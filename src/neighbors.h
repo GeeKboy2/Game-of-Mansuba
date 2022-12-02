@@ -42,6 +42,8 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx);
 
 struct neighbors_t saut_simple(struct world_t* world, unsigned int idx);
 
+struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx);
+
 unsigned int nombre_mouvements(struct world_t* world, unsigned int idx);
 
 #endif // __NEIGHBORS_H__

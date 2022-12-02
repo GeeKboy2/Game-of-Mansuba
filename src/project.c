@@ -90,6 +90,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
   printf("probleme deplacement simple");
   struct neighbors_t ss=saut_simple(world,index);
   printf("saut simple");
+  struct neighbors_t sm = saut_multiple(world,index);
   unsigned int compteur_ds=0;
   unsigned int compteur_ss=0;
   unsigned int nombre_mvt=nombre_mouvements(world,index);
@@ -134,6 +135,9 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     }
     compteur_ss++;
     somme++;
+  }
+  if(somme == rand_mvt){
+    return get_neighbor(sm.n[0].i,sm.n[0].d);
   }
   return index;
 }
