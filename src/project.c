@@ -334,6 +334,7 @@ int main(int argc,char *argv[]){
   //printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
+  /*
   world_set(world,1,2);
   world_set_sort(world,1,2);
   world_set(world,3,2);
@@ -341,22 +342,23 @@ int main(int argc,char *argv[]){
 
   world_set(world,0,0);
   world_set_sort(world,0,0);
+  */
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
   int nbr_turns=0;
   while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
-    printf("c'est le tour du %d\n",current_player);
+    //printf("c'est le tour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
-    printf("la piece en mvt est %d\n",index_pion);
+    //printf("la piece en mvt est %d\n",index_pion);
     move = choose_random_move_for_piece(world, index_pion);
-    printf("elle va se deplacer vers %d\n",move);
+    //printf("elle va se deplacer vers %d\n",move);
     move_piece(world, move,index_pion);
     nbr_turns++;
     current_player = next_player(current_player);
-    show_world(world);
-    printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
+    //show_world(world);
+    //printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }
   
