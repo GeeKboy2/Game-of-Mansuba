@@ -1,5 +1,6 @@
 #include "neighbors.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "geometry.h"
 #include "world.h"
 #include <limits.h>
@@ -184,14 +185,55 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   }
   return saut_simp;
 }
-/*
-struct neighbors_t saut_multiple(struct world_t* world, )
-*/
+
+
+struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
+  int ancienne_position[WORLD_SIZE];
+  for(int i = 0;i<WORLD_SIZE;i++){
+    ancienne_position[i] = -1;
+  }
+  struct neighbors_t saut_simp = saut_simple(world,idx);
+  if(saut_simp.n[0].i == UINT_MAX){
+    return saut_simp;
+  }
+  int l = 0;
+  int compteur = 1;
+  while(saut_simp.n[0].i != UINT_MAX && compteur != 0){
+    compteur = 0;
+    int saut_possible[MAX_NEIGHBORS];
+    for(int j = 0; saut_simp.n[j].i != UINT_MAX; j++){ //Boucle pour voir les sauts possibles et éviter les retours en arrières
+      int test = 1;
+      for(int k = 0; ancienne_position[k] != -1; k++){
+        if(ancienne_position[k] == saut_simp.n[j].i){
+          test = 0;
+        }
+      }
+      if(test == 1){
+        saut_possible[compteur]=saut_simp.n[j].i;
+        compteur++;
+      }
+    }
+    if(compteur != 0){
+      srand(time(NULL));
+      int rand_mvt = rand()%compteur;
+      idx = saut_possible[rand_mvt];
+      ancienne_position[l] = idx;
+      l++;
+      saut_simp = saut_simple(world,idx);
+    }
+  }
+  saut_simp.n[0].i = idx;
+  saut_simp.n[0].d = 0;
+  saut_simp.n[1].i = UINT_MAX;
+  return saut_simp;
+}
+
 //Compte le nombre de mouvement possible pour une position idx
 unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
 {
   struct neighbors_t mouvement1 = deplacement_simple(world,idx);
   struct neighbors_t mouvement2 = saut_simple(world,idx);
+  struct neighbors_t mouvement3 = saut_multiple(world,idx);
   unsigned int compteur = 0;
   unsigned int j = 0;
   while (mouvement1.n[j].i < UINT_MAX && j<MAX_NEIGHBORS+1)
@@ -204,6 +246,9 @@ unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
   {
     compteur+=1;
     j++;
+  }
+  if(mouvement3.n[0].i != UINT_MAX){
+    compteur++;
   }
   return compteur;
 }
