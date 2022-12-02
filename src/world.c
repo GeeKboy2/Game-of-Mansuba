@@ -37,8 +37,6 @@ void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c){
   b -> point[idx].s = c;
 }
 
-
-
 struct piece{
   int blanc[HEIGHT];
   int noir[HEIGHT];

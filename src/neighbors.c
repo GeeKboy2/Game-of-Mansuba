@@ -83,8 +83,8 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     }
     if (d>4 || d<-4 || d==0 )
     {
-      printf("INVALID DIRECTION %d",d);
-        return UINT_MAX;
+      //printf("INVALID DIRECTION %d",d);
+      return UINT_MAX;
     }
     unsigned int index=q*n+r;
     if (index > WORLD_SIZE - 1){

@@ -20,15 +20,15 @@ void show_world(struct world_t* world)
   for(int i = 0; i <WORLD_SIZE ; i++){
     if(world_get(world,i)==2)
       {
-	printf("%s%3d"," ⛀ ",i);
+	printf("%s"," ⛀ ");
       }
     if(world_get(world,i)==1)
       {
-	printf("%s%3d"," ⛂ ",i);
+	printf("%s"," ⛂ ");
       }
     if(world_get(world,i)==0)
       {
-	printf(" . %3d",i);
+	printf(" . ");
       }
     if(i%WIDTH == WIDTH-1){
       printf("\n");
@@ -85,22 +85,22 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
 
 int choose_random_move_for_piece(struct world_t *world,int index)
 {
-  printf("marche");
+  //printf("marche");
   struct neighbors_t ds=deplacement_simple(world,index);
-  printf("probleme deplacement simple");
+  //printf("probleme deplacement simple");
   struct neighbors_t ss=saut_simple(world,index);
-  printf("saut simple");
+  //printf("saut simple");
   unsigned int compteur_ds=0;
   unsigned int compteur_ss=0;
   unsigned int nombre_mvt=nombre_mouvements(world,index);
-  printf("nombre mvt = %d\n",nombre_mvt);
+  //printf("nombre mvt = %d\n",nombre_mvt);
   srand(time(NULL));
   if (nombre_mvt==0)
   {
     return index;
   }
   int rand_mvt=rand()%nombre_mvt;
-  printf("rand = %d\n",rand_mvt);
+  //printf("rand = %d\n",rand_mvt);
   int somme=0;
   while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
   {
@@ -158,8 +158,8 @@ int main(int argc,char *argv[]){
   MAX_TURNS=atoi(argv[4]);
   RNG=atoi(argv[2]);
 
-  (void) type_victoire;
-  (void) MAX_TURNS;
+  //(void) type_victoire;
+  //(void) MAX_TURNS;
   (void) RNG;
   }
   struct world_t* world=world_init();
@@ -215,8 +215,8 @@ int main(int argc,char *argv[]){
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
   ///////////////////////////////////////////////////////////test_fin
-  show_world(world);
-  printf("############################\n");
+  //show_world(world);
+  //printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
   enum color_t current_player = get_random_player();
