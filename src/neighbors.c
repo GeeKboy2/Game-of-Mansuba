@@ -228,6 +228,22 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx){
   return saut_simp;
 }
 
+//Déplacement de la tour
+struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx){
+  struct neighbors_t mvt_tour;
+  int j = 0;
+  for(int i = -3;i < 4; i = i + 2){
+    if(world_get_sort(world, get_neighbor(idx,i)) == 0){
+      mvt_tour.n[j].i = get_neighbor(idx,i);
+      mvt_tour.n[j].d = i;
+      j++; 
+    }
+  }
+  mvt_tour.n[j].i = UINT_MAX;
+  mvt_tour.n[j].d = 0;
+  return mvt_tour;
+}
+
 //Compte le nombre de mouvement possible pour une position idx
 unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
 {
