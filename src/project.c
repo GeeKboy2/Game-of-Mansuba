@@ -69,7 +69,7 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   int pos = rand()%compteur;
   int num = 0;
   int i = 0;
-  while(num <= compteur){
+  while(num <= compteur && i< WORLD_SIZE){
     if(world_get(world,i) == current_player){
       num++;
     }
@@ -140,10 +140,12 @@ int choose_random_move_for_piece(struct world_t *world,int index)
 
 void move_piece(struct world_t* world,int index_arrivee, int index_depart)
 {
+  enum color_t color=world_get(world,index_depart);
+  enum sort_t sort=world_get_sort(world,index_depart);
   world_set(world,index_depart,0);
   world_set_sort(world,index_depart,0);
-  world_set(world,index_arrivee,world_get(world,index_depart));
-  world_set_sort(world,index_arrivee,world_get_sort(world,index_depart));
+  world_set(world,index_arrivee,color);
+  world_set_sort(world,index_arrivee,sort);
 
 }
 
@@ -223,7 +225,8 @@ int main(int argc,char *argv[]){
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
-  while(condition_victoire(world,type_victoire,MAX_TURNS)!=0)
+  int nbr_turns=0;
+  while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
     printf("c'est le tour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
@@ -231,9 +234,10 @@ int main(int argc,char *argv[]){
     move = choose_random_move_for_piece(world, index_pion);
     printf("elle va se deplacer vers %d\n",move);
     move_piece(world, move,index_pion);
+    nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    printf("############################\n");
+    printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }
   

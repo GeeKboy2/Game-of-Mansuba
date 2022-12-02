@@ -184,8 +184,9 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   }
   return saut_simp;
 }
-
+/*
 struct neighbors_t saut_multiple(struct world_t* world, )
+*/
 //Compte le nombre de mouvement possible pour une position idx
 unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
 {
