@@ -377,7 +377,7 @@ int main(int argc,char *argv[]){
   }
   struct world_t* world=world_init();
   position_init(world);
-/*
+
   world_set(world,0,2);
   world_set_sort(world,0,2);
   world_set(world,WIDTH-1,1);
