@@ -390,12 +390,12 @@ int main(int argc,char *argv[]){
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
-  world_set(world,6,2);
-  world_set(world,13,2);
+  //world_set(world,6,2);
+  //world_set(world,13,2);
   //world_set(world,14,2);
   //world_set(world,19,2);
-  condition_victoire(world,"c",20);
-  */
+  //condition_victoire(world,"c",20);
+  
 
   /*
   int i = 0;
