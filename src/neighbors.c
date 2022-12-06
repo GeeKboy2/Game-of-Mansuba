@@ -311,7 +311,7 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
   struct neighbors_t mvt_tour;
   int j = 0;
   for(int i = -3;i < 4; i = i + 2){
-    if(world_get_sort(world, get_neighbor(idx,i)) == 0){
+    if(get_neighbor(idx,i) != UINT_MAX && world_get_sort(world, get_neighbor(idx,i)) == 0){
       mvt_tour.n[j].i = get_neighbor(idx,i);
       mvt_tour.n[j].d = i;
       j++; 
@@ -413,7 +413,7 @@ int nombre_mouvements(struct world_t* world ,unsigned int idx,int mvt_seed,int n
         }
         i++;
     }
-  return nombre_mouvement;
+  return nombre_mou  j++;ement;
 }
 
 
