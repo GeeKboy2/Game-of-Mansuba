@@ -390,7 +390,6 @@ int main(int argc,char *argv[]){
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
-  /*
   world_set(world,6,2);
   world_set(world,13,2);
   //world_set(world,14,2);
