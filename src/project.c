@@ -221,9 +221,9 @@ int choose_random_move_for_piece(struct world_t *world,int index)
 }
 
 
-void move_piece(struct world_t* world,int index_arrivee, int index_depart)
+void move_piece(struct world_t* world,int index_arrivee, int index_depart) // Mettre des unsigned int %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {
-   if(index_arrivee == -1){
+   if(index_arrivee == -1){ // -1 c'est UINT_MAX du coup faut juste mettre des unsigned int %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    }
    else{
    enum color_t color=world_get(world,index_depart);
