@@ -60,6 +60,90 @@ void show_world(struct world_t* world)
     }
 }
 
+void show_world_hexagone(struct world_t* world)
+{
+    for(int i = 0; i <WORLD_SIZE ; i++){
+      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 0)
+      {
+        printf("   ");
+        if(world_get_sort(world,i)==1)
+        {
+          printf("%s"," ⛀ ");
+        }
+        if(world_get_sort(world,i)==2)
+        {
+          printf("%s"," ♖ ");
+        }
+        if(world_get_sort(world,i)==3)
+        {
+          printf("%s"," ♘ ");
+        }
+      }
+      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 1)
+      {
+        if(world_get_sort(world,i)==1)
+        {
+          printf("%s"," ⛀ ");
+        }
+        if(world_get_sort(world,i)==2)
+        {
+          printf("%s"," ♖ ");
+        }
+        if(world_get_sort(world,i)==3)
+        {
+          printf("%s"," ♘ ");
+        }
+        printf("   ");
+      }
+      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 0)
+      { 
+        printf("   ");
+        if(world_get_sort(world,i)==1)
+        {
+          printf("%s"," ⛂ ");
+        }
+        if(world_get_sort(world,i)==2)
+        {
+          printf("%s"," ♜ ");
+        }
+        if(world_get_sort(world,i)==3)
+        {
+          printf("%s"," ♞ ");
+        }
+          
+        }
+      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 1)
+      { 
+        if(world_get_sort(world,i)==1)
+        {
+          printf("%s"," ⛂ ");
+        }
+        if(world_get_sort(world,i)==2)
+        {
+          printf("%s"," ♜ ");
+        }
+        if(world_get_sort(world,i)==3)
+        {
+          printf("%s"," ♞ ");
+        }
+          printf("   ");
+        }
+      if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 0)
+        {
+          printf("èèè");
+          printf(" . ");
+        }
+        else if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 1)
+        {
+          printf(" . ");
+          printf("ééé");
+        }
+      if(i%WIDTH == WIDTH-1){
+        printf("\n");
+      }    
+    }
+}
+
 enum color_t get_random_player()
 {
   srand(time(NULL));
@@ -437,7 +521,7 @@ int main(int argc,char *argv[]){
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
   ///////////////////////////////////////////////////////////test_fin
-  show_world(world);
+  show_world_hexagone(world);
   printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
@@ -467,7 +551,7 @@ int main(int argc,char *argv[]){
     move_piece(world, move,index_pion);
     nbr_turns++;
     current_player = next_player(current_player);
-    show_world(world);
+    show_world_hexagone(world);
     printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }
