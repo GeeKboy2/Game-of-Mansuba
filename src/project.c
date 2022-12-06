@@ -254,6 +254,25 @@ void move_piece(struct world_t* world,int index_arrivee, int index_depart)
     return 0;
 }
 
+int position_init_tour(struct world_t* world){
+    int b = 0;
+    int n = 0;
+    for(int i = 0; i< WORLD_SIZE; i++){
+      if(i%WIDTH==0){
+        //piece.noir[n]=i;
+        world_set(world,i,2);
+        world_set_sort(world,i,2);
+        n++;
+      }
+      if(i%WIDTH==WIDTH-1){
+        //piece.blanc[b]=i;
+        world_set(world,i,1);
+        world_set_sort(world,i,2);
+        b++;
+      }
+    }
+    return 0;
+}
 
 int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN){
   if(MAX_TURNS <= TURN){
@@ -357,8 +376,8 @@ int main(int argc,char *argv[]){
   (void) RNG;
   }
   struct world_t* world=world_init();
-  position_init(world);
-
+  position_init_tour(world);
+/*
   world_set(world,0,2);
   world_set_sort(world,0,2);
   world_set(world,WIDTH-1,1);
@@ -431,9 +450,10 @@ int main(int argc,char *argv[]){
 
   world_set(world,0,0);
   world_set_sort(world,0,0);
-  */
+
   world_set_sort(world,0,2);
   world_set_sort(world,WIDTH-1,2);
+  */
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
