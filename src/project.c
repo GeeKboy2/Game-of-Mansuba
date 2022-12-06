@@ -177,7 +177,6 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     for(int j = 0; tour.n[j].i != UINT_MAX; j++){
       nbre_mvt = j+1;
     }
-    printf("Nombre mouvement : %d\n",nbre_mvt);
     srand(time(NULL));
     int rand_dir = rand()%nbre_mvt;
     int compteur_case = 0;
@@ -186,13 +185,10 @@ int choose_random_move_for_piece(struct world_t *world,int index)
       compteur_case++;
       pos = get_neighbor(pos,tour.n[rand_dir].d);
     }
-    printf("Nombre de case possible : %d\n", compteur_case);
     int rand_mvt = rand()%(compteur_case)+1;
-    printf("Case choisi : %d\n", rand_mvt);
     for(int k = 0; k < rand_mvt; k++){
       index = get_neighbor(index,tour.n[rand_dir].d);
     }
-    printf("Position finale : %d\n", index);
     return index;
   }
   if(world_get_sort(world,index)==3)
@@ -380,7 +376,7 @@ int main(int argc,char *argv[]){
   (void) RNG;
   }
   struct world_t* world=world_init();
-  position_init_tour(world);
+  position_init(world);
 /*
   world_set(world,0,2);
   world_set_sort(world,0,2);
