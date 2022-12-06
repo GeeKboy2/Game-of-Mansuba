@@ -189,7 +189,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     for(int k = 0; k < rand_mvt; k++){
       index = get_neighbor(index,tour.n[rand_dir].d);
     }
-  return index;
+    return index;
   }
   if(world_get_sort(world,index)==3)
   {
