@@ -376,7 +376,7 @@ int main(int argc,char *argv[]){
   (void) RNG;
   }
   struct world_t* world=world_init();
-  position_init_tour(world);
+  position_init(world);
 /*
   world_set(world,0,2);
   world_set_sort(world,0,2);
