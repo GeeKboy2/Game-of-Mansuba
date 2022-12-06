@@ -12,14 +12,17 @@ all: project
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<
 
-project: geometry.o world.o neighbors.o project.o # (Add your dependency here, e.g "project.o")
-	$(CC) $(CFLAGS) geometry.o world.o neighbors.o project.o -o project
+project: geometry.o world.o neighbors.o hexagone.o project.o # (Add your dependency here, e.g "project.o")
+	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o project.o -o project
 
 #un seul .c pour faire un .o
 
 
 world.o: src/world.c
 	$(CC) $(CFLAGS) src/world.c -c -o world.o
+
+hexagone.o: src/hexagone.c
+	$(CC) $(CFLAGS) src/hexagone.c -c -o hexagone.o
 
 geometry.o: src/geometry.c
 	$(CC) $(CFLAGS) src/geometry.c -c -o geometry.o
