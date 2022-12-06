@@ -89,7 +89,7 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
     }
   }
   srand(time(NULL));
-  int pos = rand()%compteur;
+  int pos = (rand()%compteur)+1;
   int num = 0;
   int i = 0;
   while(num <= compteur && i< WORLD_SIZE){
@@ -185,7 +185,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
       compteur_case++;
       pos = get_neighbor(pos,tour.n[rand_dir].d);
     }
-    int rand_mvt = rand()%compteur_case;
+    int rand_mvt = rand()%(compteur_case)+1;
     for(int k = 0; k < rand_mvt; k++){
       index = get_neighbor(index,tour.n[rand_dir].d);
     }
