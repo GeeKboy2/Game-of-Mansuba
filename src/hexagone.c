@@ -93,11 +93,10 @@ void show_world_hexagone(struct world_t* world)
     }
 }
 
-unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d){
-    if(idx%2 == 0){
+unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d);
+    if(((idx%WIDTH)%2) == 0){
 
+    } 
+    if(((idx%WIDTH)%2) == 1){
+        
     }
-    if(idx%2 == 1){
-
-    }
-}
