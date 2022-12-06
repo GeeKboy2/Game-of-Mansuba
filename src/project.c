@@ -62,85 +62,19 @@ void show_world(struct world_t* world)
 
 void show_world_hexagone(struct world_t* world)
 {
-    for(int i = 0; i <WORLD_SIZE ; i++){
-      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 0)
+    (void) world;
+    for(int i = 0; i <HEIGHT ; i++)
+    {
+      for(int j = 1; j <HEIGHT ; j+=2) //On print les hauts ()
       {
-        printf("   ");
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛀ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♖ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♘ ");
-        }
+        
       }
-      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 1)
+      printf("\n");
+      for(int k = 0; k <HEIGHT ; k+=2) //On print les bas ()
       {
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛀ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♖ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♘ ");
-        }
-        printf("   ");
+        
       }
-      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 0)
-      { 
-        printf("   ");
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛂ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♜ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♞ ");
-        }
-          
-        }
-      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 1)
-      { 
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛂ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♜ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♞ ");
-        }
-          printf("   ");
-        }
-      if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 0)
-        {
-          printf("èèè");
-          printf(" . ");
-        }
-        else if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 1)
-        {
-          printf(" . ");
-          printf("ééé");
-        }
-      if(i%WIDTH == WIDTH-1){
-        printf("\n");
-      }    
+      printf("\n");
     }
 }
 
