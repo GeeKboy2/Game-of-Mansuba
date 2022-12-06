@@ -181,7 +181,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     int rand_dir = rand()%nbre_mvt;
     int compteur_case = 0;
     unsigned int pos = get_neighbor(index,tour.n[rand_dir].d);
-    while(world_get_sort(world,pos) == 0){
+    while(pos != UINT_MAX && world_get_sort(world,pos) == 0){
       compteur_case++;
       pos = get_neighbor(pos,tour.n[rand_dir].d);
     }
