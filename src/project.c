@@ -8,6 +8,7 @@
 #include <time.h>
 #include "limits.h"
 #include "project.h"
+#include "hexagone.h"
 /*
 #ifndef MAX_TURNS
 #define MAX_TURNS (2*WORLD_SIZE)
@@ -19,38 +20,38 @@
 void show_world(struct world_t* world)
 {
     for(int i = 0; i <WORLD_SIZE ; i++){
-      if(world_get(world,i)==2)
+      if(world_get(world,i)==BLACK)
       {
-        if(world_get_sort(world,i)==1)
+        if(world_get_sort(world,i)==PAWN)
         {
           printf("%s"," ⛀ ");
         }
-        if(world_get_sort(world,i)==2)
+        if(world_get_sort(world,i)==TOUR)
         {
           printf("%s"," ♖ ");
         }
-        if(world_get_sort(world,i)==3)
+        if(world_get_sort(world,i)==ELEPHANT)
         {
           printf("%s"," ♘ ");
         }
       }
-      if(world_get(world,i)==1)
+      if(world_get(world,i)==WHITE)
       { 
-        if(world_get_sort(world,i)==1)
+        if(world_get_sort(world,i)==PAWN)
         {
           printf("%s"," ⛂ ");
         }
-        if(world_get_sort(world,i)==2)
+        if(world_get_sort(world,i)==TOUR)
         {
           printf("%s"," ♜ ");
         }
-        if(world_get_sort(world,i)==3)
+        if(world_get_sort(world,i)==ELEPHANT)
         {
           printf("%s"," ♞ ");
         }
           
         }
-      if(world_get(world,i)==0)
+      if(world_get(world,i)==NO_COLOR)
         {
           printf(" . ");
         }
@@ -60,89 +61,7 @@ void show_world(struct world_t* world)
     }
 }
 
-void show_world_hexagone(struct world_t* world)
-{
-    for(int i = 0; i <WORLD_SIZE ; i++){
-      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 0)
-      {
-        printf("   ");
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛀ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♖ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♘ ");
-        }
-      }
-      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 1)
-      {
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛀ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♖ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♘ ");
-        }
-        printf("   ");
-      }
-      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 0)
-      { 
-        printf("   ");
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛂ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♜ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♞ ");
-        }
-          
-        }
-      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 1)
-      { 
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛂ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♜ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♞ ");
-        }
-          printf("   ");
-        }
-      if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 0)
-        {
-          printf("èèè");
-          printf(" . ");
-        }
-        else if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 1)
-        {
-          printf(" . ");
-          printf("ééé");
-        }
-      if(i%WIDTH == WIDTH-1){
-        printf("\n");
-      }    
-    }
-}
+
 
 enum color_t get_random_player()
 {
@@ -152,12 +71,12 @@ enum color_t get_random_player()
 
 enum color_t next_player(enum color_t current_player)
 {
-  if(current_player==1)
+  if(current_player==BLACK)
   {
     current_player++;
     return current_player;
   }
-  if(current_player==2)
+  if(current_player==WHITE)
   {
     current_player--;
     return current_player;
@@ -192,7 +111,7 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
 
 int choose_random_move_for_piece(struct world_t *world,int index)
 {
-  if(world_get_sort(world,index)==1)
+  if(world_get_sort(world,index)==PAWN)
   {
     //printf("marche");
     struct neighbors_t ds=deplacement_simple(world,index);
@@ -251,7 +170,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     }
     return index;
   }
-  if(world_get_sort(world,index)==2)
+  if(world_get_sort(world,index)==TOUR)
   {
     struct neighbors_t tour = translation_cardinale(world,index);
     if(tour.n[0].i == UINT_MAX){
@@ -265,7 +184,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     int rand_dir = rand()%nbre_mvt;
     int compteur_case = 0;
     unsigned int pos = get_neighbor(index,tour.n[rand_dir].d);
-    while(pos != UINT_MAX && world_get_sort(world,pos) == 0){
+    while(pos != UINT_MAX && world_get_sort(world,pos) == NO_SORT){
       compteur_case++;
       pos = get_neighbor(pos,tour.n[rand_dir].d);
     }
@@ -275,7 +194,7 @@ int choose_random_move_for_piece(struct world_t *world,int index)
     }
     return index;
   }
-  if(world_get_sort(world,index)==3)
+  if(world_get_sort(world,index)==ELEPHANT)
   {
     struct ensemble_t ds=deplacement_simple_3(world,index);
     unsigned int compteur_ds=0;
@@ -324,14 +243,14 @@ void move_piece(struct world_t* world,int index_arrivee, int index_depart)
     for(int i = 0; i< WORLD_SIZE; i++){
       if(i%WIDTH==0){
         //piece.noir[n]=i;
-        world_set(world,i,2);
-        world_set_sort(world,i,1);
+        world_set(world,i,BLACK);
+        world_set_sort(world,i,PAWN);
         n++;
       }
       if(i%WIDTH==WIDTH-1){
         //piece.blanc[b]=i;
-        world_set(world,i,1);
-        world_set_sort(world,i,1);
+        world_set(world,i,WHITE);
+        world_set_sort(world,i,PAWN);
         b++;
       }
     }
@@ -344,14 +263,14 @@ int position_init_tour(struct world_t* world){
     for(int i = 0; i< WORLD_SIZE; i++){
       if(i%WIDTH==0){
         //piece.noir[n]=i;
-        world_set(world,i,2);
-        world_set_sort(world,i,2);
+        world_set(world,i,BLACK);
+        world_set_sort(world,i,TOUR);
         n++;
       }
       if(i%WIDTH==WIDTH-1){
         //piece.blanc[b]=i;
-        world_set(world,i,1);
-        world_set_sort(world,i,2);
+        world_set(world,i,WHITE);
+        world_set_sort(world,i,TOUR);
         b++;
       }
     }
@@ -365,11 +284,11 @@ int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,
   }
   if(type_victoire[0] == 's'){
     for(int i = 0; i<WORLD_SIZE;i++){
-      if(world_get(world,i)==1 && i%WIDTH==0){
+      if(world_get(world,i)== WHITE && i%WIDTH==0){
 	      printf("Victoire simple des blancs\n");
 	      return 0;
       }
-      if(world_get(world,i)==2 && i%WIDTH==WIDTH-1){
+      if(world_get(world,i)==BLACK && i%WIDTH==WIDTH-1){
       	printf("Victoire simple des noirs\n");
 	      return 0;
       }
@@ -379,10 +298,10 @@ int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,
   int compteur_noir = 0;
   if(type_victoire[0] == 'c'){
     for(int i = 0; i<WORLD_SIZE;i++){
-      if(world_get(world,i)==1 && i%WIDTH==0){
+      if(world_get(world,i)==WHITE && i%WIDTH==0){
 	      compteur_blanc++;
       }
-      if(world_get(world,i)==2 && i%WIDTH==WIDTH-1){
+      if(world_get(world,i)==BLACK && i%WIDTH==WIDTH-1){
 	      compteur_noir++;
       }
     }
@@ -462,15 +381,15 @@ int main(int argc,char *argv[]){
   struct world_t* world=world_init();
   position_init(world);
 
-  world_set(world,0,2);
-  world_set_sort(world,0,2);
-  world_set(world,WIDTH-1,1);
-  world_set_sort(world,WIDTH-1,2);
+  world_set(world,0,BLACK);
+  world_set_sort(world,0,TOUR);
+  world_set(world,WIDTH-1,WHITE);
+  world_set_sort(world,WIDTH-1,TOUR);
 
-  world_set(world,WORLD_SIZE-WIDTH,2);
-  world_set_sort(world,WORLD_SIZE-WIDTH,3);
-  world_set(world,WORLD_SIZE-1,1);
-  world_set_sort(world,WORLD_SIZE-1,3);
+  world_set(world,WORLD_SIZE-WIDTH,BLACK);
+  world_set_sort(world,WORLD_SIZE-WIDTH,ELEPHANT);
+  world_set(world,WORLD_SIZE-1,WHITE);
+  world_set_sort(world,WORLD_SIZE-1,ELEPHANT);
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
@@ -521,7 +440,7 @@ int main(int argc,char *argv[]){
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
   ///////////////////////////////////////////////////////////test_fin
-  show_world_hexagone(world);
+  show_world(world);
   printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
@@ -551,7 +470,7 @@ int main(int argc,char *argv[]){
     move_piece(world, move,index_pion);
     nbr_turns++;
     current_player = next_player(current_player);
-    show_world_hexagone(world);
+    show_world(world);
     printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }
