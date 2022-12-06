@@ -440,7 +440,7 @@ int main(int argc,char *argv[]){
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
   ///////////////////////////////////////////////////////////test_fin
-  show_world(world);
+  //show_world(world);
   show_world_hexagone(world);
   printf("############################\n");
 
@@ -457,6 +457,7 @@ int main(int argc,char *argv[]){
   world_set_sort(world,0,2);
   world_set_sort(world,WIDTH-1,2);
   */
+ 
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;

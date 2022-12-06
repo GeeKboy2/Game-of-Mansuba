@@ -13,80 +13,84 @@
 
 void show_world_hexagone(struct world_t* world)
 {
+  int idx=0;
     for(int i = 0; i <HEIGHT ; i++)
     {
-      for(int j = 1; j <HEIGHT ; j+=2) //On print les hauts ()
+      for(int j = 1; j <WIDTH ; j+=2) //On print les hauts ()
       {
-        if(world_get(world,i)==BLACK)
+        idx=i*WIDTH+j;
+        if(world_get(world,idx)==BLACK)
         {
-          if(world_get_sort(world,i)==PAWN)
+          if(world_get_sort(world,idx)==PAWN)
           {
             printf("%s","    ⛀ ");
           }
-          if(world_get_sort(world,i)==TOUR)
+          if(world_get_sort(world,idx)==TOUR)
           {
             printf("%s","    ♖ ");
           }
-          if(world_get_sort(world,i)==ELEPHANT)
+          if(world_get_sort(world,idx)==ELEPHANT)
           {
             printf("%s","    ♘ ");
           }
         }
-        if(world_get(world,i)==WHITE)
+        if(world_get(world,idx)==WHITE)
         { 
-          if(world_get_sort(world,i)==PAWN)
+          if(world_get_sort(world,idx)==PAWN)
           {
             printf("%s","    ⛂ ");
           }
-          if(world_get_sort(world,i)==TOUR)
+          if(world_get_sort(world,idx)==TOUR)
           {
             printf("%s","    ♜ ");
           }
-          if(world_get_sort(world,i)==ELEPHANT)
+          if(world_get_sort(world,idx)==ELEPHANT)
           {
             printf("%s","    ♞ ");
           }
             
         }
-        if(world_get(world,i)==NO_COLOR)
+        if(world_get(world,idx)==NO_COLOR)
         {
           printf("    . ");
         }
       }
       printf("\n");
-      for(int k = 0; k <HEIGHT ; k+=2) //On print les bas ()
+      for(int k = 0; k <WIDTH ; k+=2) //On print les bas ()
       {
-          if(world_get(world,i)==BLACK)
+        
+        idx=i*WIDTH+k;
+        if(world_get(world,idx)==BLACK)
         {
-          if(world_get_sort(world,i)==PAWN)
+          if(world_get_sort(world,idx)==PAWN)
           {
             printf("%s"," ⛀    ");
           }
-          if(world_get_sort(world,i)==TOUR)
+          if(world_get_sort(world,idx)==TOUR)
           {
             printf("%s"," ♖    ");
           }
-          if(world_get_sort(world,i)==ELEPHANT)
+          if(world_get_sort(world,idx)==ELEPHANT)
           {
             printf("%s"," ♘    ");
           }
         }
-        if(world_get(world,i)==WHITE)
+        if(world_get(world,idx)==WHITE)
         { 
-          if(world_get_sort(world,i)==PAWN)
+          if(world_get_sort(world,idx)==PAWN)
           {
             printf("%s"," ⛂    ");
           }
-          if(world_get_sort(world,i)==TOUR)
+          if(world_get_sort(world,idx)==TOUR)
           {
             printf("%s"," ♜    ");
           }
-          if(world_get_sort(world,i)==ELEPHANT)
+          if(world_get_sort(world,idx)==ELEPHANT)
           {
             printf("%s"," ♞    ");
           } 
         }
-        if(world_get(world,i)==NO_COLOR)
+        if(world_get(world,idx)==NO_COLOR)
         {
           printf(" .    ");
         }
