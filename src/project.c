@@ -8,7 +8,7 @@
 #include <time.h>
 #include "limits.h"
 #include "project.h"
-#include "hexagone.h"
+//#include "hexagone.h"
 /*
 #ifndef MAX_TURNS
 #define MAX_TURNS (2*WORLD_SIZE)
@@ -50,17 +50,17 @@ void show_world(struct world_t* world)
           printf("%s"," ♞ ");
         }
           
-        }
+      }
       if(world_get(world,i)==NO_COLOR)
-        {
-          printf(" . ");
-        }
-      if(i%WIDTH == WIDTH-1){
+      {
+        printf(" . ");
+      }
+      if(i%WIDTH == WIDTH-1)
+      {
         printf("\n");
       }    
     }
 }
-
 
 
 enum color_t get_random_player()
@@ -440,7 +440,8 @@ int main(int argc,char *argv[]){
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
   ///////////////////////////////////////////////////////////test_fin
-  show_world(world);
+  //show_world(world);
+  show_world_hexagone(world);
   printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
@@ -456,6 +457,7 @@ int main(int argc,char *argv[]){
   world_set_sort(world,0,2);
   world_set_sort(world,WIDTH-1,2);
   */
+ 
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
@@ -470,7 +472,7 @@ int main(int argc,char *argv[]){
     move_piece(world, move,index_pion);
     nbr_turns++;
     current_player = next_player(current_player);
-    show_world(world);
+    show_world_hexagone(world);
     printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }

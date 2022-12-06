@@ -9,94 +9,93 @@
 #include "limits.h"
 #include "project.h"
 
+
+
 void show_world_hexagone(struct world_t* world)
 {
-    for(int i = 0; i <WORLD_SIZE ; i++){
-      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 0)
+  int idx=0;
+    for(int i = 0; i <HEIGHT ; i++)
+    {
+      for(int j = 1; j <WIDTH ; j+=2) //On print les hauts ()
       {
-        printf("   ");
-        if(world_get_sort(world,i)==1)
+        idx=i*WIDTH+j;
+        if(world_get(world,idx)==BLACK)
         {
-          printf("%s"," ⛀ ");
+          if(world_get_sort(world,idx)==PAWN)
+          {
+            printf("%s","    ⛀ ");
+          }
+          if(world_get_sort(world,idx)==TOUR)
+          {
+            printf("%s","    ♖ ");
+          }
+          if(world_get_sort(world,idx)==ELEPHANT)
+          {
+            printf("%s","    ♘ ");
+          }
         }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♖ ");
+        if(world_get(world,idx)==WHITE)
+        { 
+          if(world_get_sort(world,idx)==PAWN)
+          {
+            printf("%s","    ⛂ ");
+          }
+          if(world_get_sort(world,idx)==TOUR)
+          {
+            printf("%s","    ♜ ");
+          }
+          if(world_get_sort(world,idx)==ELEPHANT)
+          {
+            printf("%s","    ♞ ");
+          }
+            
         }
-        if(world_get_sort(world,i)==3)
+        if(world_get(world,idx)==NO_COLOR)
         {
-          printf("%s"," ♘ ");
+          printf("    . ");
         }
       }
-      if(world_get(world,i)==2 && (i%(WIDTH-1))%2 == 1)
+      printf("\n");
+      for(int k = 0; k <WIDTH ; k+=2) //On print les bas ()
       {
-        if(world_get_sort(world,i)==1)
+        
+        idx=i*WIDTH+k;
+        if(world_get(world,idx)==BLACK)
         {
-          printf("%s"," ⛀ ");
+          if(world_get_sort(world,idx)==PAWN)
+          {
+            printf("%s"," ⛀    ");
+          }
+          if(world_get_sort(world,idx)==TOUR)
+          {
+            printf("%s"," ♖    ");
+          }
+          if(world_get_sort(world,idx)==ELEPHANT)
+          {
+            printf("%s"," ♘    ");
+          }
         }
-        if(world_get_sort(world,i)==2)
+        if(world_get(world,idx)==WHITE)
+        { 
+          if(world_get_sort(world,idx)==PAWN)
+          {
+            printf("%s"," ⛂    ");
+          }
+          if(world_get_sort(world,idx)==TOUR)
+          {
+            printf("%s"," ♜    ");
+          }
+          if(world_get_sort(world,idx)==ELEPHANT)
+          {
+            printf("%s"," ♞    ");
+          } 
+        }
+        if(world_get(world,idx)==NO_COLOR)
         {
-          printf("%s"," ♖ ");
+          printf(" .    ");
         }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♘ ");
-        }
-        printf("   ");
       }
-      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 0)
-      { 
-        printf("   ");
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛂ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♜ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♞ ");
-        }
-          
-        }
-      if(world_get(world,i)==1 && (i%(WIDTH-1))%2 == 1)
-      { 
-        if(world_get_sort(world,i)==1)
-        {
-          printf("%s"," ⛂ ");
-        }
-        if(world_get_sort(world,i)==2)
-        {
-          printf("%s"," ♜ ");
-        }
-        if(world_get_sort(world,i)==3)
-        {
-          printf("%s"," ♞ ");
-        }
-          printf("   ");
-        }
-      if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 0)
-        {
-          printf("   ");
-          printf(" . ");
-        }
-        else if(world_get(world,i)==0 && (i%(WIDTH-1))%2 == 1)
-        {
-          printf(" . ");
-          printf("   ");
-        }
-      if(i%WIDTH == WIDTH-1){
-        printf("\n");
-      }    
+      printf("\n");
     }
 }
 
-unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d);
-    if(((idx%WIDTH)%2) == 0){
-
-    } 
-    if(((idx%WIDTH)%2) == 1){
-        
-    }
