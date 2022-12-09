@@ -27,3 +27,5 @@ unsigned int nombre_semidiag(struct world_t*world,unsigned int index);
 struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx);
 
 void show_world_hexagone(struct world_t* world);
+
+void show_world_triangle(struct world_t* world);

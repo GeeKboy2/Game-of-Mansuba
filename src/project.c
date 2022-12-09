@@ -441,7 +441,7 @@ int main(int argc,char *argv[]){
   */
   ///////////////////////////////////////////////////////////test_fin
   //show_world(world);
-  show_world_hexagone(world);
+  show_world_triangle(world);
   printf("############################\n");
 
   //init_neighbors(0); // Use seed 0 at the beginning of a game
@@ -457,7 +457,7 @@ int main(int argc,char *argv[]){
   world_set_sort(world,0,2);
   world_set_sort(world,WIDTH-1,2);
   */
- 
+
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
@@ -472,10 +472,9 @@ int main(int argc,char *argv[]){
     move_piece(world, move,index_pion);
     nbr_turns++;
     current_player = next_player(current_player);
-    show_world_hexagone(world);
+    show_world_triangle(world);
     printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }
-  
   return 0;
 }
