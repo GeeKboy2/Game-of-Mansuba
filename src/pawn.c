@@ -45,13 +45,13 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   unsigned int j = 0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t saut_simp; //Structure à retouner pour voir les directions et index des sauts 
-  unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
+  unsigned int position = get_neighbor_in_table(neighbors.n[k].i,neighbors.n[k].d,get_neighbors_seed());
   k++;
   while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
   {
     if(world_get_sort(world,neighbors.n[k].i) == 1)
     {
-      position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
+      position = get_neighbor_in_table(neighbors.n[k].i,neighbors.n[k].d,get_neighbors_seed());
       if(position<UINT_MAX)
       {
         if(world_get_sort(world,position) == 0)
@@ -145,14 +145,14 @@ unsigned int mov_pawn(struct world_t *world, int index){
     {
       if(somme==rand_mvt)
       {
-        return get_neighbor(ss.n[compteur_ss].i,ss.n[compteur_ss].d);
+        return get_neighbor_in_table(ss.n[compteur_ss].i,ss.n[compteur_ss].d,get_neighbors_seed());
       }
       compteur_ss++;
       somme++;
     }
     if(somme == rand_mvt && sm.n[0].i != UINT_MAX)
     {
-      return get_neighbor(sm.n[0].i,sm.n[0].d);
+      return get_neighbor_in_table(sm.n[0].i,sm.n[0].d,get_neighbors_seed());
     }
     return index;
 }

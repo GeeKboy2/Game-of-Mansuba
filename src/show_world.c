@@ -9,7 +9,7 @@
 #include "limits.h"
 #include "project.h"
 
-void show_world(struct world_t* world)
+void show_world_carre(struct world_t* world)
 {
     for(int i = 0; i <WORLD_SIZE ; i++){
       if(world_get(world,i)==BLACK)
@@ -231,3 +231,17 @@ void show_world_triangle(struct world_t* world)
         
     }
 }
+
+
+void show_world(struct world_t* world){
+  if(get_neighbors_seed()==0){
+    show_world_carre(world);
+  }
+  if(get_neighbors_seed()==1){
+    show_world_hexagone(world);
+  }
+  if(get_neighbors_seed()==2){
+    show_world_triangle(world);
+  }
+}
+

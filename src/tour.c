@@ -14,8 +14,8 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
   struct neighbors_t mvt_tour;
   int j = 0;
   for(int i = -3;i < 4; i = i + 2){
-    if(get_neighbor(idx,i) != UINT_MAX && world_get_sort(world, get_neighbor(idx,i)) == 0){
-      mvt_tour.n[j].i = get_neighbor(idx,i);
+    if(get_neighbor_in_table(idx,i,get_neighbors_seed()) != UINT_MAX && world_get_sort(world, get_neighbor_in_table(idx,i,get_neighbors_seed())) == 0){
+      mvt_tour.n[j].i = get_neighbor_in_table(idx,i,get_neighbors_seed());
       mvt_tour.n[j].d = i;
       j++; 
     }
@@ -38,14 +38,14 @@ unsigned int mov_tour(struct world_t *world, int index){
     srand(time(NULL));
     int rand_dir = rand()%nbre_mvt;
     int compteur_case = 0;
-    unsigned int pos = get_neighbor(index,tour.n[rand_dir].d);
+    unsigned int pos = get_neighbor_in_table(index,tour.n[rand_dir].d,get_neighbors_seed());
     while(pos != UINT_MAX && world_get_sort(world,pos) == NO_SORT){
       compteur_case++;
-      pos = get_neighbor(pos,tour.n[rand_dir].d);
+      pos = get_neighbor_in_table(pos,tour.n[rand_dir].d,get_neighbors_seed());
     }
     int rand_mvt = rand()%(compteur_case)+1;
     for(int k = 0; k < rand_mvt; k++){
-      index = get_neighbor(index,tour.n[rand_dir].d);
+      index = get_neighbor_in_table(index,tour.n[rand_dir].d,get_neighbors_seed());
     }
     return index;
 }

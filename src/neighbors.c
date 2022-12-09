@@ -7,6 +7,19 @@
 #include <time.h>
 #include "project.h"
 
+unsigned int t_plateau;
+void init_neighbors(unsigned int seed){
+  t_plateau=seed%MAX_RELATIONS;
+}
+
+
+
+unsigned int get_neighbors_seed(){
+  return t_plateau;
+}
+
+
+
 unsigned int get_neighbor(unsigned int idx, enum dir_t d)
 {
     if (idx>(HEIGHT*WIDTH))
@@ -99,7 +112,7 @@ struct neighbors_t get_neighbors(unsigned int idx)
   unsigned int k=0;
   for(d = -4; d<=4; d++) //Ajout de tout les voisins possible.
   {
-    unsigned int ind=get_neighbor(idx,d);
+    unsigned int ind=get_neighbor_in_table(idx,d,get_neighbors_seed());
     if(ind<UINT_MAX)
     {
       neighbors.n[k].i=ind;

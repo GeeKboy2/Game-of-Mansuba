@@ -42,5 +42,6 @@ unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d){
             return UINT_MAX;
         }
     }
+    return UINT_MAX;
 }
 

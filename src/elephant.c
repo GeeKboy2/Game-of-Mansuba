@@ -19,10 +19,10 @@ struct ensemble_t get_neighbors_3(unsigned int idx)
   unsigned int ind1;
   for(d = -3; d<=4; d+=2)    //Parcour des directions cardinales.
   {
-    ind=get_neighbor(idx,d); 
+    ind=get_neighbor_in_table(idx,d,get_neighbors_seed()); 
     for(r = -3; r<=4; r+=2)  //Parcour des directions cardinales.
     {
-      ind1=get_neighbor(ind,r);
+      ind1=get_neighbor_in_table(ind,r,get_neighbors_seed());
       if(ind1<UINT_MAX && idx!=ind1) //Pas de retour en arrieve.
       {
         neighbors.n[k].i=ind1;
