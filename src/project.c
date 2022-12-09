@@ -133,7 +133,19 @@ int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,
 // Créé le monde et set les différents pions dans leur position initiale
 
 int main(int argc,char *argv[]){
-  modif_rules(argc,argv);
+ 
+  char* type_victoire="s";
+  int RNG=2; //initialisation random
+  int MAX_TURNS=2*WORLD_SIZE;
+  /*
+  if(argc > 1){
+    type_victoire = argv[6];
+    MAX_TURNS = atoi(argv[4]);
+    RNG = atoi(argv[2]);
+    (void) RNG;
+  }
+  */
+  modif_rules(argc,argv,type_victoire,RNG,MAX_TURNS);
   struct world_t* world=world_init();
   position_init(world);
 
@@ -212,7 +224,7 @@ int main(int argc,char *argv[]){
   world_set_sort(world,0,2);
   world_set_sort(world,WIDTH-1,2);
   */
-  /*
+
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
@@ -231,6 +243,6 @@ int main(int argc,char *argv[]){
     printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     sleep(0.1);
   }
-  */
+
   return 0;
 }
