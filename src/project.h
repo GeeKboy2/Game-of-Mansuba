@@ -29,3 +29,7 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
 void show_world_hexagone(struct world_t* world);
 
 void show_world_triangle(struct world_t* world);
+
+unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d);
+
+unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d);
