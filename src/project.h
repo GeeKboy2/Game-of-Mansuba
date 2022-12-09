@@ -33,3 +33,8 @@ void show_world_triangle(struct world_t* world);
 unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d);
 
 unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d);
+
+unsigned int mov_pawn(struct world_t *world, int index);
+
+unsigned int mov_tour(struct world_t *world, int index);
+

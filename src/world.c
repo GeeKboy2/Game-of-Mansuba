@@ -1,6 +1,5 @@
 #include "world.h"
 #include <stdio.h>
-//#include "geometry.h"
 
 struct pion{
   enum color_t c;
@@ -13,7 +12,6 @@ struct world_t{
 
 struct world_t world;
 struct world_t* world_init(){
-  //struct world_t* world;
   for(int i = 0; i < WORLD_SIZE; i++){
     world.point[i].c = 0;
     world.point[i].s = 0;
