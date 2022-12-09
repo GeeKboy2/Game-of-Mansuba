@@ -12,8 +12,8 @@ all: project
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<
 
-project: geometry.o world.o neighbors.o hexagone.o triangle.o project.o # (Add your dependency here, e.g "project.o")
-	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o project.o -o project
+project: geometry.o world.o neighbors.o hexagone.o triangle.o project.o show_world.o pawn.o tour.o elephant.o# (Add your dependency here, e.g "project.o")
+	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o project.o show_world.o pawn.o tour.o elephant.o -o project
 
 #un seul .c pour faire un .o
 
@@ -32,6 +32,18 @@ geometry.o: src/geometry.c
 
 neighbors.o: src/neighbors.c
 	$(CC) $(CFLAGS) src/neighbors.c -c -o neighbors.o
+
+show_world.o: src/show_world.c
+	$(CC) $(CFLAGS) src/show_world.c -c -o show_world.o
+
+pawn.o: src/pawn.c
+	$(CC) $(CFLAGS) src/pawn.c -c -o pawn.o
+
+tour.o: src/tour.c
+	$(CC) $(CFLAGS) src/tour.c -c -o tour.o
+
+elephant.o: src/elephant.c
+	$(CC) $(CFLAGS) src/elephant.c -c -o elephant.o
 
 project.o: src/project.c # (Add your dependency here, e.g "test.o")
 	$(CC) $(CFLAGS) src/project.c -c -o project.o
