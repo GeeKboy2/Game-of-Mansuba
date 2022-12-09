@@ -1,3 +1,14 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "geometry.h"
+#include "world.h"
+#include "neighbors.h"
+#include <unistd.h>
+#include <time.h>
+#include "limits.h"
+#include "project.h"
+
 void show_world(struct world_t* world)
 {
     for(int i = 0; i <WORLD_SIZE ; i++){

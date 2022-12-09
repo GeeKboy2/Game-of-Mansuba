@@ -1,7 +1,13 @@
-
-struct ensemble_t{
-  struct vector_t n[12+1];
-};
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "geometry.h"
+#include "world.h"
+#include "neighbors.h"
+#include <unistd.h>
+#include <time.h>
+#include "limits.h"
+#include "project.h"
 
 struct ensemble_t get_neighbors_3(unsigned int idx)
 {

@@ -38,3 +38,5 @@ unsigned int mov_pawn(struct world_t *world, int index);
 
 unsigned int mov_tour(struct world_t *world, int index);
 
+unsigned int mov_elephant(struct world_t *world, int index);
+
