@@ -8,59 +8,7 @@
 #include <time.h>
 #include "limits.h"
 #include "project.h"
-//#include "hexagone.h"
-/*
-#ifndef MAX_TURNS
-#define MAX_TURNS (2*WORLD_SIZE)
-#endif
-*/
-//#define TURN 0
-//#define UINT_MAX 0
 
-void show_world(struct world_t* world)
-{
-    for(int i = 0; i <WORLD_SIZE ; i++){
-      if(world_get(world,i)==BLACK)
-      {
-        if(world_get_sort(world,i)==PAWN)
-        {
-          printf("%s"," ⛀ ");
-        }
-        if(world_get_sort(world,i)==TOUR)
-        {
-          printf("%s"," ♖ ");
-        }
-        if(world_get_sort(world,i)==ELEPHANT)
-        {
-          printf("%s"," ♘ ");
-        }
-      }
-      if(world_get(world,i)==WHITE)
-      { 
-        if(world_get_sort(world,i)==PAWN)
-        {
-          printf("%s"," ⛂ ");
-        }
-        if(world_get_sort(world,i)==TOUR)
-        {
-          printf("%s"," ♜ ");
-        }
-        if(world_get_sort(world,i)==ELEPHANT)
-        {
-          printf("%s"," ♞ ");
-        }
-          
-      }
-      if(world_get(world,i)==NO_COLOR)
-      {
-        printf(" . ");
-      }
-      if(i%WIDTH == WIDTH-1)
-      {
-        printf("\n");
-      }    
-    }
-}
 
 
 enum color_t get_random_player()
@@ -109,121 +57,27 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   return i;
 }
 
-int choose_random_move_for_piece(struct world_t *world,int index)
+unsigned int choose_random_move_for_piece(struct world_t *world,int index)
 {
   if(world_get_sort(world,index)==PAWN)
   {
-    //printf("marche");
-    struct neighbors_t ds=deplacement_simple(world,index);
-    //printf("probleme deplacement simple");
-    struct neighbors_t ss=saut_simple(world,index);
-    struct neighbors_t sm = saut_multiple(world,index);
-    //printf("saut simple");
-    unsigned int compteur_ds=0;
-    unsigned int compteur_ss=0;
-    unsigned int nombre_mvt=nombre_mouvements(world,index);
-    //printf("nombre mvt = %d\n",nombre_mvt);
-    srand(time(NULL));
-    if (nombre_mvt==0)
-    {
-      return index;
-    }
-    int rand_mvt=rand()%nombre_mvt;
-    //printf("rand = %d\n",rand_mvt);
-    int somme=0;
-    while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
-    {
-      if(somme==rand_mvt)
-      {
-        return ds.n[compteur_ds].i;
-      }
-      compteur_ds++;
-      somme++;
-      
-      /*
-      if(ds.n[compteur_ds].i==UINT_MAX)
-      {
-        compteur_ss++;
-      }else{
-        compteur_ds++;
-      }
-      if(ds.n[compteur_ds].i==UINT_MAX)
-      {
-
-      }else{
-        return ds.n[compteur_ds].i;
-      }
-      */
-    }
-    while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
-    {
-      if(somme==rand_mvt)
-      {
-        return get_neighbor(ss.n[compteur_ss].i,ss.n[compteur_ss].d);
-      }
-      compteur_ss++;
-      somme++;
-    }
-    if(somme == rand_mvt && sm.n[0].i != UINT_MAX)
-    {
-      return get_neighbor(sm.n[0].i,sm.n[0].d);
-    }
-    return index;
+    return mov_pawn(world,index);
   }
   if(world_get_sort(world,index)==TOUR)
   {
-    struct neighbors_t tour = translation_cardinale(world,index);
-    if(tour.n[0].i == UINT_MAX){
-      return index;
-    }
-    int nbre_mvt = 0;
-    for(int j = 0; tour.n[j].i != UINT_MAX; j++){
-      nbre_mvt = j+1;
-    }
-    srand(time(NULL));
-    int rand_dir = rand()%nbre_mvt;
-    int compteur_case = 0;
-    unsigned int pos = get_neighbor(index,tour.n[rand_dir].d);
-    while(pos != UINT_MAX && world_get_sort(world,pos) == NO_SORT){
-      compteur_case++;
-      pos = get_neighbor(pos,tour.n[rand_dir].d);
-    }
-    int rand_mvt = rand()%(compteur_case)+1;
-    for(int k = 0; k < rand_mvt; k++){
-      index = get_neighbor(index,tour.n[rand_dir].d);
-    }
-    return index;
+    return mov_tour(world,index);
   }
   if(world_get_sort(world,index)==ELEPHANT)
   {
-    struct ensemble_t ds=deplacement_simple_3(world,index);
-    unsigned int compteur_ds=0;
-    unsigned int nombre_mvt=nombre_semidiag(world,index);
-
-    srand(time(NULL));
-    if (nombre_mvt==0)
-    {
-      return index;
-    }
-    int rand_mvt=rand()%nombre_mvt;
-    int somme=0;
-    while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < 13)
-    {
-      if(somme==rand_mvt)
-      {
-        return ds.n[compteur_ds].i;
-      }
-      compteur_ds++;
-      somme++;
-    }
+    return mov_elephant(world,index);
   }
-  return -1;
+  return UINT_MAX;
 }
 
 
-void move_piece(struct world_t* world,int index_arrivee, int index_depart) // Mettre des unsigned int %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+void move_piece(struct world_t* world,unsigned int index_arrivee,unsigned int index_depart) // Mettre des unsigned int %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {
-   if(index_arrivee == -1){ // -1 c'est UINT_MAX du coup faut juste mettre des unsigned int %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   if(index_arrivee == UINT_MAX){ 
    }
    else{
    enum color_t color=world_get(world,index_depart);
@@ -233,48 +87,6 @@ void move_piece(struct world_t* world,int index_arrivee, int index_depart) // Me
    world_set(world,index_arrivee,color);
    world_set_sort(world,index_arrivee,sort);
   }
-}
-
-
-  //struct piece piece;
-  int position_init(struct world_t* world){
-    int b = 0;
-    int n = 0;
-    for(int i = 0; i< WORLD_SIZE; i++){
-      if(i%WIDTH==0){
-        //piece.noir[n]=i;
-        world_set(world,i,BLACK);
-        world_set_sort(world,i,PAWN);
-        n++;
-      }
-      if(i%WIDTH==WIDTH-1){
-        //piece.blanc[b]=i;
-        world_set(world,i,WHITE);
-        world_set_sort(world,i,PAWN);
-        b++;
-      }
-    }
-    return 0;
-}
-
-int position_init_tour(struct world_t* world){
-    int b = 0;
-    int n = 0;
-    for(int i = 0; i< WORLD_SIZE; i++){
-      if(i%WIDTH==0){
-        //piece.noir[n]=i;
-        world_set(world,i,BLACK);
-        world_set_sort(world,i,TOUR);
-        n++;
-      }
-      if(i%WIDTH==WIDTH-1){
-        //piece.blanc[b]=i;
-        world_set(world,i,WHITE);
-        world_set_sort(world,i,TOUR);
-        b++;
-      }
-    }
-    return 0;
 }
 
 int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN){
@@ -317,50 +129,6 @@ int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,
   return -1;
 }
 
-/* int main(int argc,char *argv[]){ */
-/*   struct world_t* world = world_init(); */
-/*   position_init(world); */
-/*   for(int i = 0; i <WORLD_SIZE ; i++){ */
-/*     if(i%WIDTH == 0){ */
-/*       printf("|"); */
-/*     } */
-/*     printf("%d,%d|",world ->point[i].c,world->point[i].s); */
-/*     if(i%WIDTH == WIDTH-1){ */
-/*       printf("\n"); */
-/*     }     */
-/*   } */
-/*   return 0; */
-/* } */
-
-/*
-// Règle de base : Noir à gauche, Blanc à droite
-void position_init(struct world_t* b){
-  enum color_t color;
-  enum sort_t sort=1;
-  for(int i = 0; i < WORLD_SIZE; i++){
-    if(i%WIDTH == 0){
-      color=1;
-      world_set(b,i,color);      
-      world_set_sort(b,i,sort);
-    }
-    if(i%WIDTH == WIDTH - 1){
-      color=2;
-      world_set(b,i,color);
-      world_set_sort(b,i,sort);
-    }
-  }
-}
-
-void test_position_init(){
-  struct world_t* b;
-  b = world_init();
-  position_init(b);
-  for(int i; i<WORLD_SIZE;i++){
-    printf("i : %d --> %d, %d\n",i, b->point[i].c,b->point[i].s); 
-  }
-}
-
-*/
 
 // Créé le monde et set les différents pions dans leur position initiale
 

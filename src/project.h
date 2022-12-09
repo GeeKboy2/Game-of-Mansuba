@@ -29,3 +29,7 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
 void show_world_hexagone(struct world_t* world);
 
 void show_world_triangle(struct world_t* world);
+
+unsigned int mov_pawn(struct world_t *world, int index);
+
+unsigned int mov_tour(struct world_t *world, int index);
