@@ -52,5 +52,5 @@ unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d){
     if(d == SOUTH){
         return idx + WIDTH;
     }
-    
+  return UINT_MAX;
 }

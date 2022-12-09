@@ -1,3 +1,14 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "geometry.h"
+#include "world.h"
+#include "neighbors.h"
+#include <unistd.h>
+#include <time.h>
+#include "limits.h"
+#include "project.h"
+
 //Renvoie les directions possibles pour le déplacement de la tour
 struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx){
   struct neighbors_t mvt_tour;
