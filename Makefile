@@ -58,7 +58,7 @@ test.o: tst/test.c
 # commandes à executer
 
 test:
-	./project -m 60
+	./project -m 30
 
 clean:
 	rm -f *.o *~ project

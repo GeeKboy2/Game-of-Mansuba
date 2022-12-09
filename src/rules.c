@@ -16,16 +16,4 @@ enum plateau {
     MAX_PLATEAU = 3,
 };
 
-void modif_rules(int argc, char *argv[],char* type_victoire,int RNG,int MAX_TURNS){
-    for( int i = 0; i < argc - 1; i++){ // On va jusqu'à argc - 1 car si on a un paramètre en dernier argument, il n'y a pas de valeur implémenté derrière donc il est inutile
-        if(argv[i] == "-t"){
-            type_victoire = argv[i+1];
-        }
-        if(argv[i] == "-m"){
-            MAX_TURNS = atoi(argv[i+1]);
-        }
-        if(argv[i] == "-s"){
-            RNG = atoi(argv[i+1]);
-        }
-    }
-}
+

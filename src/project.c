@@ -145,7 +145,7 @@ int main(int argc,char *argv[]){
     (void) RNG;
   }
   */
-  modif_rules(argc,argv,type_victoire,RNG,MAX_TURNS);
+  MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
   position_init(world);
 
