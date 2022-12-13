@@ -133,7 +133,7 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
   int compteur = 1;
   int j = 0;
   int test = 0;
-  while(compteur != 0 && saut_simp.n[0].i != UINT_MAX){             // Permet de regarder si un saut simple est possible et que ce n'est pas une ancienne position 
+  while(compteur != 0){             // Permet de regarder si un saut simple est possible et que ce n'est pas une ancienne position 
     compteur = 0;
     test = 0;
     for( int i = 0; saut_simp.n[i].i != UINT_MAX; i++){
