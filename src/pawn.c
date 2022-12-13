@@ -143,6 +143,7 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
         if(saut_simp.n[i].i == ancienne_position[k]){
           test = -1;
         }
+        k++;
       }
       if(test == 0){
         indice_saut[compteur] = saut_simp.n[i].i;
