@@ -18,7 +18,7 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   struct neighbors_t deplacement_smpl;
   while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
   {
-    if(world_get_sort(world,neighbors.n[k].i)== 0)
+    if(world_get_sort(world,neighbors.n[k].i)== NO_SORT)
     {
       deplacement_smpl.n[j].i = neighbors.n[k].i;
       deplacement_smpl.n[j].d = neighbors.n[k].d;
@@ -46,15 +46,14 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t saut_simp; //Structure à retouner pour voir les directions et index des sauts 
   unsigned int position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
-  k++;
   while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
   {
-    if(world_get_sort(world,neighbors.n[k].i) == 1)
+    if(world_get_sort(world,neighbors.n[k].i) != NO_SORT)
     {
       position = get_neighbor(neighbors.n[k].i,neighbors.n[k].d);
-      if(position<UINT_MAX)
+      if(position != UINT_MAX)
       {
-        if(world_get_sort(world,position) == 0)
+        if(world_get_sort(world,position) == NO_SORT)
         {
           saut_simp.n[j].i = neighbors.n[k].i;
           saut_simp.n[j].d = neighbors.n[k].d;
@@ -136,6 +135,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
     {
       if(somme==rand_mvt)
       {
+        printf("Le déplacement : %d\n", ds.n[compteur_ds].i);
         return ds.n[compteur_ds].i;
       }
       compteur_ds++;
@@ -145,6 +145,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
     {
       if(somme==rand_mvt)
       {
+        printf("Le saut : %d\n", get_neighbor(ss.n[compteur_ss].i,ss.n[compteur_ss].d));
         return get_neighbor(ss.n[compteur_ss].i,ss.n[compteur_ss].d);
       }
       compteur_ss++;
@@ -152,8 +153,10 @@ unsigned int mov_pawn(struct world_t *world, int index){
     }
     if(somme == rand_mvt && sm.n[0].i != UINT_MAX)
     {
+      printf("Le saut multiple : %d\n", get_neighbor(sm.n[0].i,sm.n[0].d));
       return get_neighbor(sm.n[0].i,sm.n[0].d);
     }
+    printf("Le bug : %d\n", index);
     return index;
 }
 
