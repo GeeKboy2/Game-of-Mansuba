@@ -75,7 +75,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   return saut_simp;
 }
 
-/*
+
 struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
 {
   unsigned int ancienne_position[WORLD_SIZE];
@@ -117,8 +117,8 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
   saut_simp.n[1].i = UINT_MAX;
   return saut_simp;
 }
-*/
 
+/*
 unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
   unsigned int ancienne_position[WORLD_SIZE];
   for(int i = 0;i<WORLD_SIZE;i++){
@@ -126,10 +126,6 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
   }
   unsigned int indice_saut[MAX_NEIGHBORS];
   unsigned int direction_saut[MAX_NEIGHBORS];
-  for(int i = 0; i<MAX_NEIGHBORS; i++){
-    indice_saut[i] = UINT_MAX;
-    direction_saut[i] = UINT_MAX;
-  }
   struct neighbors_t saut_simp = saut_simple(world,idx);
   if(saut_simp.n[0].i == UINT_MAX){
     return UINT_MAX;
@@ -167,12 +163,12 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
   return idx;
 
 }
-
+*/
 unsigned int mov_pawn(struct world_t *world, int index){
     struct neighbors_t ds=deplacement_simple(world,index);
     struct neighbors_t ss=saut_simple(world,index);
-    //struct neighbors_t sm = saut_multiple(world,index);
-    unsigned int sm2 = saut_multiple2(world,index);
+    struct neighbors_t sm = saut_multiple(world,index);
+    //unsigned int sm2 = saut_multiple2(world,index);
     unsigned int compteur_ds=0;
     unsigned int compteur_ss=0;
     unsigned int nombre_mvt=nombre_mouvements(world,index);
@@ -202,10 +198,10 @@ unsigned int mov_pawn(struct world_t *world, int index){
       compteur_ss++;
       somme++;
     }
-    if(somme == rand_mvt && sm2 != UINT_MAX)
+    if(somme == rand_mvt && sm.n[0].i != UINT_MAX)
     {
-      printf("Deplacement multiple : %d\n", sm2);
-      return sm2;
+      //printf("Deplacement multiple : %d\n", sm);
+      return sm.n[0].i;
     }
     printf("Le bug : %d\n", index);
     return index;

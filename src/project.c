@@ -135,7 +135,6 @@ int main(int argc,char *argv[]){
   int valeur_changement=floor(sqrt(MAX_TURNS));
   while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
-    /*
     if(condition_changement_tableau>valeur_changement){
       printf("========================================== CHANGEMENT DE TABLE =========================================\n");
       condition_changement_tableau=0;
@@ -146,7 +145,6 @@ int main(int argc,char *argv[]){
       }
       init_neighbors(random_table_seed);
     }
-    */
     printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     printf("c'est le tour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
