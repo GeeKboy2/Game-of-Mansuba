@@ -75,6 +75,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   return saut_simp;
 }
 
+/*
 struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
 {
   unsigned int ancienne_position[WORLD_SIZE];
@@ -116,11 +117,57 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
   saut_simp.n[1].i = UINT_MAX;
   return saut_simp;
 }
+*/
+
+unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
+  unsigned int ancienne_position[WORLD_SIZE];
+  for(int i = 0;i<WORLD_SIZE;i++){
+    ancienne_position[i] = UINT_MAX;
+  }
+  unsigned int indice_saut[MAX_NEIGHBORS];
+  unsigned int direction_saut[MAX_NEIGHBORS];
+  struct neighbors_t saut_simp = saut_simple(world,idx);
+  if(saut_simp.n[0].i == UINT_MAX){
+    return UINT_MAX;
+  }
+  int compteur = 1;
+  int j = 0;
+  int test = 0;
+  while(compteur != 0 && saut_simp.n[0].i != UINT_MAX){             // Permet de regarder si un saut simple est possible et que ce n'est pas une ancienne position 
+    compteur = 0;
+    test = 0;
+    for( int i = 0; saut_simp.n[i].i != UINT_MAX; i++){
+      int k = 0;
+      test = 0;
+      while(ancienne_position[k] != UINT_MAX){
+        if(saut_simp.n[i].i == ancienne_position[k]){
+          test = -1;
+        }
+      }
+      if(test == 0){
+        indice_saut[compteur] = saut_simp.n[i].i;
+        direction_saut[compteur] = saut_simp.n[i].d;
+        compteur++;
+      }
+    }
+    if(compteur != 0){
+      srand(time(NULL));
+      int rand_mvt = rand()%compteur;
+      ancienne_position[j] = idx;
+      idx = get_neighbor(indice_saut[rand_mvt],direction_saut[rand_mvt]);
+      saut_simp = saut_simple(world, idx);
+      j++;
+    }
+  }
+  return idx;
+
+}
 
 unsigned int mov_pawn(struct world_t *world, int index){
     struct neighbors_t ds=deplacement_simple(world,index);
-    struct neighbors_t ss=saut_simple(world,index);
-    struct neighbors_t sm = saut_multiple(world,index);
+    //struct neighbors_t ss=saut_simple(world,index);
+    //struct neighbors_t sm = saut_multiple(world,index);
+    unsigned int sm2 = saut_multiple2(world,index);
     unsigned int compteur_ds=0;
     unsigned int compteur_ss=0;
     unsigned int nombre_mvt=nombre_mouvements(world,index);
@@ -141,7 +188,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
       compteur_ds++;
       somme++;
     }
-    while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
+    /*while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
     {
       if(somme==rand_mvt)
       {
@@ -149,10 +196,11 @@ unsigned int mov_pawn(struct world_t *world, int index){
       }
       compteur_ss++;
       somme++;
-    }
-    if(somme == rand_mvt && sm.n[0].i != UINT_MAX)
+    }*/
+    if(somme == rand_mvt && sm2 != UINT_MAX)
     {
-      return get_neighbor_in_table(sm.n[0].i,sm.n[0].d,get_neighbors_seed());
+      printf("Deplacement multiple : %d\n", sm2);
+      return sm2;
     }
     printf("Le bug : %d\n", index);
     return index;
