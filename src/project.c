@@ -9,6 +9,7 @@
 #include <time.h>
 #include "limits.h"
 #include "project.h"
+#include <getopt.h>
 
 
 // Créé le monde et set les différents pions dans leur position initiale
@@ -17,13 +18,26 @@ int main(int argc,char *argv[]){
   char* type_victoire="s";
   int RNG=2; //initialisation random
   int MAX_TURNS=2*WORLD_SIZE;
-  
-  if(argc > 1){
-    type_victoire = argv[6];
-    MAX_TURNS = atoi(argv[4]);
-    RNG = atoi(argv[2]);
-    (void) RNG;
+
+  int option;
+
+  /* parse short options */
+
+  while ((option = getopt(argc, argv, "smt")) != -1) {
+    printf("waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%s\n",argv[optind]);
+    switch (option) {
+    case 's':
+      RNG=atoi(argv[optind]);
+      break;
+    case 'm':
+      MAX_TURNS=atoi(argv[optind]);
+      break;
+    case 't':
+      type_victoire=argv[optind];
+      break;
+    }
   }
+
   //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
   position_init(world);
@@ -95,8 +109,7 @@ int main(int argc,char *argv[]){
   */
   ///////////////////////////////////////////////////////////test_fin
   //show_world(world);
-
-  init_neighbors(0); // Use seed 0 at the beginning of a game
+  init_neighbors(RNG); // Use seed 0 at the beginning of a game
   show_world(world);
   printf("############################\n");
   /*
@@ -152,7 +165,7 @@ int main(int argc,char *argv[]){
     nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    sleep(0.1);
+    sleep(0.2);
     condition_changement_tableau+=1;
   }
 
