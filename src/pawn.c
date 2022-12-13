@@ -16,13 +16,15 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   unsigned int j =0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t deplacement_smpl;
-  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
+  while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS)
   {
-    if(world_get_sort(world,neighbors.n[k].i)== 0)
-    {
-      deplacement_smpl.n[j].i = neighbors.n[k].i;
-      deplacement_smpl.n[j].d = neighbors.n[k].d;
-      j++;
+    if(neighbors.n[k].i < UINT_MAX){
+      if(world_get_sort(world,neighbors.n[k].i)== 0)
+      {
+        deplacement_smpl.n[j].i = neighbors.n[k].i;
+        deplacement_smpl.n[j].d = neighbors.n[k].d;
+        j++;
+      }
     }
     k++;
   }

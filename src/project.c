@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <string.h>
 #include <stdlib.h>
 #include "geometry.h"
@@ -12,19 +13,19 @@
 
 // Créé le monde et set les différents pions dans leur position initiale
 int main(int argc,char *argv[]){
+ 
   char* type_victoire="s";
   int RNG=2; //initialisation random
   int MAX_TURNS=2*WORLD_SIZE;
-
-  if(argc>1){
-  type_victoire= argv[6];
-  MAX_TURNS=atoi(argv[4]);
-  RNG=atoi(argv[2]);
-
-  //(void) type_victoire;
-  //(void) MAX_TURNS;
-  (void) RNG;
+  
+  if(argc > 1){
+    type_victoire = argv[6];
+    MAX_TURNS = atoi(argv[4]);
+    RNG = atoi(argv[2]);
+    (void) RNG;
   }
+  
+  //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
   position_init(world);
 
@@ -88,9 +89,7 @@ int main(int argc,char *argv[]){
   */
   ///////////////////////////////////////////////////////////test_fin
   //show_world(world);
-  init_neighbors(1); // Use seed 0 at the beginning of a game
-  printf("seeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee %d /  %u\n",MAX_RELATIONS,get_neighbors_seed());
-
+  init_neighbors(0); // Use seed 0 at the beginning of a game
   show_world(world);
   printf("############################\n");
   /*
@@ -105,12 +104,26 @@ int main(int argc,char *argv[]){
   world_set_sort(world,0,2);
   world_set_sort(world,WIDTH-1,2);
   */
+
   enum color_t current_player = get_random_player();
   int index_pion;
   int move;
   int nbr_turns=0;
+  int condition_changement_tableau=0;
+  int valeur_changement=floor(sqrt(MAX_TURNS));
   while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
+    if(condition_changement_tableau>valeur_changement){
+      printf("========================================== CHANGEMENT DE TABLE =========================================\n");
+      condition_changement_tableau=0;
+      srand((time(NULL)));
+      unsigned int random_table_seed=get_neighbors_seed();
+      while(random_table_seed==get_neighbors_seed()){
+        random_table_seed=rand()%3;
+      }
+      init_neighbors(random_table_seed);
+    }
+    printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
     printf("c'est le tour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
     printf("la piece en mvt est %d\n",index_pion);
@@ -120,8 +133,10 @@ int main(int argc,char *argv[]){
     nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
+    
     sleep(0.1);
+    condition_changement_tableau+=1;
   }
+
   return 0;
 }

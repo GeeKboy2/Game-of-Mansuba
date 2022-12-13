@@ -52,5 +52,41 @@ unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d){
     if(d == SOUTH){
         return idx + WIDTH;
     }
+    if( d == SEAST){
+      return idx + WIDTH + 1;
+    }
+    if(d == SWEST){
+      return idx + WIDTH - 1;
+    }
+    if( d == NWEST){
+      return idx - WIDTH - 1;
+    }
+    if( d == NEAST){
+      return idx - WIDTH + 1;
+    }
   return UINT_MAX;
+}
+
+struct neighbors_t get_neighbors_hex(unsigned int idx){
+  struct neighbors_t neighbors; 
+  enum dir_t d;
+  unsigned int k=0;
+  for(d = -4; d<=4; d++) //Ajout de tout les voisins possible.
+  {
+    unsigned int ind=get_neighbor_hex(idx,d);
+    if(ind<UINT_MAX)
+    {
+      neighbors.n[k].i=ind;
+      neighbors.n[k].d=d;
+      k++;
+    }
+  }
+  neighbors.n[k].i=UINT_MAX; //marquer la fin des voisins par UINT_MAX.
+  k++;
+  while(k<MAX_NEIGHBORS+1) //Completion par des zeros.
+  {
+    neighbors.n[k].i=0;
+    k++;
+  }
+  return neighbors;
 }
