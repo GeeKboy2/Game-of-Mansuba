@@ -26,9 +26,8 @@ unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int t
 
 enum color_t get_random_player()
 {
-  /*srand(time(NULL));
-  return rand()%2+1;*/
-  return BLACK;
+  srand(time(NULL));
+  return rand()%2+1;
 }
 
 enum color_t next_player(enum color_t current_player)
