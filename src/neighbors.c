@@ -134,8 +134,9 @@ struct neighbors_t get_neighbors(unsigned int idx)
 unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
 {
   struct neighbors_t mouvement1 = deplacement_simple(world,idx); //Stockage des deplacement simples.
-  struct neighbors_t mouvement2 = saut_simple(world,idx);        //Stockage des sauts simples.
-  struct neighbors_t mouvement3 = saut_multiple(world,idx);      //Stockage des sauts multiples.
+  //struct neighbors_t mouvement2 = saut_simple(world,idx);        //Stockage des sauts simples.
+  //struct neighbors_t mouvement3 = saut_multiple(world,idx);      //Stockage des sauts multiples.
+  unsigned int mouvement3 = saut_multiple2(world, idx);
   unsigned int compteur = 0;
   unsigned int j = 0;
   //Comptage de nombre de mouvement.
@@ -145,12 +146,12 @@ unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
     j++;
   }
   j = 0;
-  while(mouvement2.n[j].i < UINT_MAX && j<MAX_NEIGHBORS+1)
+  /*while(mouvement2.n[j].i < UINT_MAX && j<MAX_NEIGHBORS+1)
   {
     compteur+=1;
     j++;
-  }
-  if(mouvement3.n[0].i != UINT_MAX){
+  }*/
+  if(mouvement3 != UINT_MAX){
     compteur++;
   }
   return compteur;
