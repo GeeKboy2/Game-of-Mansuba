@@ -126,6 +126,10 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
   }
   unsigned int indice_saut[MAX_NEIGHBORS];
   unsigned int direction_saut[MAX_NEIGHBORS];
+  for(int i = 0; i<MAX_NEIGHBORS; i++){
+    indice_saut[i] = UINT_MAX;
+    direction_saut[i] = UINT_MAX;
+  }
   struct neighbors_t saut_simp = saut_simple(world,idx);
   if(saut_simp.n[0].i == UINT_MAX){
     return UINT_MAX;
@@ -166,7 +170,7 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
 
 unsigned int mov_pawn(struct world_t *world, int index){
     struct neighbors_t ds=deplacement_simple(world,index);
-    //struct neighbors_t ss=saut_simple(world,index);
+    struct neighbors_t ss=saut_simple(world,index);
     //struct neighbors_t sm = saut_multiple(world,index);
     unsigned int sm2 = saut_multiple2(world,index);
     unsigned int compteur_ds=0;
@@ -189,7 +193,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
       compteur_ds++;
       somme++;
     }
-    /*while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
+    while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
     {
       if(somme==rand_mvt)
       {
@@ -197,7 +201,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
       }
       compteur_ss++;
       somme++;
-    }*/
+    }
     if(somme == rand_mvt && sm2 != UINT_MAX)
     {
       printf("Deplacement multiple : %d\n", sm2);
