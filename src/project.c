@@ -24,7 +24,6 @@ int main(int argc,char *argv[]){
   /* parse short options */
 
   while ((option = getopt(argc, argv, "smt")) != -1) {
-    printf("waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa%s\n",argv[optind]);
     switch (option) {
     case 's':
       RNG=atoi(argv[optind]);
@@ -40,8 +39,9 @@ int main(int argc,char *argv[]){
 
   //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
+  struct world_t* cimetiere=cimetiere_init();
   position_init(world);
-  
+  /*
   world_set(world,1,WHITE);
   world_set_sort(world,1,PAWN);
   world_set(world,3,WHITE);
@@ -49,7 +49,7 @@ int main(int argc,char *argv[]){
   
   world_set(world,4,NO_COLOR);
   world_set_sort(world,4,0);
-  /*
+  */
   world_set(world,0,BLACK);
   world_set_sort(world,0,TOUR);
   world_set(world,WIDTH-1,WHITE);
@@ -59,7 +59,7 @@ int main(int argc,char *argv[]){
   world_set_sort(world,WORLD_SIZE-WIDTH,ELEPHANT);
   world_set(world,WORLD_SIZE-1,WHITE);
   world_set_sort(world,WORLD_SIZE-1,ELEPHANT);
-  */
+  
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
@@ -113,7 +113,8 @@ int main(int argc,char *argv[]){
   //show_world(world);
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
   show_world(world);
-  printf("############################\n");
+  printf(" --cimetiere--\n");
+  show_world(cimetiere);
   /*
   world_set(world,1,2);
   world_set_sort(world,1,2);
@@ -145,24 +146,24 @@ int main(int argc,char *argv[]){
       }
       init_neighbors(random_table_seed);
     }
-    printf("############################ turn %d/%d\n",nbr_turns,MAX_TURNS);
-    printf("c'est le tour du %d\n",current_player);
+    printf("\n-Turn %d/%d\n",nbr_turns+1,MAX_TURNS);
+    printf("\tTour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
-    printf("la piece en mvt est %d\n",index_pion);
-    printf("Ses voisins sont :");
+    printf("\tLa piece en mvt est %d\n",index_pion);
+    printf("\tSes voisins sont :");
     struct neighbors_t neighbors = get_neighbors(index_pion);
     struct neighbors_t saut = saut_simple(world,index_pion);
     for(int k = 0; k < MAX_NEIGHBORS+1;k++){
       printf("%d ", neighbors.n[k].i);
     }
 
-    printf("\nLes sauts possibles sont :");
+    printf("\n\tSauts possibles :");
     for(int k = 0; k < MAX_NEIGHBORS+1;k++){
       printf("%d ", saut.n[k].i);
     }
     printf("\n");
     move = choose_random_move_for_piece(world, index_pion);
-    printf("elle va se deplacer vers %d\n",move);
+    printf("\tDéplacement vers %d\n",move);
     move_piece(world, move,index_pion);
     nbr_turns++;
     current_player = next_player(current_player);

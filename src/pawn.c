@@ -183,7 +183,6 @@ unsigned int mov_pawn(struct world_t *world, int index){
     {
       if(somme==rand_mvt)
       {
-        printf("Le déplacement : %d\n", ds.n[compteur_ds].i);
         return ds.n[compteur_ds].i;
       }
       compteur_ds++;

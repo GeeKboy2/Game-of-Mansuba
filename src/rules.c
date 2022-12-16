@@ -10,6 +10,14 @@
 #include "project.h"
 
 
+struct pion{
+  enum color_t c;
+  enum sort_t s;
+};
+
+struct world_t{
+  struct pion point[WORLD_SIZE];
+};
 
 unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int type_plateau){
     if(type_plateau==0){
@@ -141,3 +149,13 @@ unsigned int condition_victoire(struct world_t * world,char *type_victoire,int M
   }
   return UINT_MAX;
 }
+
+struct world_t cimetiere;
+struct world_t* cimetiere_init(){
+  for(int i = 0; i < WORLD_SIZE; i++){
+    cimetiere.point[i].c = 0;
+    cimetiere.point[i].s = 0;
+  }
+  return &cimetiere;
+}
+

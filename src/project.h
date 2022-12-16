@@ -61,3 +61,5 @@ unsigned int mov_elephant(struct world_t *world, int index);
 unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int type_plateau);
 
 //unsigned int saut_multiple2(struct world_t* world, unsigned int idx);
+
+struct world_t* cimetiere_init();
