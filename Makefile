@@ -6,17 +6,17 @@ CFLAGS = -Wall -Wextra -std=c99 -g3 $(MANSUBA_FLAGS)
 #-g3 sert au debuggage
 # Utiliser $(CFLAGS) pour avoir tjs les mêmes flags et memes definitions de width et height dans tout les .o
 
-all:  project test
+all:  project testing
 
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<
 
-test: geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o test.o# (Add your dependency here, e.g "project.o")
-	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o test.o -o test -lm
+testing: geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o test.o# (Add your dependency here, e.g "project.o")
+	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o test.o -o test -lm
 
-project: geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o project.o# (Add your dependency here, e.g "project.o")
-	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o project.o -o project -lm
+project: geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o project.o# (Add your dependency here, e.g "project.o")
+	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o project.o -o project -lm
 
 
 #un seul .c pour faire un .o
@@ -53,6 +53,9 @@ elephant.o: src/elephant.c
 rules.o: src/rules.c
 	$(CC) $(CFLAGS) src/rules.c -c -o rules.o
 
+prison.o: src/prison.c
+	$(CC) $(CFLAGS) src/prison.c -c -o prison.o
+
 project.o: src/project.c # (Add your dependency here, e.g "test.o")
 	$(CC) $(CFLAGS) src/project.c -c -o project.o
 
@@ -65,7 +68,7 @@ test.o: tst/test.c
 game:
 	./project -m 50 -t s -s 1
 
-try:
+tests:
 	./test -m 50 -t s -s 1
 
 clean:

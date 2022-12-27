@@ -40,11 +40,12 @@ int main(int argc,char *argv[]){
 
   //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
-  
+
   show_world_carre(world);
   position_initialisation(PION_TOUR_ELEPHANT,world);
   enum color_t current_player = get_random_player();
   printf("current_player = %d\n",current_player);
+
   condition_victoire(world,type_victoire,MAX_TURNS,0);
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);

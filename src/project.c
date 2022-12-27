@@ -39,6 +39,7 @@ int main(int argc,char *argv[]){
 
   //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
+  struct prison_t* prison=prison_init();
   show_world_carre(world);
   position_initialisation(PION_TOUR_ELEPHANT,world);
   enum color_t current_player = get_random_player();
@@ -102,23 +103,15 @@ int main(int argc,char *argv[]){
   printf("avant choose random\n");
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
+
+
+  emprisoner(world,0,prison); 
+  emprisoner(world,WIDTH-1,prison); 
   ///////////////////////////////////////////////////////////test_fin
-  //show_world(world);
+
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
   printf("\n-Turn #%d/%d# :\n",0,MAX_TURNS);
   show_world(world);
-  /*
-  world_set(world,1,2);
-  world_set_sort(world,1,2);
-  world_set(world,3,2);
-  world_set_sort(world,3,2);
-
-  world_set(world,0,0);
-  world_set_sort(world,0,0);
-
-  world_set_sort(world,0,2);
-  world_set_sort(world,WIDTH-1,2);
-  */
 
   
   int index_pion;
@@ -164,6 +157,6 @@ int main(int argc,char *argv[]){
     sleep(0.2);
     condition_changement_tableau+=1;
   }
-
+  
   return 0;
 }

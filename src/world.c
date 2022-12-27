@@ -1,14 +1,7 @@
 #include "world.h"
 #include <stdio.h>
+#include "project.h"
 
-struct pion{
-  enum color_t c;
-  enum sort_t s;
-};
-
-struct world_t{
-  struct pion point[WORLD_SIZE];
-};
 
 struct world_t world;
 struct world_t* world_init(){
@@ -35,7 +28,4 @@ void world_set_sort(struct world_t* b, unsigned int idx, enum sort_t c){
   b -> point[idx].s = c;
 }
 
-struct piece{
-  int blanc[HEIGHT];
-  int noir[HEIGHT];
-};
+

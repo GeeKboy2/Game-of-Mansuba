@@ -10,15 +10,6 @@
 #include "project.h"
 
 
-struct pion{
-  enum color_t c;
-  enum sort_t s;
-};
-
-struct world_t{
-  struct pion point[WORLD_SIZE];
-};
-
 unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int type_plateau){
     if(type_plateau==0){
         return get_neighbor(idx,d);

@@ -2,6 +2,15 @@
 #include "world.h"
 #include "neighbors.h"
 
+struct pion{
+  enum color_t c;
+  enum sort_t s;
+};
+
+struct world_t{
+  struct pion point[WORLD_SIZE];
+};
+
 struct ensemble_t{
   struct vector_t n[12+1];
 };
@@ -11,6 +20,8 @@ enum init{
   PION_TOUR_ELEPHANT = 1,
   MAX_INIT =2
 };
+
+
 
 enum color_t get_random_player();
 
@@ -69,3 +80,14 @@ unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int t
 //unsigned int saut_multiple2(struct world_t* world, unsigned int idx);
 
 void position_initialisation(enum init type_init,struct world_t* world);
+
+struct prison_t{
+  struct pion n[2*HEIGHT];
+  unsigned int index[2*HEIGHT];
+};
+
+struct prison_t* prison_init();
+
+void emprisoner(struct world_t* world,unsigned int index,struct prison_t* prison);
+
+void tentative_evasion(struct prison_t* prison, struct world_t* world);
