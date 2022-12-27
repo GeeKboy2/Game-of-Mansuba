@@ -150,12 +150,28 @@ unsigned int condition_victoire(struct world_t * world,char *type_victoire,int M
   return UINT_MAX;
 }
 
-struct world_t cimetiere;
-struct world_t* cimetiere_init(){
-  for(int i = 0; i < WORLD_SIZE; i++){
-    cimetiere.point[i].c = 0;
-    cimetiere.point[i].s = 0;
+
+
+void position_initialisation(enum init type_init,struct world_t* world){
+  if(type_init==PIONS){
+    position_init(world);
+  }else if(type_init==PION_TOUR_ELEPHANT){
+    position_init(world);
+    world_set(world,0,BLACK);
+    world_set_sort(world,0,TOUR);
+    world_set(world,WIDTH-1,WHITE);
+    world_set_sort(world,WIDTH-1,TOUR);
+
+    world_set(world,WORLD_SIZE-WIDTH,BLACK);
+    world_set_sort(world,WORLD_SIZE-WIDTH,ELEPHANT);
+    world_set(world,WORLD_SIZE-1,WHITE);
+    world_set_sort(world,WORLD_SIZE-1,ELEPHANT);
+  }else {
+    printf("INVALID INITIALISATION");
   }
-  return &cimetiere;
 }
+
+
+
+
 
