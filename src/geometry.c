@@ -5,22 +5,22 @@
 
 
 const char* place_to_string(enum color_t c, enum sort_t s){
-  if(c == 0 && s == 0){
+  if(c == NO_COLOR && s == NO_SORT){
     return "NO_COLOR and NO_SORT";
   }
-  if(c == 1 && s == 0){
+  if(c == BLACK && s == NO_SORT){
     return "BLACK and NO_SORT";
   }
-  if(c == 2 && s == 0){
+  if(c == WHITE && s == NO_SORT){
     return "WHITE and NO_SORT";
   }
-  if(c == 0 && s == 1){
+  if(c == NO_COLOR && s == PAWN){
     return "NO_COLOR and PAWN";
   }
-  if(c == 1 && s == 1){
+  if(c == BLACK && s == PAWN){
     return "BLACK PAWN";
   }
-  if(c == 2 && s == 1){
+  if(c == WHITE && s == PAWN){
     return "WHITE PAWN";
   }
   else{
@@ -39,39 +39,39 @@ const char* dir_to_string(enum dir_t d)
 {
   char* str;
   printf("%d",d);
-  if (d == 0)
+  if (d == NO_DIR)
   {
     str = "NO_DIR";
   }
-  if (d == 1)
+  if (d == EAST)
   {
     str = "EAST";
   }
-  if (d == 2)
+  if (d == NEAST)
   {
     str = "NEAST";
   }
-  if (d == 3)
+  if (d == NORTH)
   {
     str = "NORTH";
   }
-  if (d == 4)
+  if (d == NWEST)
   {
     str = "NWEST";
   }
-    if (d == -1)
+    if (d == WEST)
   {
     str = "WEST";
   }
-    if (d == -2)
+    if (d == SWEST)
   {
     str = "SWEST";
   }
-  if (d == -3)
+  if (d == SOUTH)
   {
     str = "SOUTH";
   }
-    if (d == -4)
+    if (d == SEAST)
   {
     str = "SEAST";
   }
