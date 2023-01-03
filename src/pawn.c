@@ -227,7 +227,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
       return index;
     }
     int rand_mvt=(rand()%nombre_mvt);
-    int somme=UINT_MAX;
+    int somme=0;
     while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
     {
       if(somme==rand_mvt)
