@@ -38,9 +38,11 @@ int main(int argc,char *argv[]){
   }
   
   struct world_t* world=world_init();
-  struct world_t* cimetiere=cimetiere_init();
-  position_init(world);
-  
+  struct prison_t* prison=prison_init();
+  show_world_carre(world);
+  position_initialisation(PION_TOUR_ELEPHANT,world);
+  enum color_t current_player = get_random_player();
+  /*
   world_set(world,1,WHITE);
   world_set_sort(world,1,PAWN);
   world_set(world,3,WHITE);
@@ -48,17 +50,9 @@ int main(int argc,char *argv[]){
   
   world_set(world,4,NO_COLOR);
   world_set_sort(world,4,0);
-/*
-  world_set(world,0,BLACK);
-  world_set_sort(world,0,TOUR);
-  world_set(world,WIDTH-1,WHITE);
-  world_set_sort(world,WIDTH-1,TOUR);
 
-  world_set(world,WORLD_SIZE-WIDTH,BLACK);
-  world_set_sort(world,WORLD_SIZE-WIDTH,ELEPHANT);
-  world_set(world,WORLD_SIZE-1,WHITE);
-  world_set_sort(world,WORLD_SIZE-1,ELEPHANT);
   */
+  
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
@@ -108,26 +102,17 @@ int main(int argc,char *argv[]){
   printf("avant choose random\n");
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
+
+
+  emprisoner(world,0,prison); 
+  emprisoner(world,WIDTH-1,prison); 
   ///////////////////////////////////////////////////////////test_fin
-  //show_world(world);
+
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
+  printf("\n-Turn #%d/%d# :\n",0,MAX_TURNS);
   show_world(world);
-  printf(" --cimetiere--\n");
-  show_world(cimetiere);
-  /*
-  world_set(world,1,2);
-  world_set_sort(world,1,2);
-  world_set(world,3,2);
-  world_set_sort(world,3,2);
 
-  world_set(world,0,0);
-  world_set_sort(world,0,0);
-
-  world_set_sort(world,0,2);
-  world_set_sort(world,WIDTH-1,2);
-  */
-
-  enum color_t current_player = get_random_player();
+  
   int index_pion;
   int move;
   int nbr_turns=0;
@@ -135,7 +120,7 @@ int main(int argc,char *argv[]){
   //int valeur_changement=floor(sqrt(MAX_TURNS));
   while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
-    /*if(condition_changement_tableau>valeur_changement){
+    if(condition_changement_tableau>valeur_changement){
       printf("========================================== CHANGEMENT DE TABLE =========================================\n");
       condition_changement_tableau=0;
       srand((time(NULL)));
@@ -144,8 +129,8 @@ int main(int argc,char *argv[]){
         random_table_seed=rand()%3;
       }
       init_neighbors(random_table_seed);
-    }*/
-    printf("\n-Turn %d/%d\n",nbr_turns+1,MAX_TURNS);
+    }
+    printf("\n-Turn #%d/%d# :\n",nbr_turns+1,MAX_TURNS);
     printf("\tTour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
     printf("\tLa piece en mvt est %d\n",index_pion);
@@ -170,6 +155,6 @@ int main(int argc,char *argv[]){
     sleep(0.2);
     condition_changement_tableau+=1;
   }
-
+  
   return 0;
 }
