@@ -66,6 +66,8 @@ test.o: tst/test.c
 #nom: dépendances (hors .h)
 # commandes à executer
 
+
+
 game:
 	./project -m 50 -t s -s 1
 

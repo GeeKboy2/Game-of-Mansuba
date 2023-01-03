@@ -9,6 +9,14 @@
 #include "limits.h"
 #include "project.h"
 
+struct piece_t{
+  int blanc[WORLD_SIZE];
+  int noir[WORLD_SIZE];
+};
+
+struct depart_t{
+  struct piece_t piece;
+};
 
 unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int type_plateau){
     if(type_plateau==0){

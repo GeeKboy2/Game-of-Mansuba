@@ -36,8 +36,7 @@ int main(int argc,char *argv[]){
       break;
     }
   }
-
-  //MAX_TURNS = getopt(argc,argv,"-m:");
+  
   struct world_t* world=world_init();
   struct prison_t* prison=prison_init();
   show_world_carre(world);
@@ -51,8 +50,8 @@ int main(int argc,char *argv[]){
   
   world_set(world,4,NO_COLOR);
   world_set_sort(world,4,0);
+
   */
-  
   
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
@@ -121,7 +120,6 @@ int main(int argc,char *argv[]){
   int valeur_changement=floor(sqrt(MAX_TURNS));
   while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
-
     if(condition_changement_tableau>valeur_changement){
       printf("========================================== CHANGEMENT DE TABLE =========================================\n");
       condition_changement_tableau=0;
