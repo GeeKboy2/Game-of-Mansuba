@@ -38,7 +38,7 @@ int main(int argc,char *argv[]){
   }
   
   struct world_t* world=world_init();
-  struct prison_t* prison=prison_init();
+  //struct prison_t* prison=prison_init();
   show_world_carre(world);
   position_initialisation(PION_TOUR_ELEPHANT,world);
   enum color_t current_player = get_random_player();
