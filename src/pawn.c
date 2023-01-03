@@ -77,7 +77,56 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   return saut_simp;
 }
 
+unsigned int saut_multiple(struct world_t* world, unsigned int idx){
+  unsigned int index_passe[WORLD_SIZE];
+  for(int i=0;i<WORLD_SIZE;i++){
+    index_passe[i]=UINT_MAX;
+  }
+  struct neighbors_t saut_simpl=saut_simple(world,idx);
+  unsigned int compteur_saut=0;
+  enum color_t color=world_get(world,idx);
+  enum sort_t sort=world_get_sort(world,idx);
+  //printf("La premiere case soté est %u\n",saut_simpl.n[0].i);
+  if(saut_simpl.n[0].i==UINT_MAX){
+    return UINT_MAX;
+  }
+  index_passe[compteur_saut]=idx;
+  idx=saut_simpl.n[0].i;
+  idx=get_neighbor_in_table(idx,saut_simpl.n[0].d,get_neighbors_seed());
+  if(idx==UINT_MAX){
+    return UINT_MAX;
+  }
+  world_set(world,idx,color);
+  world_set_sort(world,idx,sort);
+  //printf("dessine %u\n",idx);
+  compteur_saut++;
+  index_passe[compteur_saut]=idx;
+  //printf("Je peux aller à %u\n",idx);
+  while(idx!=UINT_MAX){
+    world_set(world,idx,color);
+    world_set_sort(world,idx,sort);
+    //printf("dessine %u\n",idx);
+    saut_simpl=saut_simple(world,idx);
+    idx=saut_simpl.n[0].i;
+    if(idx==UINT_MAX){
+      break;
+    }
+    idx=get_neighbor_in_table(idx,saut_simpl.n[0].d,get_neighbors_seed());
+    compteur_saut++;
+    index_passe[compteur_saut]=idx;
+  }
 
+  for(int i=1;i<WORLD_SIZE;i++){
+    if(index_passe[i]!=UINT_MAX){
+      world_set(world,index_passe[i-1],NO_COLOR);
+      world_set_sort(world,index_passe[i-1],NO_SORT);
+      //printf("effacer %u\n",index_passe[i-1]);
+    }
+  }
+
+  return 0;
+}
+/*
 struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
 {
   unsigned int ancienne_position[WORLD_SIZE];
@@ -119,7 +168,7 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
   saut_simp.n[1].i = UINT_MAX;
   return saut_simp;
 }
-
+*/
 /*
 unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
   unsigned int ancienne_position[WORLD_SIZE];
@@ -169,7 +218,7 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
 unsigned int mov_pawn(struct world_t *world, int index){
     struct neighbors_t ds=deplacement_simple(world,index);
     struct neighbors_t ss=saut_simple(world,index);
-    struct neighbors_t sm = saut_multiple(world,index);
+    //struct neighbors_t sm = saut_multiple(world,index);
     //unsigned int sm2 = saut_multiple2(world,index);
     unsigned int compteur_ds=0;
     unsigned int compteur_ss=0;
@@ -180,7 +229,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
       return index;
     }
     int rand_mvt=(rand()%nombre_mvt);
-    int somme=0;
+    int somme=UINT_MAX;
     while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
     {
       if(somme==rand_mvt)
@@ -201,13 +250,14 @@ unsigned int mov_pawn(struct world_t *world, int index){
       compteur_ss++;
       somme++;
     }
-    if(somme == rand_mvt && sm.n[0].i != UINT_MAX)
+    if(somme == rand_mvt)
+    //if(1==1)
     {
       printf("Je saute beaucoup");
       //printf("Deplacement multiple : %d\n", sm);
-      return sm.n[0].i;
+      saut_multiple(world,index);
     }
-    printf("Le bug : %d\n", index);
+    //printf("Le bug : %d\n", index);
     return index;
 }
 
