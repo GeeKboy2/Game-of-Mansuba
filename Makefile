@@ -60,6 +60,7 @@ project.o: src/project.c # (Add your dependency here, e.g "test.o")
 	$(CC) $(CFLAGS) src/project.c -c -o project.o
 
 test.o: tst/test.c
+	cp -r ./src/*.h ./tst
 	$(CC) $(CFLAGS) tst/test.c -c -o test.o
 
 #nom: dépendances (hors .h)
@@ -73,4 +74,5 @@ tests:
 
 clean:
 	rm -f *.o *~ project test
+	rm -r ./tst/*.h
 #utiliser avec :~/$ make clean
