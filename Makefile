@@ -65,13 +65,10 @@ test.o: tst/test.c
 #nom: dépendances (hors .h)
 # commandes à executer
 
-<<<<<<< HEAD
-test:
-	./project -m 50 -t s -s 0
-=======
+
+
 game:
 	./project -m 50 -t s -s 1
->>>>>>> origin/master
 
 tests:
 	./test -m 50 -t s -s 1

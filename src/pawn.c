@@ -210,22 +210,20 @@ unsigned int mov_pawn(struct world_t *world, int index){
     return index;
 }
 
-struct depart_t position_init(struct world_t* world){
+int position_init(struct world_t* world){
   int b = 0;
   int n = 0;
   for(int i = 0; i< WORLD_SIZE; i++){
     if(i%WIDTH==0){
       world_set(world,i,BLACK);
       world_set_sort(world,i,PAWN);
-      piece.noir[n] = i;
       n++;
     }
     if(i%WIDTH==WIDTH-1){
       world_set(world,i,WHITE);
       world_set_sort(world,i,PAWN);
-      piece.blanc[b] = i;
       b++;
     }
   }
-  
+  return 0;
 }

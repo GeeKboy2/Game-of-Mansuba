@@ -117,7 +117,7 @@ int main(int argc,char *argv[]){
   int move;
   int nbr_turns=0;
   int condition_changement_tableau=0;
-  //int valeur_changement=floor(sqrt(MAX_TURNS));
+  int valeur_changement=floor(sqrt(MAX_TURNS));
   while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
     if(condition_changement_tableau>valeur_changement){
