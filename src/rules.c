@@ -9,12 +9,21 @@
 #include "limits.h"
 #include "project.h"
 
+struct piece_t{
+  int blanc[WORLD_SIZE];
+  int noir[WORLD_SIZE];
+};
 
+struct depart_t{
+  struct piece_t piece;
+};
+
+/*
 struct pion{
   enum color_t c;
   enum sort_t s;
 };
-
+*/
 struct world_t{
   struct pion point[WORLD_SIZE];
 };

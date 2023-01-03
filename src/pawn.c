@@ -18,7 +18,7 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   struct neighbors_t deplacement_smpl;
   while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS)
   {
-    if(world_get_sort(world,neighbors.n[k].i) == NO_SORT || (world_get(world,neighbors.n[k].i) != NO_COLOR && world_get(world,neighbors.n[k].i) != world_get(world,idx)))
+    if(world_get_sort(world,neighbors.n[k].i) == NO_SORT || (world_get(world,neighbors.n[k].i) != NO_COLOR && world_get(world,neighbors.n[k].i) != world_get(world,idx)))// --> Sert à manger des pièces mais pas de prise en compte des position de départ
     {
       deplacement_smpl.n[j].i = neighbors.n[k].i;
       deplacement_smpl.n[j].d = neighbors.n[k].d;
@@ -94,7 +94,7 @@ struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
     for(int j = 0; saut_simp.n[j].i != UINT_MAX; j++){ //Boucle pour voir les sauts possibles et éviter les retours en arrières
       int test = 1;
       for(int k = 0; ancienne_position[k] != UINT_MAX; k++){
-        if(ancienne_position[k] == saut_simp.n[j].i){
+        if(ancienne_position[k] == get_neighbor(saut_simp.n[j].i, saut_simp.n[j].d)){ //Bug, mettre un get_neighbor avec la direction
           test = 0;
         }
       }
@@ -183,6 +183,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
     {
       if(somme==rand_mvt)
       {
+        printf("Je me déplace");
         return ds.n[compteur_ds].i;
       }
       compteur_ds++;
@@ -192,6 +193,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
     {
       if(somme==rand_mvt)
       {
+        printf("Je saute");
         return get_neighbor_in_table(ss.n[compteur_ss].i,ss.n[compteur_ss].d,get_neighbors_seed());
       }
       compteur_ss++;
@@ -199,6 +201,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
     }
     if(somme == rand_mvt && sm.n[0].i != UINT_MAX)
     {
+      printf("Je saute beaucoup");
       //printf("Deplacement multiple : %d\n", sm);
       return sm.n[0].i;
     }
@@ -206,20 +209,22 @@ unsigned int mov_pawn(struct world_t *world, int index){
     return index;
 }
 
-int position_init(struct world_t* world){
+struct depart_t position_init(struct world_t* world){
   int b = 0;
   int n = 0;
   for(int i = 0; i< WORLD_SIZE; i++){
     if(i%WIDTH==0){
       world_set(world,i,BLACK);
       world_set_sort(world,i,PAWN);
+      piece.noir[n] = i;
       n++;
     }
     if(i%WIDTH==WIDTH-1){
       world_set(world,i,WHITE);
       world_set_sort(world,i,PAWN);
+      piece.blanc[b] = i;
       b++;
     }
   }
-  return 0;
+  
 }

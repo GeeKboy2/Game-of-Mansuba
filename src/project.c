@@ -36,12 +36,11 @@ int main(int argc,char *argv[]){
       break;
     }
   }
-
-  //MAX_TURNS = getopt(argc,argv,"-m:");
+  
   struct world_t* world=world_init();
   struct world_t* cimetiere=cimetiere_init();
   position_init(world);
-  /*
+  
   world_set(world,1,WHITE);
   world_set_sort(world,1,PAWN);
   world_set(world,3,WHITE);
@@ -49,7 +48,7 @@ int main(int argc,char *argv[]){
   
   world_set(world,4,NO_COLOR);
   world_set_sort(world,4,0);
-  */
+/*
   world_set(world,0,BLACK);
   world_set_sort(world,0,TOUR);
   world_set(world,WIDTH-1,WHITE);
@@ -59,7 +58,7 @@ int main(int argc,char *argv[]){
   world_set_sort(world,WORLD_SIZE-WIDTH,ELEPHANT);
   world_set(world,WORLD_SIZE-1,WHITE);
   world_set_sort(world,WORLD_SIZE-1,ELEPHANT);
-  
+  */
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
@@ -133,10 +132,10 @@ int main(int argc,char *argv[]){
   int move;
   int nbr_turns=0;
   int condition_changement_tableau=0;
-  int valeur_changement=floor(sqrt(MAX_TURNS));
+  //int valeur_changement=floor(sqrt(MAX_TURNS));
   while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
-    if(condition_changement_tableau>valeur_changement){
+    /*if(condition_changement_tableau>valeur_changement){
       printf("========================================== CHANGEMENT DE TABLE =========================================\n");
       condition_changement_tableau=0;
       srand((time(NULL)));
@@ -145,7 +144,7 @@ int main(int argc,char *argv[]){
         random_table_seed=rand()%3;
       }
       init_neighbors(random_table_seed);
-    }
+    }*/
     printf("\n-Turn %d/%d\n",nbr_turns+1,MAX_TURNS);
     printf("\tTour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
