@@ -9,6 +9,8 @@
 #include "limits.h"
 #include "project.h"
 
+//Ce fichier concerne 
+
 //Regarde les déplacements simples réalisables
 struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
 {
