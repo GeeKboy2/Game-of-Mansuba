@@ -42,16 +42,6 @@ int main(int argc,char *argv[]){
   show_world_carre(world);
   position_initialisation(PION_TOUR_ELEPHANT,world);
   enum color_t current_player = get_random_player();
-  /*
-  world_set(world,1,WHITE);
-  world_set_sort(world,1,PAWN);
-  world_set(world,3,WHITE);
-  world_set_sort(world,3,PAWN);
-  
-  world_set(world,4,NO_COLOR);
-  world_set_sort(world,4,0);
-
-  */
   
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
@@ -104,8 +94,8 @@ int main(int argc,char *argv[]){
   */
 
 
-  emprisoner(world,0,prison); 
-  emprisoner(world,WIDTH-1,prison); 
+  //emprisoner(world,0,prison); 
+  //emprisoner(world,WIDTH-1,prison); 
   ///////////////////////////////////////////////////////////test_fin
 
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
@@ -140,7 +130,6 @@ int main(int argc,char *argv[]){
     for(int k = 0; k < MAX_NEIGHBORS+1;k++){
       printf("%d ", neighbors.n[k].i);
     }
-
     printf("\n\tSauts possibles :");
     for(int k = 0; k < MAX_NEIGHBORS+1;k++){
       printf("%d ", saut.n[k].i);

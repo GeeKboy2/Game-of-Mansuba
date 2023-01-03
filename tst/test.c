@@ -40,9 +40,9 @@ int main(int argc,char *argv[]){
 
   //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
-
+  struct prison_t* prison=prison_init();
   show_world_carre(world);
-  position_initialisation(PION_TOUR_ELEPHANT,world);
+  position_initialisation(PIONS,world);
   enum color_t current_player = get_random_player();
   printf("current_player = %d\n",current_player);
 
@@ -99,10 +99,17 @@ int main(int argc,char *argv[]){
   ///////////////////////////////////////////////////////////test_fin
 
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
+  emprisoner(world,WIDTH-1,prison);
+  world_set(world,1,WHITE);
+  world_set_sort(world,1,PAWN);
+  world_set(world,3,WHITE);
+  world_set_sort(world,3,PAWN);
+  //world_set(world,5,WHITE);
+  //world_set_sort(world,5,PAWN);
   printf("\n-Turn #%d/%d# :\n",0,MAX_TURNS);
   show_world(world);
 
-  /*
+  
   int index_pion;
   int move;
   int nbr_turns=0;
@@ -146,6 +153,6 @@ int main(int argc,char *argv[]){
     sleep(0.2);
     condition_changement_tableau+=1;
   }
-  */
+  
   return 0;
 }

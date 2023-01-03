@@ -72,7 +72,7 @@ game:
 	./project -m 50 -t s -s 1
 
 tests:
-	./test -m 50 -t s -s 1
+	./test -m 50 -t s -s 0
 
 clean:
 	rm -f *.o *~ project test
