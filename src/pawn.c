@@ -18,8 +18,7 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   struct neighbors_t deplacement_smpl;
   while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS)
   {
-
-    if(world_get_sort(world,neighbors.n[k].i) == NO_SORT )//|| (world_get(world,neighbors.n[k].i) != NO_COLOR && world_get(world,neighbors.n[k].i) != world_get(world,idx)))
+    if(world_get_sort(world,neighbors.n[k].i) == NO_SORT ) //|| (world_get(world,neighbors.n[k].i) != NO_COLOR && world_get(world,neighbors.n[k].i) != world_get(world,idx)))
     {
       deplacement_smpl.n[j].i = neighbors.n[k].i;
       deplacement_smpl.n[j].d = neighbors.n[k].d;

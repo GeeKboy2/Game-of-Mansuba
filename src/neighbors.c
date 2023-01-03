@@ -34,66 +34,66 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     unsigned int r=idx%n;
     // La ligne est q & la colonne est r.
     
-    if(idx%WIDTH == 0){
-       if (d==4 || d== -2 || d== -1)
+    if(idx%WIDTH == 0){ //Bordure à l'ouest
+       if (d==NWEST || d== SWEST || d== WEST)
 	 {
 	   return UINT_MAX;
 	 }
     }
-    if(idx%WIDTH == WIDTH - 1){ //Bordure.
-      if(d == 2 || d== 1 || d == -4){
+    if(idx%WIDTH == WIDTH - 1){ //Bordure à l'est.
+      if(d == NEAST || d== SEAST || d == EAST){
 	    return UINT_MAX;
       }
     }
-    if(idx/WIDTH == 0){ //Bordure.
-      if(d==2 || d== 3 || d==4){
+    if(idx/WIDTH == 0){ //Bordure au nord.
+      if(d==NEAST || d== NORTH || d==NWEST){
         return UINT_MAX;
       }
     }
-    if(idx/WIDTH == WIDTH-2){ //Bordure.
-      if(d==-2 || d==-3 || d==-4 )
+    if(idx/WIDTH == WIDTH-2){ //Bordure au sud.
+      if(d==SWEST || d==SOUTH || d==SEAST)
       {
         return UINT_MAX;
       }
     }
     
-    if (d==4)
+    if (d==NWEST)
 	 {
 	   q--;
 	   r--;
 	 }
-    if (d==-2)
+    if (d==SWEST)
 	 {
 	   r--;
 	   q++;
 	 }
-    if (d==-1)
+    if (d==WEST)
 	 {
 	   r--;
 	 }
-    if (d==1)
+    if (d==EAST)
     {
         r++;
     }
-    if (d==2)
+    if (d==NEAST)
     {
         r++;
         q--;
     }
-    if (d==3)
+    if (d==NORTH)
     {
         q--;
     }
-    if (d==-3)
+    if (d==SOUTH)
     {
         q++;
     }
-    if (d==-4)
+    if (d==SEAST)
     { 
         q++;
         r++;
     }
-    if (d>4 || d<-4 || d==0 )
+    if (d>4 || d<-4 || d==NO_DIR )
     {
       //printf("INVALID DIRECTION %d",d);
       return UINT_MAX;

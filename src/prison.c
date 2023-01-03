@@ -23,12 +23,12 @@ struct prison_t* prison_init(){
 
 void tentative_evasion(struct prison_t* prison,struct world_t * world){
     unsigned int index;
-    srand(time(NULL));
     for(int i = 0; i < 2*HEIGHT; i++){
         if(prison->index[i]==UINT_MAX){
             continue;
         }
         if(world_get(world,prison->index[i])==NO_COLOR && world_get_sort(world,prison->index[i])==NO_SORT ){
+            srand(time(NULL));
             if(rand()%2==0){
                 index=prison->index[i];
                 world_set(world,index,prison->n[i].c);
