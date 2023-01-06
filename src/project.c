@@ -40,7 +40,7 @@ int main(int argc,char *argv[]){
   struct world_t* world=world_init();
   //struct prison_t* prison=prison_init();
   show_world_carre(world);
-  position_initialisation(PIONS,world);
+  position_initialisation(PION_TOUR_ELEPHANT,world);
   enum color_t current_player = get_random_player();
   
   ///////////////////////////////////////////////////////////test
@@ -142,7 +142,7 @@ int main(int argc,char *argv[]){
     nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    //sleep(0.2);
+    sleep(1);
     condition_changement_tableau+=1;
   }
   
