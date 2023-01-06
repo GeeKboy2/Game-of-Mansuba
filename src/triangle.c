@@ -13,8 +13,9 @@
 
 //Gets the neighbor of a piece in a direction.
 unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d){
-        if(idx/WIDTH == 0){
+    if(idx/WIDTH == 0){
         if(d == NORTH || d == NEAST || d == NWEST){ //No north allowed for slots on the north.
+            return UINT_MAX;
         }
     }
     if(idx/WIDTH == WIDTH - 2){

@@ -124,8 +124,8 @@ int main(int argc,char *argv[]){
     printf("\tTour du %d\n",current_player);
     index_pion = choose_random_piece_belonging_to(world, current_player);
     printf("\tLa piece en mvt est %d\n",index_pion);
-    printf("\tSes voisins sont :");
-    struct neighbors_t neighbors = get_neighbors(index_pion);
+    /*printf("\tSes voisins sont :");
+    //struct neighbors_t neighbors = get_neighbors(index_pion);
     struct neighbors_t saut = saut_simple(world,index_pion);
     for(int k = 0; k < MAX_NEIGHBORS+1;k++){
       printf("%d ", neighbors.n[k].i);
@@ -135,13 +135,14 @@ int main(int argc,char *argv[]){
       printf("%d ", saut.n[k].i);
     }
     printf("\n");
+    */
     move = choose_random_move_for_piece(world, index_pion);
     printf("\tDéplacement vers %d\n",move);
     move_piece(world, move,index_pion);
     nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    sleep(0.2);
+    sleep(1);
     condition_changement_tableau+=1;
   }
   

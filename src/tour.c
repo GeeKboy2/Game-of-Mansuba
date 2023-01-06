@@ -22,6 +22,11 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
       }
     }
   }
+  if(j == 0){
+    mvt_tour.n[j].i = idx;
+    mvt_tour.n[j].d = 0;
+    j++;
+  }
   mvt_tour.n[j].i = UINT_MAX;
   mvt_tour.n[j].d = 0;
   return mvt_tour;
@@ -44,6 +49,9 @@ unsigned int mov_tour(struct world_t *world, int index){
     while(pos != UINT_MAX && world_get_sort(world,pos) == NO_SORT){
       compteur_case++;
       pos = get_neighbor_in_table(pos,tour.n[rand_dir].d,get_neighbors_seed());
+    }
+    if(compteur_case == 0){
+      return index;
     }
     int rand_mvt = rand()%(compteur_case)+1;
     for(int k = 0; k < rand_mvt; k++){

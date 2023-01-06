@@ -71,7 +71,7 @@ struct neighbors_t get_neighbors_hex(unsigned int idx);
 
 unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d);
 
-unsigned int mov_pawn(struct world_t *world, int index);
+unsigned int mov_pawn(struct world_t *world, unsigned int index);
 
 unsigned int mov_tour(struct world_t *world, int index);
 
