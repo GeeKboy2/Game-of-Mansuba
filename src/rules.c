@@ -9,6 +9,9 @@
 #include "limits.h"
 #include "project.h"
 
+//In this file. All the laws of the game are defined.
+
+
 struct piece_t{
   int blanc[WORLD_SIZE];
   int noir[WORLD_SIZE];
@@ -18,25 +21,28 @@ struct depart_t{
   struct piece_t piece;
 };
 
+//Call the correct get_neighbor function according the table type.
 unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int type_plateau){
-    if(type_plateau==0){
+    if(type_plateau==0){ //Square.
         return get_neighbor(idx,d);
     }
-    if(type_plateau==1){
+    if(type_plateau==1){ //Hexagonal.
         return get_neighbor_hex(idx,d);
     }
-    if(type_plateau==2){
+    if(type_plateau==2){ //Triangular.
         return get_neighbor_triangle(idx,d);
     }
     return UINT_MAX;
 }
 
+//Choose a random player to start the game.
 enum color_t get_random_player()
 {
   srand(time(NULL));
   return rand()%2+1;
 }
 
+//Switche the playing hand to the other player.
 enum color_t next_player(enum color_t current_player)
 {
   if(current_player==BLACK)
@@ -52,31 +58,34 @@ enum color_t next_player(enum color_t current_player)
   return current_player;
 }
 
+//Choose a random piece belonging to a player.
 int choose_random_piece_belonging_to(struct world_t* world, enum color_t current_player){
   int compteur = 0;
-  for(int i = 0; i<WORLD_SIZE; i++){
+  for(int i = 0; i<WORLD_SIZE; i++){ //Count the number of pieces in the world.
     if(world_get(world,i) == current_player){
       compteur++;
     }
   }
   srand(time(NULL));
-  int pos = (rand()%compteur)+1;
-  int num = 0;
-  int i = 0;
-  while(num <= compteur && i< WORLD_SIZE){
-    if(world_get(world,i) == current_player){
+  int pos = (rand()%compteur)+1;//Gets the number of a random piece.
+  int num = 0;//Will be increacing until it reaches the number of the piece.
+  int i = 0; //The index of the piece.
+  while(num <= compteur && i< WORLD_SIZE){ //Travel the world.
+    if(world_get(world,i) == current_player){ //Increasing num.
       num++;
     }
-    if(num==pos)
+    if(num==pos) //We reached the piece the rand() gave us.(We are 100% sure this case will be true at some point)
     {
-      return i;
+      return i; //Retun it's index.
     }
-    i++;
+    i++; 
   }
-  i--;
+  //The case i=WORLD_SIZE is already solved in the loop.
+  i--; //This case will never be reached but in case i=WORLD_SIZE we substract one and return it.
   return i;
 }
 
+//This function calls the functions that chooses a random move for a piece according to its type.
 unsigned int choose_random_move_for_piece(struct world_t *world,int index)
 {
   if(world_get_sort(world,index)==PAWN)
@@ -94,8 +103,8 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index)
   return UINT_MAX;
 }
 
-
-void move_piece(struct world_t* world,unsigned int index_arrivee,unsigned int index_depart) // Mettre des unsigned int %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//Move a piece from a starting position to an end position.
+void move_piece(struct world_t* world,unsigned int index_arrivee,unsigned int index_depart) 
 {
    if(index_arrivee == UINT_MAX){ 
    }
@@ -109,39 +118,40 @@ void move_piece(struct world_t* world,unsigned int index_arrivee,unsigned int in
   }
 }
 
+//Define victory conditions according the type of victory.
 unsigned int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN){
   if(MAX_TURNS <= TURN){
-    printf("Nombre de tour maximum atteint, pas de vainqueur\n");
+    printf("MAX_TURNS reached.\n");
     return 0;
   }
   if(type_victoire[0] == 's'){
     for(int i = 0; i<WORLD_SIZE;i++){
       if(world_get(world,i)== WHITE && i%WIDTH==0){
-	      printf("Victoire simple des blancs\n");
+	      printf("Simple Victory (WHITE)\n");
 	      return 0;
       }
       if(world_get(world,i)==BLACK && i%WIDTH==WIDTH-1){
-      	printf("Victoire simple des noirs\n");
+      	printf("Simple Victory (BLACK)\n");
 	      return 0;
       }
     }
   }
-  int compteur_blanc = 0;
+  int compteur_blanc = 0; //Count the number of white pieces are in the
   int compteur_noir = 0;
   if(type_victoire[0] == 'c'){
     for(int i = 0; i<WORLD_SIZE;i++){
-      if(world_get(world,i)==WHITE && i%WIDTH==0){
+      if(world_get(world,i)==WHITE && i%WIDTH==0){ //Counting the number of white pieces.
 	      compteur_blanc++;
       }
-      if(world_get(world,i)==BLACK && i%WIDTH==WIDTH-1){
+      if(world_get(world,i)==BLACK && i%WIDTH==WIDTH-1){ //Counting the number of black pieces.
 	      compteur_noir++;
       }
     }
-    if (compteur_blanc == HEIGHT){
+    if (compteur_blanc == HEIGHT){ //Max number of pieces reached.
       printf("Victoire complexe des blancs\n");
       return 0;
     }
-    if(compteur_noir == HEIGHT){
+    if(compteur_noir == HEIGHT){ //Max number of pieces reached.
       printf("Victoire complexe des noirs\n");
       return 0;
     }
@@ -166,7 +176,7 @@ void position_initialisation(enum init type_init,struct world_t* world){
     world_set(world,WORLD_SIZE-1,WHITE);
     world_set_sort(world,WORLD_SIZE-1,ELEPHANT);
   }else {
-    printf("INVALID INITIALISATION");
+    printf("INVALID INITIALISATION\n");
   }
 }
 
