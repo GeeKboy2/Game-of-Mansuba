@@ -18,9 +18,9 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
   unsigned int j =0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t deplacement_smpl;
-  while(neighbors.n[k].i != UINT_MAX && k<MAX_NEIGHBORS)
+  while((neighbors.n[k].i != UINT_MAX) && (k<MAX_NEIGHBORS))
   {
-    if(world_get_sort(world,neighbors.n[k].i) == NO_SORT ) //|| (world_get(world,neighbors.n[k].i) != NO_COLOR && world_get(world,neighbors.n[k].i) != world_get(world,idx)))
+    if(world_get_sort(world,neighbors.n[k].i) == NO_SORT )
     {
       deplacement_smpl.n[j].i = neighbors.n[k].i;
       deplacement_smpl.n[j].d = neighbors.n[k].d;
@@ -123,8 +123,7 @@ unsigned int saut_multiple(struct world_t* world, unsigned int idx){
       //printf("effacer %u\n",index_passe[i-1]);
     }
   }
-
-  return 0;
+  return idx;
 }
 /*
 struct neighbors_t saut_multiple(struct world_t* world, unsigned int idx)
@@ -215,7 +214,10 @@ unsigned int saut_multiple2(struct world_t* world, unsigned int idx){
 
 }
 */
-unsigned int mov_pawn(struct world_t *world, int index){
+unsigned int mov_pawn(struct world_t *world, unsigned int index){
+    if(world_get_sort(world, index) != PAWN ){
+      return index;
+    }
     struct neighbors_t ds=deplacement_simple(world,index);
     struct neighbors_t ss=saut_simple(world,index);
     //struct neighbors_t sm = saut_multiple(world,index);
@@ -255,7 +257,7 @@ unsigned int mov_pawn(struct world_t *world, int index){
     {
       printf("Je saute beaucoup");
       //printf("Deplacement multiple : %d\n", sm);
-      saut_multiple(world,index);
+      return saut_multiple(world,index);
     }
     //printf("Le bug : %d\n", index);
     return index;

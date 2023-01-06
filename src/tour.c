@@ -22,6 +22,11 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
       }
     }
   }
+  if(j == 0){
+    mvt_tour.n[j].i = idx;
+    mvt_tour.n[j].d = 0;
+    j++;
+  }
   mvt_tour.n[j].i = UINT_MAX;
   mvt_tour.n[j].d = 0;
   return mvt_tour;

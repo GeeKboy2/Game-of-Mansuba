@@ -104,8 +104,8 @@ int main(int argc,char *argv[]){
   world_set_sort(world,1,PAWN);
   world_set(world,3,WHITE);
   world_set_sort(world,3,PAWN);
-  //world_set(world,5,WHITE);
-  //world_set_sort(world,5,PAWN);
+  world_set(world,5,WHITE);
+  world_set_sort(world,5,PAWN);
   printf("\n-Turn #%d/%d# :\n",0,MAX_TURNS);
   show_world(world);
 
