@@ -142,7 +142,7 @@ int main(int argc,char *argv[]){
     nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    sleep(1);
+    //sleep(1);
     condition_changement_tableau+=1;
   }
   
