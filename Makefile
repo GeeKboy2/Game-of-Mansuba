@@ -12,8 +12,9 @@ all:  project testing
 %.o: %.c
 	$(CC) -c $(CFLAGS) $<
 
-testing: geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o test.o# (Add your dependency here, e.g "project.o")
+testing: geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o test.o test_show_world.o# (Add your dependency here, e.g "project.o")
 	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o test.o -o test -lm
+	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o test_show_world.o -o test_show_world -lm
 
 project: geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o project.o# (Add your dependency here, e.g "project.o")
 	$(CC) $(CFLAGS) geometry.o world.o neighbors.o hexagone.o triangle.o show_world.o pawn.o tour.o rules.o elephant.o prison.o project.o -o project -lm
@@ -63,6 +64,10 @@ test.o: tst/test.c
 	cp -r ./src/*.h ./tst
 	$(CC) $(CFLAGS) tst/test.c -c -o test.o
 
+test_show_world.o: tst/test_show_world.c
+	cp -r ./src/*.h ./tst
+	$(CC) $(CFLAGS) tst/test_show_world.c -c -o test_show_world.o
+
 #nom: dépendances (hors .h)
 # commandes à executer
 
@@ -73,8 +78,9 @@ game:
 
 tests:
 	./test -m 50 -t s -s 0
+	./test_show_world -m 50 -t s -s 0
 
 clean:
-	rm -f *.o *~ project test
+	rm -f *.o *~ project test test_show_world
 	rm -r ./tst/*.h
 #utiliser avec :~/$ make clean
