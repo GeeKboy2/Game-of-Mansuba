@@ -162,9 +162,9 @@ unsigned int condition_victoire(struct world_t * world,char *type_victoire,int M
 
 
 void position_initialisation(enum init type_init,struct world_t* world){
-  if(type_init==PIONS){
+  if(type_init==PIONS){ //Two columns of pawns.
     position_init(world);
-  }else if(type_init==PION_TOUR_ELEPHANT){
+  }else if(type_init==PION_TOUR_ELEPHANT){ //Mix of pawns elephants and tours.
     position_init(world);
     world_set(world,0,BLACK);
     world_set_sort(world,0,TOUR);

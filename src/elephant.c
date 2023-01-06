@@ -9,6 +9,9 @@
 #include "limits.h"
 #include "project.h"
 
+//This file has all the functions related to the elephant piece.
+
+//Gets all the neighbors of an elephant.
 struct ensemble_t get_neighbors_3(unsigned int idx)
 {
   struct ensemble_t neighbors; 
@@ -17,15 +20,15 @@ struct ensemble_t get_neighbors_3(unsigned int idx)
   unsigned int k=0;
   unsigned int ind;
   unsigned int ind1;
-  for(d = -3; d<=4; d+=2)    //Parcour des directions cardinales.
+  for(d = -3; d<=4; d+=2)    //Going through all the cardinal directions.
   {
     if(idx!=UINT_MAX){
       ind=get_neighbor_in_table(idx,d,get_neighbors_seed()); 
-      for(r = -3; r<=4; r+=2)  //Parcour des directions cardinales.
+      for(r = -3; r<=4; r+=2)  //Going through all the cardinal directions of the neighbor.
       {
         if(ind!=UINT_MAX){
           ind1=get_neighbor_in_table(ind,r,get_neighbors_seed());
-          if(ind1!=UINT_MAX && idx!=ind1) //Pas de retour en arrieve.
+          if(ind1!=UINT_MAX && idx!=ind1) //No turning back.
           {
             neighbors.n[k].i=ind1;
             neighbors.n[k].d=r;
@@ -35,9 +38,9 @@ struct ensemble_t get_neighbors_3(unsigned int idx)
       }
     }
   }
-  neighbors.n[k].i=UINT_MAX; //Termination par UINT_MAX.         
+  neighbors.n[k].i=UINT_MAX; //Close with an UINT_MAX.         
   k++;
-  while(k<13) //Completion par des 0.
+  while(k<13) //Filling the rest with zeros.
   {
     neighbors.n[k].i=0;
     k++;
@@ -45,6 +48,7 @@ struct ensemble_t get_neighbors_3(unsigned int idx)
   return neighbors;
 }
 
+//
 struct ensemble_t deplacement_simple_3(struct world_t* world, unsigned int idx)
 {
   unsigned int k = 0;
@@ -73,6 +77,7 @@ struct ensemble_t deplacement_simple_3(struct world_t* world, unsigned int idx)
   return deplacement_smpl;
 }
 
+
 unsigned int nombre_semidiag(struct world_t*world,unsigned int index)
 {
   struct ensemble_t mouvement1 = deplacement_simple_3(world,index);
@@ -85,6 +90,7 @@ unsigned int nombre_semidiag(struct world_t*world,unsigned int index)
   }
   return compteur;
 }
+
 
 unsigned int mov_elephant(struct world_t *world, int index){
     struct ensemble_t ds=deplacement_simple_3(world,index);
