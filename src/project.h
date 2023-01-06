@@ -2,6 +2,8 @@
 #include "world.h"
 #include "neighbors.h"
 
+//In this file we have the rest of signatures that aren't in  the other *.h
+
 struct pion{
   enum color_t c;
   enum sort_t s;

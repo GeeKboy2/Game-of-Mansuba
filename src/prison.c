@@ -49,6 +49,7 @@ void emprisoner(struct world_t* world,unsigned int index,struct prison_t* prison
             prison->index[i]=index;
             prison->n[i].c=color;
             prison->n[i].s=sort;
+            break;
         }
     }
 }

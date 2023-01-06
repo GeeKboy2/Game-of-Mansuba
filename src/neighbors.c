@@ -32,7 +32,7 @@ unsigned int get_neighbor(unsigned int idx, enum dir_t d)
     unsigned int n=WIDTH;
     unsigned int q=idx/n;
     unsigned int r=idx%n;
-    // La ligne est q & la colonne est r.
+    //The coordinates of each piece are (q,r) q for lines and r for columns.
     
     if(idx%WIDTH == 0){ //Bordure à l'ouest
        if (d==NWEST || d== SWEST || d== WEST)

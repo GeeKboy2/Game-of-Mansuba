@@ -11,9 +11,9 @@
 #include "project.h"
 #include <getopt.h>
 
+//In this file we make random lines to test all the functions we make.
 
 
-// Créé le monde et set les différents pions dans leur position initiale
 int main(int argc,char *argv[]){
  
   char* type_victoire="s";
