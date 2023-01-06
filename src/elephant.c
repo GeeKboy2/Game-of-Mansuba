@@ -65,10 +65,10 @@ struct ensemble_t deplacement_simple_3(struct world_t* world, unsigned int idx)
     }
     k++;
   }
-  deplacement_smpl.n[j].i=UINT_MAX;
+  deplacement_smpl.n[j].i=UINT_MAX;//Closing with an UINT_MAX.
   deplacement_smpl.n[j].d=0;
   j++;
-  while(j<13)
+  while(j<13)//Completing with zeros. 
   {
     deplacement_smpl.n[j].i=0;
     deplacement_smpl.n[j].d=0;
