@@ -150,6 +150,8 @@ unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
     compteur+=1;
     j++;
   }
-  compteur++;
+  if(saut_multiple(world, idx) != UINT_MAX){
+    compteur++;
+  }
   return compteur;
 }
