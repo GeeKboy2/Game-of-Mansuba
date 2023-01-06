@@ -82,7 +82,7 @@ int main(int argc,char *argv[]){
   }
   
   (void) type_victoire;
-  //(void) RNG;
+  (void) RNG;
   (void) MAX_TURNS;
 
 

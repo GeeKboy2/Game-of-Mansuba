@@ -9,16 +9,16 @@
 #include "limits.h"
 #include "project.h"
 
-//Renvoie les directions possibles pour le déplacement de la tour
+//Return the possible directions for the tower.
 struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx){
   struct neighbors_t mvt_tour;
   int j = 0;
-  for(int i = -3;i < 4; i = i + 2){
+  for(int i = -3;i < 4; i = i + 2){  //Look all cardinal directions.
     if(get_neighbor_in_table(idx,i,get_neighbors_seed())<UINT_MAX){
-      if(get_neighbor_in_table(idx,i,get_neighbors_seed()) != UINT_MAX && world_get_sort(world, get_neighbor_in_table(idx,i,get_neighbors_seed())) == 0){
+      if(get_neighbor_in_table(idx,i,get_neighbors_seed()) != UINT_MAX && world_get_sort(world, get_neighbor_in_table(idx,i,get_neighbors_seed())) == 0){ //Check the existence of a neighbor.
         mvt_tour.n[j].i = get_neighbor_in_table(idx,i,get_neighbors_seed());
         mvt_tour.n[j].d = i;
-        j++; 
+        j++;
       }
     }
   }
@@ -32,7 +32,7 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
   return mvt_tour;
 }
 
-//Renvoie l'index d'arrivée de la tour
+//Return the end index of the tower.
 unsigned int mov_tour(struct world_t *world, int index){
     struct neighbors_t tour = translation_cardinale(world,index);
     if(tour.n[0].i == UINT_MAX){
