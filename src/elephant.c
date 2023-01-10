@@ -54,27 +54,27 @@ struct elephant_set_t simple_movement_elephant(struct world_t* world, unsigned i
   unsigned int k = 0;
   unsigned int j =0;
   struct elephant_set_t neighbors = get_neighbors_elephant(idx);
-  struct elephant_set_t simple_mouvement_list;
+  struct elephant_set_t simple_movement_list;
   while(neighbors.n[k].i < UINT_MAX && k<13) //
   {
     if(world_get_sort(world,neighbors.n[k].i)== 0)
     {
-      simple_mouvement_list.n[j].i = neighbors.n[k].i;
-      simple_mouvement_list.n[j].d = neighbors.n[k].d;
+      simple_movement_list.n[j].i = neighbors.n[k].i;
+      simple_movement_list.n[j].d = neighbors.n[k].d;
       j++;
     }
     k++;
   }
-  simple_mouvement_list.n[j].i=UINT_MAX;//Closing with an UINT_MAX.
-  simple_mouvement_list.n[j].d=0;
+  simple_movement_list.n[j].i=UINT_MAX;//Closing with an UINT_MAX.
+  simple_movement_list.n[j].d=0;
   j++;
   while(j<13)//Completing with zeros. 
   {
-    simple_mouvement_list.n[j].i=0;
-    simple_mouvement_list.n[j].d=0;
+    simple_movement_list.n[j].i=0;
+    simple_movement_list.n[j].d=0;
     j++;
   }
-  return simple_mouvement_list;
+  return simple_movement_list;
 }
 
 
@@ -93,8 +93,8 @@ unsigned int number_semidiag(struct world_t*world,unsigned int index)
 
 
 unsigned int move_elephant(struct world_t *world, int index){
-    struct elephant_set_t simple_mouvement_list=simple_movement_elephant(world,index);
-    unsigned int simple_mouvement_counter=0;
+    struct elephant_set_t simple_movement_list=simple_movement_elephant(world,index);
+    unsigned int simple_movement_counter=0;
     unsigned int nombre_mvt=number_semidiag(world,index);
 
     srand(time(NULL));
@@ -104,14 +104,14 @@ unsigned int move_elephant(struct world_t *world, int index){
     }
     int rand_mvt=rand()%nombre_mvt;
     int somme=0;
-    while(simple_mouvement_list.n[simple_mouvement_counter].i!=UINT_MAX && simple_mouvement_counter < 13)
+    while(simple_movement_list.n[simple_movement_counter].i!=UINT_MAX && simple_movement_counter < 13)
     {
       if(somme==rand_mvt)
       {
-        printf("");
-        return simple_mouvement_list.n[simple_mouvement_counter].i;
+        printf("Simple movement");
+        return simple_movement_list.n[simple_movement_counter].i;
       }
-      simple_mouvement_counter++;
+      simple_movement_counter++;
       somme++;
     }
     return UINT_MAX;
