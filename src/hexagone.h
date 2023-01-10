@@ -1,2 +1,2 @@
-//void show_world_hexagone(struct world_t* world);
+//void show_world_hexagon(struct world_t* world);
 

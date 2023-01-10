@@ -10,7 +10,7 @@
 #include "project.h"
 
 //Shows the world, but with square relations.
-void show_world_carre(struct world_t* world)
+void show_world_square(struct world_t* world)
 {
     for(int i = 0; i <WORLD_SIZE ; i++){
       if(world_get(world,i)==BLACK) //If the piece is black.
@@ -59,7 +59,7 @@ void show_world_carre(struct world_t* world)
 //The folowing example is only one line of the square table.
 //spaces ⛀ spaces ⛀
 //  ⛀ spaces ⛀ spaces 
-void show_world_hexagone(struct world_t* world)
+void show_world_hexagon(struct world_t* world)
 {
   int idx=0;
     for(int i = 0; i <HEIGHT ; i++)
@@ -242,10 +242,10 @@ void show_world_triangle(struct world_t* world)
 //Calls functions that show the world but according to the current relations.
 void show_world(struct world_t* world){
   if(get_neighbors_seed()==0){
-    show_world_carre(world);
+    show_world_square(world);
   }
   if(get_neighbors_seed()==1){
-    show_world_hexagone(world);
+    show_world_hexagon(world);
   }
   if(get_neighbors_seed()==2){
     show_world_triangle(world);

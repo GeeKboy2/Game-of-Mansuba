@@ -19,7 +19,7 @@ struct ensemble_t{
 
 enum init{
   PIONS = 0,
-  PION_TOUR_ELEPHANT = 1,
+  PAWNS_TOWERS_ELEPHANTS = 1,
   MAX_INIT =2
 };
 
@@ -57,9 +57,9 @@ unsigned int nombre_semidiag(struct world_t*world,unsigned int index);
 
 struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx);
 
-void show_world_carre(struct world_t* world);
+void show_world_square(struct world_t* world);
 
-void show_world_hexagone(struct world_t* world);
+void show_world_hexagon(struct world_t* world);
 
 void show_world_triangle(struct world_t* world);
 

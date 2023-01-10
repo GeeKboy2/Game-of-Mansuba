@@ -41,7 +41,7 @@ int main(int argc,char *argv[]){
   //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
   struct prison_t* prison=prison_init();
-  show_world_carre(world);
+  show_world_square(world);
   position_initialisation(PIONS,world);
   enum color_t current_player = get_random_player();
   printf("current_player = %d\n",current_player);
