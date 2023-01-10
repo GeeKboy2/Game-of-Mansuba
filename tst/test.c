@@ -40,7 +40,7 @@ int main(int argc,char *argv[]){
 
   //MAX_TURNS = getopt(argc,argv,"-m:");
   struct world_t* world=world_init();
-  struct prison_t* prison=prison_init();
+  struct jail_t* prison=jail_init();
   show_world_square(world);
   position_initialisation(PAWNS,world);
   enum color_t current_player = get_random_player();
@@ -99,7 +99,7 @@ int main(int argc,char *argv[]){
   ///////////////////////////////////////////////////////////test_fin
 
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
-  emprisoner(world,WIDTH-1,prison);
+  imprison(world,WIDTH-1,prison);
   world_set(world,1,WHITE);
   world_set_sort(world,1,PAWN);
   world_set(world,3,WHITE);

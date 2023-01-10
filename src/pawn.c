@@ -75,7 +75,6 @@ struct neighbors_t simple_jump(struct world_t* world, unsigned int idx)
     saut_simp.n[j].d=0;
     j++;
   }
-  printf("\n");
   return saut_simp;
 }
 
@@ -123,7 +122,7 @@ unsigned int multiple_jumps(struct world_t* world, unsigned int idx){
   return idx;
 }
 
-unsigned int mov_pawn(struct world_t *world, unsigned int index){
+unsigned int move_pawn(struct world_t *world, unsigned int index){
     if(world_get_sort(world, index) != PAWN ){
       return index;
     }

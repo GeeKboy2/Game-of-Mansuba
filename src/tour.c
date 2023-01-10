@@ -10,7 +10,7 @@
 #include "project.h"
 
 //Return the possible directions for the tower.
-struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx){
+struct neighbors_t cardinal_translation(struct world_t *world, unsigned int idx){
   struct neighbors_t mvt_tour;
   int j = 0;
   for(int i = -3;i < 4; i = i + 2){  //Look all cardinal directions.
@@ -33,8 +33,8 @@ struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx
 }
 
 //Return the end index of the tower.
-unsigned int mov_tour(struct world_t *world, int index){
-    struct neighbors_t tour = translation_cardinale(world,index);
+unsigned int move_tour(struct world_t *world, int index){
+    struct neighbors_t tour = cardinal_translation(world,index);
     if(tour.n[0].i == UINT_MAX){
       return index;
     }

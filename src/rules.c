@@ -27,7 +27,7 @@ unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int t
         return get_neighbor(idx,d);
     }
     if(type_plateau==1){ //Hexagonal.
-        return get_neighbor_hex(idx,d);
+        return get_neighbor_hexagon(idx,d);
     }
     if(type_plateau==2){ //Triangular.
         return get_neighbor_triangle(idx,d);
@@ -67,9 +67,11 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
       compteur++;
     }
   }
+  /*
   if(compteur <4){
     exit(100);
   }
+  */
   srand(time(NULL));
   int pos = (rand()%compteur)+1;//Gets the number of a random piece.
   int num = 0;//Will be increacing until it reaches the number of the piece.
@@ -95,15 +97,15 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index)
   
   if(world_get_sort(world,index)==PAWN)
   {
-    return mov_pawn(world,index);
+    return move_pawn(world,index);
   }
   if(world_get_sort(world,index)==TOUR)
   {
-    return mov_tour(world,index);
+    return move_tour(world,index);
   }
   if(world_get_sort(world,index)==ELEPHANT)
   {
-    return mov_elephant(world,index);
+    return move_elephant(world,index);
   }
   return UINT_MAX;
 }
@@ -111,7 +113,7 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index)
 //Move a piece from a starting position to an end position.
 void move_piece(struct world_t* world,unsigned int end_index,unsigned int start_index) 
 {
-  printf("%d -> %d\n",start_index,end_index);
+  printf("%d -> %d\n\n",start_index,end_index);
    if(end_index == UINT_MAX){ 
    }
    else{

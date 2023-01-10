@@ -13,7 +13,7 @@ struct world_t{
   struct pion point[WORLD_SIZE];
 };
 
-struct ensemble_t{
+struct elephant_set_t{
   struct vector_t n[12+1];
 };
 
@@ -49,13 +49,13 @@ int position_init(struct world_t* world);
 
 unsigned int victory_condition(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
 
-struct ensemble_t get_neighbors_3(unsigned int idx);
+struct elephant_set_t get_neighbors_elephant(unsigned int idx);
 
-struct ensemble_t deplacement_simple_3(struct world_t* world, unsigned int idx);
+struct elephant_set_t simple_movement_elephant(struct world_t* world, unsigned int idx);
 
-unsigned int nombre_semidiag(struct world_t*world,unsigned int index);
+unsigned int number_semidiag(struct world_t*world,unsigned int index);
 
-struct neighbors_t translation_cardinale(struct world_t *world, unsigned int idx);
+struct neighbors_t cardinal_translation(struct world_t *world, unsigned int idx);
 
 void show_world_square(struct world_t* world);
 
@@ -65,31 +65,29 @@ void show_world_triangle(struct world_t* world);
 
 void show_world(struct world_t* world);
 
-unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d);
+unsigned int get_neighbor_hexagon(unsigned int idx, enum dir_t d);
 
 struct neighbors_t get_neighbors_hex(unsigned int idx);
 
 unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d);
 
-unsigned int mov_pawn(struct world_t *world, unsigned int index);
+unsigned int move_pawn(struct world_t *world, unsigned int index);
 
-unsigned int mov_tour(struct world_t *world, int index);
+unsigned int move_tour(struct world_t *world, int index);
 
-unsigned int mov_elephant(struct world_t *world, int index);
+unsigned int move_elephant(struct world_t *world, int index);
 
 unsigned int get_neighbor_in_table(unsigned int idx ,enum dir_t d,unsigned int type_plateau);
 
-//unsigned int saut_multiple2(struct world_t* world, unsigned int idx);
-
 void position_initialisation(enum init type_init,struct world_t* world);
 
-struct prison_t{
+struct jail_t{
   struct pion n[2*HEIGHT];
   unsigned int index[2*HEIGHT];
 };
 
-struct prison_t* prison_init();
+struct jail_t* jail_init();
 
-void emprisoner(struct world_t* world,unsigned int index,struct prison_t* prison);
+void imprison(struct world_t* world,unsigned int index,struct jail_t* jail);
 
-void tentative_evasion(struct prison_t* prison, struct world_t* world);
+void escape_attempt(struct jail_t* jail, struct world_t* world);

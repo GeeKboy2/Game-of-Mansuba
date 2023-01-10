@@ -11,8 +11,8 @@
 #include "project.h"
 
 
-struct prison_t prison;
-struct prison_t* prison_init(){
+struct jail_t prison;
+struct jail_t* jail_init(){
   for(int i = 0; i < 2*HEIGHT; i++){
     prison.n[i].c = NO_COLOR;
     prison.n[i].s = NO_SORT;
@@ -21,7 +21,7 @@ struct prison_t* prison_init(){
   return &prison;
 }
 
-void tentative_evasion(struct prison_t* prison,struct world_t * world){
+void escape_attempt(struct jail_t* prison,struct world_t * world){
     unsigned int index;
     for(int i = 0; i < 2*HEIGHT; i++){
         if(prison->index[i]==UINT_MAX){
@@ -39,7 +39,7 @@ void tentative_evasion(struct prison_t* prison,struct world_t * world){
 }
 
 
-void emprisoner(struct world_t* world,unsigned int index,struct prison_t* prison){
+void imprison(struct world_t* world,unsigned int index,struct jail_t* prison){
     enum color_t color=world_get(world,index);
     enum sort_t sort=world_get_sort(world,index);
     world_set(world,index,NO_COLOR);

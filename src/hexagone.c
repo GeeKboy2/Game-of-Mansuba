@@ -9,7 +9,7 @@
 #include "limits.h"
 #include "project.h"
 
-unsigned int get_neighbor_hex(unsigned int idx, enum dir_t d){
+unsigned int get_neighbor_hexagon(unsigned int idx, enum dir_t d){
     if(idx/WIDTH == 0){
         if(d == NORTH || d == NEAST || d == NWEST){ // Pas de Nord pour les case en haut du plateau
             return UINT_MAX;
@@ -73,7 +73,7 @@ struct neighbors_t get_neighbors_hex(unsigned int idx){
   unsigned int k=0;
   for(d = -4; d<=4; d++) //Ajout de tout les voisins possible.
   {
-    unsigned int ind=get_neighbor_hex(idx,d);
+    unsigned int ind=get_neighbor_hexagon(idx,d);
     if(ind<UINT_MAX)
     {
       neighbors.n[k].i=ind;
