@@ -18,11 +18,7 @@ int main(int argc,char *argv[]){
   char* type_victoire="s";
   int RNG=2; //initialisation random
   int MAX_TURNS=2*WORLD_SIZE;
-
   int option;
-
-  /* parse short options */
-
   while ((option = getopt(argc, argv, "smt")) != -1) {
     switch (option) {
     case 's':
@@ -36,67 +32,16 @@ int main(int argc,char *argv[]){
       break;
     }
   }
-  
+  /*Initializing all the structures*/
   struct world_t* world=world_init();
   //struct prison_t* prison=prison_init();
   show_world_carre(world);
   position_initialisation(PION_TOUR_ELEPHANT,world);
-  enum color_t current_player = get_random_player();
-  
-  ///////////////////////////////////////////////////////////test
-  //int neigh=get_neighbor(10,-2);
-  //printf("%d\n",neigh);
-  //world_set(world,6,2);
-  //world_set(world,13,2);
-  //world_set(world,14,2);
-  //world_set(world,19,2);
-  //condition_victoire(world,"c",20);
-  
 
-  /*
-  int i = 0;
-  while(i < WORLD_SIZE){
-    struct neighbors_t dpl = deplacement_simple(world,i);
-    printf("%d :\n", i);
-    int j = 0;
-    while(dpl.n[j].i != UINT_MAX){
-      printf("%d\n", dpl.n[j].i);
-      j++;
-    }
-    i = i + 10;
-  }
-  */
-  /*
-  world_set(world,6,1);
-  world_set_sort(world,6,1);
-  world_set(world,13,2);
-  world_set_sort(world,13,2);
-  struct neighbors_t neigh=get_neighbors(7);
-  for(int j=0;j<MAX_NEIGHBORS+1;j++)
-  {
-    printf("voisin %u de direction %u\n",neigh.n[j].i,neigh.n[j].d);
-    //printf("voisin %u\n",get_neighbor(7,j-4));
-  }
-  */
- 
-  //printf("%d",MAX_NEIGHBORS);
-  /*
-  printf("voisin de 0 %d\n",get_neighbor(0,3));
-  //printf("%d\n",next_player(1));
-  */
-  /*
-  world_set(world,6,1);
-  world_set_sort(world,6,1);
-  printf("avant exemple nbr mvt\n");
-  printf("nombre mvt = %d\n",nombre_mouvements(world,0));
-  printf("avant choose random\n");
-  printf("%d\n",choose_random_piece_belonging_to(world,1,));
-  */
-
+  enum color_t current_player = get_random_player();//choosing a starting player
 
   //emprisoner(world,0,prison); 
   //emprisoner(world,WIDTH-1,prison); 
-  ///////////////////////////////////////////////////////////test_fin
 
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
   printf("\n-Turn #%d/%d# :\n",0,MAX_TURNS);

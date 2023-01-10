@@ -120,8 +120,8 @@ unsigned int saut_multiple(struct world_t* world, unsigned int idx){
 
   for(int i=1;i<WORLD_SIZE;i++){
     if(index_passe[i]!=UINT_MAX){
-      world_set(world,index_passe[i-1],NO_COLOR);
-      world_set_sort(world,index_passe[i-1],NO_SORT);
+      world_set(world,index_passe[i],NO_COLOR);
+      world_set_sort(world,index_passe[i],NO_SORT);
     }
   }
   return idx;
