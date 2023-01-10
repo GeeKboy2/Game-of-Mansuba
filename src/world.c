@@ -10,8 +10,8 @@ struct world_t world;
 //Initialises the world with empty slots.
 struct world_t* world_init(){
   for(int i = 0; i < WORLD_SIZE; i++){
-    world.point[i].c = 0;
-    world.point[i].s = 0;
+    world.point[i].c = NO_COLOR;
+    world.point[i].s = NO_SORT;
   }
   return &world;
 }
