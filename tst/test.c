@@ -42,11 +42,11 @@ int main(int argc,char *argv[]){
   struct world_t* world=world_init();
   struct prison_t* prison=prison_init();
   show_world_square(world);
-  position_initialisation(PIONS,world);
+  position_initialisation(PAWNS,world);
   enum color_t current_player = get_random_player();
   printf("current_player = %d\n",current_player);
 
-  condition_victoire(world,type_victoire,MAX_TURNS,0);
+  victory_condition(world,type_victoire,MAX_TURNS,0);
   ///////////////////////////////////////////////////////////test
   //int neigh=get_neighbor(10,-2);
   //printf("%d\n",neigh);
@@ -54,13 +54,13 @@ int main(int argc,char *argv[]){
   //world_set(world,13,2);
   //world_set(world,14,2);
   //world_set(world,19,2);
-  //condition_victoire(world,"c",20);
+  //victory_condition(world,"c",20);
   
 
   /*
   int i = 0;
   while(i < WORLD_SIZE){
-    struct neighbors_t dpl = deplacement_simple(world,i);
+    struct neighbors_t dpl = simple_movement(world,i);
     printf("%d :\n", i);
     int j = 0;
     while(dpl.n[j].i != UINT_MAX){
@@ -92,7 +92,7 @@ int main(int argc,char *argv[]){
   world_set(world,6,1);
   world_set_sort(world,6,1);
   printf("avant exemple nbr mvt\n");
-  printf("nombre mvt = %d\n",nombre_mouvements(world,0));
+  printf("nombre mvt = %d\n",number_of_movements(world,0));
   printf("avant choose random\n");
   printf("%d\n",choose_random_piece_belonging_to(world,1,));
   */
@@ -115,7 +115,7 @@ int main(int argc,char *argv[]){
   int nbr_turns=0;
   int condition_changement_tableau=0;
   int valeur_changement=floor(sqrt(MAX_TURNS));
-  while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
+  while(victory_condition(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
 
     if(condition_changement_tableau>valeur_changement){
@@ -134,7 +134,7 @@ int main(int argc,char *argv[]){
     printf("\tLa piece en mvt est %d\n",index_pion);
     printf("\tSes voisins sont :");
     struct neighbors_t neighbors = get_neighbors(index_pion);
-    struct neighbors_t saut = saut_simple(world,index_pion);
+    struct neighbors_t saut = simple_jump(world,index_pion);
     for(int k = 0; k < MAX_NEIGHBORS+1;k++){
       printf("%d ", neighbors.n[k].i);
     }

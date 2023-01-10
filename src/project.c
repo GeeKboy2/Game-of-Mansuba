@@ -53,7 +53,7 @@ int main(int argc,char *argv[]){
   int nbr_turns=0;
   int table_change_remote=0;
   int change_value=floor(sqrt(MAX_TURNS));
-  while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)//testing victory according to its type
+  while(victory_condition(world,type_victoire,MAX_TURNS,nbr_turns)!=0)//testing victory according to its type
   {
     if(table_change_remote>change_value){//condition of table switch reached
       printf("========================================== CHANGEMENT DE TABLE =========================================\n");

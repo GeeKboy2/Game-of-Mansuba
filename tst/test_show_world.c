@@ -15,11 +15,11 @@ void test_show_world_and_position_init(struct world_t* world){
   show_world(world);
   printf("\n");
 
-  position_initialisation(PION_TOUR_ELEPHANT,world);
+  position_initialisation(PAWNS_TOWERS_ELEPHANTS,world);
   show_world(world);
   printf("\n");
 
-  position_initialisation(PIONS,world);
+  position_initialisation(PAWNS,world);
   show_world(world);
   printf("\n");
 }
@@ -30,14 +30,14 @@ void test_victoire(struct world_t* world,int MAX_TURNS){
     world_set(world,0,WHITE);
     world_set_sort(world,0,PAWN);
     show_world(world);
-    condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns);
+    victory_condition(world,type_victoire,MAX_TURNS,nbr_turns);
 
     world_set(world,0,NO_COLOR);
     world_set_sort(world,0,NO_SORT);
     world_set(world,WIDTH-1,BLACK);
     world_set_sort(world,WIDTH-1,PAWN);
     show_world(world);
-    condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns);
+    victory_condition(world,type_victoire,MAX_TURNS,nbr_turns);
 
     nbr_turns=MAX_TURNS;
     world_set(world,WIDTH-1,NO_COLOR);
@@ -45,14 +45,14 @@ void test_victoire(struct world_t* world,int MAX_TURNS){
     world_set(world,0,WHITE);
     world_set_sort(world,0,PAWN);
     show_world(world);
-    condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns);
+    victory_condition(world,type_victoire,MAX_TURNS,nbr_turns);
 
     world_set(world,0,NO_COLOR);
     world_set_sort(world,0,NO_SORT);
     world_set(world,WIDTH-1,BLACK);
     world_set_sort(world,WIDTH-1,PAWN);
     show_world(world);
-    condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns);
+    victory_condition(world,type_victoire,MAX_TURNS,nbr_turns);
 }
 
 
@@ -101,7 +101,7 @@ int main(int argc,char *argv[]){
   int index_pion;
   int move;
   int nbr_turns=0;
-  while(condition_victoire(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
+  while(victory_condition(world,type_victoire,MAX_TURNS,nbr_turns)!=0)
   {
     printf("\n-Turn #%d/%d# :\n",nbr_turns+1,MAX_TURNS);
     printf("\tTour du %d\n",current_player);
@@ -109,7 +109,7 @@ int main(int argc,char *argv[]){
     printf("\tLa piece en mvt est %d\n",index_pion);
     printf("\tSes voisins sont :");
     struct neighbors_t neighbors = get_neighbors(index_pion);
-    struct neighbors_t saut = saut_simple(world,index_pion);
+    struct neighbors_t saut = simple_jump(world,index_pion);
     for(int k = 0; k < MAX_NEIGHBORS+1;k++){
       printf("%d ", neighbors.n[k].i);
     }

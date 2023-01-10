@@ -131,10 +131,10 @@ struct neighbors_t get_neighbors(unsigned int idx)
 }
 
 //Counts all the possible moves for a piece in the world.
-unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
+unsigned int number_of_movements(struct world_t* world, unsigned int idx)
 {
-  struct neighbors_t mouvement1 = deplacement_simple(world,idx); //Storing the simple movements.
-  struct neighbors_t mouvement2 = saut_simple(world,idx);        //Storing the simple jumps.
+  struct neighbors_t mouvement1 = simple_movement(world,idx); //Storing the simple movements.
+  struct neighbors_t mouvement2 = simple_jump(world,idx);        //Storing the simple jumps.
   unsigned int compteur = 0;
   unsigned int j = 0;
   //Counting number of mouvements.
@@ -149,7 +149,7 @@ unsigned int nombre_mouvements(struct world_t* world, unsigned int idx)
     compteur+=1;
     j++;
   }
-  if(saut_multiple(world, idx) != UINT_MAX){ //Adding the multiple jump if it's possible.
+  if(multiple_jumps(world, idx) != UINT_MAX){ //Adding the multiple jump if it's possible.
     compteur++;
   }
   return compteur;

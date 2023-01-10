@@ -18,7 +18,7 @@ struct ensemble_t{
 };
 
 enum init{
-  PIONS = 0,
+  PAWNS = 0,
   PAWNS_TOWERS_ELEPHANTS = 1,
   MAX_INIT =2
 };
@@ -35,19 +35,19 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index);
 
 void move_piece(struct world_t* world,unsigned int index_arrivee,unsigned int index_depart);
 
-unsigned int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
+unsigned int victory_condition(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
 
-struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx);
+struct neighbors_t simple_movement(struct world_t* world, unsigned int idx);
 
-struct neighbors_t saut_simple(struct world_t* world, unsigned int idx);
+struct neighbors_t simple_jump(struct world_t* world, unsigned int idx);
 
-unsigned int saut_multiple(struct world_t* world, unsigned int idx);
+unsigned int multiple_jumps(struct world_t* world, unsigned int idx);
 
-unsigned int nombre_mouvements(struct world_t* world, unsigned int idx);
+unsigned int number_of_movements(struct world_t* world, unsigned int idx);
 
 int position_init(struct world_t* world);
 
-unsigned int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
+unsigned int victory_condition(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN);
 
 struct ensemble_t get_neighbors_3(unsigned int idx);
 

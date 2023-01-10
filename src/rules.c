@@ -63,7 +63,7 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
   int compteur = 0;
   for(int i = 0; i<WORLD_SIZE; i++){ //Count the number of pieces in the world.
     if(world_get(world,i)==current_player && world_get_sort(world,i)!=NO_SORT){
-      printf("found %d ",i);
+      //printf("found %d ",i);
       compteur++;
     }
   }
@@ -109,37 +109,28 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index)
 }
 
 //Move a piece from a starting position to an end position.
-void move_piece(struct world_t* world,unsigned int index_arrivee,unsigned int index_depart) 
+void move_piece(struct world_t* world,unsigned int end_index,unsigned int start_index) 
 {
-  printf("%d -> %d\n",index_depart,index_arrivee);
-   if(index_arrivee == UINT_MAX){ 
+  printf("%d -> %d\n",start_index,end_index);
+   if(end_index == UINT_MAX){ 
    }
    else{
-   enum color_t color=world_get(world,index_depart);
-   enum sort_t sort=world_get_sort(world,index_depart);
-   printf("copie de couleur et type de %d\n",index_depart);
-   show_world(world);
-   printf("-----------------\n");
-   world_set(world,index_depart,0);
-   world_set_sort(world,index_depart,0);
-   printf("suppresion de piece\n");
-   show_world(world);
-   printf("-----------------\n");
-   world_set(world,index_arrivee,color);
-   world_set_sort(world,index_arrivee,sort);
-   printf("ajout de piece a la pos %d\n",index_arrivee);
-   show_world(world);
-   printf("-----------------\n");
+   enum color_t color=world_get(world,start_index);
+   enum sort_t sort=world_get_sort(world,start_index);
+   world_set(world,start_index,0);
+   world_set_sort(world,start_index,0);
+   world_set(world,end_index,color);
+   world_set_sort(world,end_index,sort);
   }
 }
 
 //Define victory conditions according the type of victory.
-unsigned int condition_victoire(struct world_t * world,char *type_victoire,int MAX_TURNS,int TURN){
+unsigned int victory_condition(struct world_t * world,char *victory_type,int MAX_TURNS,int TURN){
   if(MAX_TURNS <= TURN){
     printf("MAX_TURNS reached.\n");
     return 0;
   }
-  if(type_victoire[0] == 's'){
+  if(victory_type[0] == 's'){
     for(int i = 0; i<WORLD_SIZE;i++){
       if(world_get(world,i)== WHITE && i%WIDTH==0){
 	      printf("Simple Victory (WHITE)\n");
@@ -151,23 +142,23 @@ unsigned int condition_victoire(struct world_t * world,char *type_victoire,int M
       }
     }
   }
-  int compteur_blanc = 0; //Count the number of white pieces are in the
-  int compteur_noir = 0;
-  if(type_victoire[0] == 'c'){
+  int white_counter = 0; //Count the number of white pieces are in the
+  int black_counter = 0;
+  if(victory_type[0] == 'c'){
     for(int i = 0; i<WORLD_SIZE;i++){
       if(world_get(world,i)==WHITE && i%WIDTH==0){ //Counting the number of white pieces.
-	      compteur_blanc++;
+	      white_counter++;
       }
       if(world_get(world,i)==BLACK && i%WIDTH==WIDTH-1){ //Counting the number of black pieces.
-	      compteur_noir++;
+	      black_counter++;
       }
     }
-    if (compteur_blanc == HEIGHT){ //Max number of pieces reached.
-      printf("Victoire complexe des blancs\n");
+    if (white_counter == HEIGHT){ //Max number of pieces reached.
+      printf("Complex victory (WHITE)\n");
       return 0;
     }
-    if(compteur_noir == HEIGHT){ //Max number of pieces reached.
-      printf("Victoire complexe des noirs\n");
+    if(black_counter == HEIGHT){ //Max number of pieces reached.
+      printf("Complex victory (BLACK)\n");
       return 0;
     }
   }
@@ -177,7 +168,7 @@ unsigned int condition_victoire(struct world_t * world,char *type_victoire,int M
 
 
 void position_initialisation(enum init type_init,struct world_t* world){
-  if(type_init==PIONS){ //Two columns of pawns.
+  if(type_init==PAWNS){ //Two columns of pawns.
     position_init(world);
   }else if(type_init==PAWNS_TOWERS_ELEPHANTS){ //Mix of pawns elephants and tours.
     position_init(world);

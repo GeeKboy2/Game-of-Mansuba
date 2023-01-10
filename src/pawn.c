@@ -12,7 +12,7 @@
 //Ce fichier concerne les fonctions associés aux pions.
 
 //Regarde les déplacements simples réalisables
-struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
+struct neighbors_t simple_movement(struct world_t* world, unsigned int idx)
 {
   unsigned int k = 0;
   unsigned int j =0;
@@ -41,7 +41,7 @@ struct neighbors_t deplacement_simple(struct world_t* world, unsigned int idx)
 }
 
 //Regarde les sauts simple réalisables
-struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
+struct neighbors_t simple_jump(struct world_t* world, unsigned int idx)
 {
   unsigned int k = 0;
   unsigned int j = 0;
@@ -53,16 +53,12 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
 
     if(world_get_sort(world,neighbors.n[k].i) != NO_SORT)
     {
-      printf("case %d n'est pas vide dans dir %d\n",neighbors.n[k].i,neighbors.n[k].i);
       position = get_neighbor_in_table(neighbors.n[k].i,neighbors.n[k].d,get_neighbors_seed());
-      printf("%u est un voisin du voisin\n",position);
       if(position<UINT_MAX)
       {
         if(world_get_sort(world,position) == NO_SORT)
         {
-          printf("elle est bien vide");
           saut_simp.n[j].i = neighbors.n[k].i;
-          printf("%d iter %d grand %d --------------------------------------------------\n",neighbors.n[k].i,j,k);
           saut_simp.n[j].d = neighbors.n[k].d;
           j++;
         }
@@ -83,12 +79,12 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   return saut_simp;
 }
 
-unsigned int saut_multiple(struct world_t* world, unsigned int idx){
+unsigned int multiple_jumps(struct world_t* world, unsigned int idx){
   unsigned int index_passe[WORLD_SIZE];
   for(int i=0;i<WORLD_SIZE;i++){
     index_passe[i]=UINT_MAX;
   }
-  struct neighbors_t saut_simpl=saut_simple(world,idx);
+  struct neighbors_t saut_simpl=simple_jump(world,idx);
   unsigned int compteur_saut=0;
   enum color_t color=world_get(world,idx);
   enum sort_t sort=world_get_sort(world,idx);
@@ -108,7 +104,7 @@ unsigned int saut_multiple(struct world_t* world, unsigned int idx){
   while(idx!=UINT_MAX){
     world_set(world,idx,color);
     world_set_sort(world,idx,sort);
-    saut_simpl=saut_simple(world,idx);
+    saut_simpl=simple_jump(world,idx);
     idx=saut_simpl.n[0].i;
     if(idx==UINT_MAX){
       break;
@@ -131,59 +127,55 @@ unsigned int mov_pawn(struct world_t *world, unsigned int index){
     if(world_get_sort(world, index) != PAWN ){
       return index;
     }
-    struct neighbors_t ds=deplacement_simple(world,index);
-    struct neighbors_t ss=saut_simple(world,index);
-    unsigned int compteur_ds=0;
-    unsigned int compteur_ss=0;
-    unsigned int nombre_mvt=nombre_mouvements(world,index);
+    struct neighbors_t simple_movement_list=simple_movement(world,index);
+    struct neighbors_t simple_jump_list=simple_jump(world,index);
+    unsigned int simple_movement_counter=0;
+    unsigned int simple_jump_counter=0;
+    unsigned int movement_number=number_of_movements(world,index);
     srand(time(NULL));
-    if (nombre_mvt==0)
+    if (movement_number==0)
     {
       return index;
     }
-    int rand_mvt=(rand()%nombre_mvt);
-    int somme=0;
-    while(ds.n[compteur_ds].i!=UINT_MAX && compteur_ds < MAX_NEIGHBORS)
+    int random_movement_number=(rand()%movement_number);
+    int sum_movement_remote=0;
+    while(simple_movement_list.n[simple_movement_counter].i!=UINT_MAX && simple_movement_counter < MAX_NEIGHBORS)
     {
-      if(somme==rand_mvt)
+      if(sum_movement_remote==random_movement_number)
       {
-        printf("Je me déplace");
-        return ds.n[compteur_ds].i;
+        printf("Simple mouvement : ");
+        return simple_movement_list.n[simple_movement_counter].i;
       }
-      compteur_ds++;
-      somme++;
+      simple_movement_counter++;
+      sum_movement_remote++;
     }
-    while (ss.n[compteur_ss].i!=UINT_MAX && compteur_ss < MAX_NEIGHBORS)
+    while (simple_jump_list.n[simple_jump_counter].i!=UINT_MAX && simple_jump_counter < MAX_NEIGHBORS)
     {
-      if(somme==rand_mvt)
+      if(sum_movement_remote==random_movement_number)
       {
-        printf("Je saute %d\n",ss.n[compteur_ss].i);
-        return get_neighbor_in_table(ss.n[compteur_ss].i,ss.n[compteur_ss].d,get_neighbors_seed());
+        printf("Simple jump : ");
+        return get_neighbor_in_table(simple_jump_list.n[simple_jump_counter].i,simple_jump_list.n[simple_jump_counter].d,get_neighbors_seed());
       }
-      compteur_ss++;
-      somme++;
+      simple_jump_counter++;
+      sum_movement_remote++;
     }
-    if(somme == rand_mvt)
+    if(sum_movement_remote == random_movement_number)
     {
-      printf("Je saute beaucoup");
-      return saut_multiple(world,index);
+      printf("Multiple jumps : ");
+      return multiple_jumps(world,index);
     }
     return index;
 }
 
 int position_init(struct world_t* world){
-  int b = 0;
-  int n = 0;
   for(int i = 0; i< WORLD_SIZE; i++){
     if(i%WIDTH==0){
       world_set(world,i,BLACK);
       world_set_sort(world,i,PAWN);
-      n++;
     }
     if(i%WIDTH==WIDTH-1){
       world_set(world,i,WHITE);
       world_set_sort(world,i,PAWN);
-      b++;
     }
   }
   return 0;
