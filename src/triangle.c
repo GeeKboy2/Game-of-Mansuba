@@ -33,6 +33,7 @@ unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d){
             return UINT_MAX;
         }
     }
+    /*
     if(((idx%WIDTH)%2) == 0){ //Case high.
         if(d == NWEST || d == NEAST){ //Structure with 6 neighbors, we don't take the North West and North East.
             return UINT_MAX;
@@ -43,6 +44,7 @@ unsigned int get_neighbor_triangle(unsigned int idx, enum dir_t d){
             return UINT_MAX;
         }
     }
+    */
     if(idx%2==0){ //The triangle is pointing to the north => vertical neighbor to the south.
         if(d==EAST){
             idx++;
