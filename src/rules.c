@@ -62,16 +62,20 @@ enum color_t next_player(enum color_t current_player)
 int choose_random_piece_belonging_to(struct world_t* world, enum color_t current_player){
   int compteur = 0;
   for(int i = 0; i<WORLD_SIZE; i++){ //Count the number of pieces in the world.
-    if(world_get(world,i) == current_player){
+    if(world_get(world,i)==current_player && world_get_sort(world,i)!=NO_SORT){
+      printf("found %d ",i);
       compteur++;
     }
+  }
+  if(compteur <4){
+    exit(100);
   }
   srand(time(NULL));
   int pos = (rand()%compteur)+1;//Gets the number of a random piece.
   int num = 0;//Will be increacing until it reaches the number of the piece.
   int i = 0; //The index of the piece.
   while(num <= compteur && i< WORLD_SIZE){ //Travel the world.
-    if(world_get(world,i) == current_player){ //Increasing num.
+    if(world_get(world,i)==current_player && world_get_sort(world,i)!=NO_SORT){ //Increasing num.
       num++;
     }
     if(num==pos) //We reached the piece the rand() gave us.(We are 100% sure this case will be true at some point)
@@ -88,6 +92,7 @@ int choose_random_piece_belonging_to(struct world_t* world, enum color_t current
 //This function calls the functions that chooses a random move for a piece according to its type.
 unsigned int choose_random_move_for_piece(struct world_t *world,int index)
 {
+  
   if(world_get_sort(world,index)==PAWN)
   {
     return mov_pawn(world,index);
@@ -106,15 +111,25 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index)
 //Move a piece from a starting position to an end position.
 void move_piece(struct world_t* world,unsigned int index_arrivee,unsigned int index_depart) 
 {
+  printf("%d -> %d\n",index_depart,index_arrivee);
    if(index_arrivee == UINT_MAX){ 
    }
    else{
    enum color_t color=world_get(world,index_depart);
    enum sort_t sort=world_get_sort(world,index_depart);
+   printf("copie de couleur et type de %d\n",index_depart);
+   show_world(world);
+   printf("-----------------\n");
    world_set(world,index_depart,0);
    world_set_sort(world,index_depart,0);
+   printf("suppresion de piece\n");
+   show_world(world);
+   printf("-----------------\n");
    world_set(world,index_arrivee,color);
    world_set_sort(world,index_arrivee,sort);
+   printf("ajout de piece a la pos %d\n",index_arrivee);
+   show_world(world);
+   printf("-----------------\n");
   }
 }
 

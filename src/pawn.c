@@ -47,17 +47,22 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
   unsigned int j = 0;
   struct neighbors_t neighbors = get_neighbors(idx);
   struct neighbors_t saut_simp; //Structure à retouner pour voir les directions et index des sauts 
-  unsigned int position = get_neighbor_in_table(neighbors.n[k].i,neighbors.n[k].d,get_neighbors_seed());
-  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS+1)
+  unsigned int position =0; //get_neighbor_in_table(neighbors.n[k].i,neighbors.n[k].d,get_neighbors_seed());
+  while(neighbors.n[k].i < UINT_MAX && k<MAX_NEIGHBORS)
   {
+
     if(world_get_sort(world,neighbors.n[k].i) != NO_SORT)
     {
+      printf("case %d n'est pas vide dans dir %d\n",neighbors.n[k].i,neighbors.n[k].i);
       position = get_neighbor_in_table(neighbors.n[k].i,neighbors.n[k].d,get_neighbors_seed());
+      printf("%u est un voisin du voisin\n",position);
       if(position<UINT_MAX)
       {
         if(world_get_sort(world,position) == NO_SORT)
         {
+          printf("elle est bien vide");
           saut_simp.n[j].i = neighbors.n[k].i;
+          printf("%d iter %d grand %d --------------------------------------------------\n",neighbors.n[k].i,j,k);
           saut_simp.n[j].d = neighbors.n[k].d;
           j++;
         }
@@ -74,6 +79,7 @@ struct neighbors_t saut_simple(struct world_t* world, unsigned int idx)
     saut_simp.n[j].d=0;
     j++;
   }
+  printf("\n");
   return saut_simp;
 }
 
@@ -151,7 +157,7 @@ unsigned int mov_pawn(struct world_t *world, unsigned int index){
     {
       if(somme==rand_mvt)
       {
-        printf("Je saute");
+        printf("Je saute %d\n",ss.n[compteur_ss].i);
         return get_neighbor_in_table(ss.n[compteur_ss].i,ss.n[compteur_ss].d,get_neighbors_seed());
       }
       compteur_ss++;

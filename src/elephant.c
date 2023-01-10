@@ -55,7 +55,7 @@ struct ensemble_t deplacement_simple_3(struct world_t* world, unsigned int idx)
   unsigned int j =0;
   struct ensemble_t neighbors = get_neighbors_3(idx);
   struct ensemble_t deplacement_smpl;
-  while(neighbors.n[k].i < UINT_MAX && k<13)
+  while(neighbors.n[k].i < UINT_MAX && k<13) //
   {
     if(world_get_sort(world,neighbors.n[k].i)== 0)
     {
