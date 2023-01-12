@@ -65,7 +65,7 @@ test.o: tst/test.c
 	$(CC) $(CFLAGS) tst/test.c -c -o test.o
 
 test_show_world.o: tst/test_show_world.c
-	cp -r ./src/project.h ./tst
+	cp -r ./src/*.h ./tst
 	$(CC) $(CFLAGS) tst/test_show_world.c -c -o test_show_world.o
 
 #nom: dépendances (hors .h)
