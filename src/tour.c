@@ -1,12 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include <unistd.h>
-#include <time.h>
-#include "limits.h"
 #include "project.h"
 
 //Return the possible directions for the tower.
@@ -33,7 +24,7 @@ struct neighbors_t cardinal_translation(struct world_t *world, unsigned int idx)
 }
 
 //Return the end index of the tower.
-unsigned int move_tour(struct world_t *world, int index){
+unsigned int move_tower(struct world_t *world, int index){
     struct neighbors_t tour = cardinal_translation(world,index);
     if(tour.n[0].i == UINT_MAX){
       return index;

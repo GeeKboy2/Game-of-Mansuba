@@ -1,5 +1,5 @@
-#include "world.h"
-#include <stdio.h>
+//#include "world.h"
+//#include <stdio.h>
 #include "project.h"
 
 

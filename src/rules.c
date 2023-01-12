@@ -1,12 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include <unistd.h>
-#include <time.h>
-#include "limits.h"
 #include "project.h"
 
 //In this file. All the laws of the game are defined.
@@ -101,7 +92,7 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index)
   }
   if(world_get_sort(world,index)==TOUR)
   {
-    return move_tour(world,index);
+    return move_tower(world,index);
   }
   if(world_get_sort(world,index)==ELEPHANT)
   {
