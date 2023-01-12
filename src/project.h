@@ -7,6 +7,7 @@
 //#include <string.h>
 #include <math.h>
 #include <stdlib.h>
+#include <getopt.h>
 
 
 //In this file we have the remaining signatures of the functions used in theis project. Moreover, short sentences that describe what the functions are meant to do.

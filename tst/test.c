@@ -1,7 +1,5 @@
-#include <time.h>
-
 #include "project.h"
-#include <getopt.h>
+
 
 //In this file we make random lines to test all the functions we make.
 

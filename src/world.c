@@ -1,5 +1,3 @@
-//#include "world.h"
-//#include <stdio.h>
 #include "project.h"
 
 

@@ -1,5 +1,5 @@
 #include "project.h"
-#include <getopt.h>
+
 
 
 // Créé le monde et set les différents pions dans leur position initiale
@@ -63,7 +63,7 @@ int main(int argc,char *argv[]){
     nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    //sleep(1);
+    //sleep(1); //Uncomment this line to have more random plays.(keep in mind that they will be slower)
     table_change_remote+=1;
   }
   
