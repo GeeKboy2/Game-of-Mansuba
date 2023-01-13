@@ -77,8 +77,8 @@ game:
 	./project -m 50 -t s -s 1
 .PHONY: test
 test:
-	./test -m 50 -t s -s 0
-	./test_show_world -m 50 -t s -s 0
+	./test -m 50 -t s -s 2
+	./test_show_world -m 50 -t s -s 2
 
 clean:
 	rm -f *.o *~ project test test_show_world

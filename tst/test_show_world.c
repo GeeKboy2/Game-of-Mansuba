@@ -77,7 +77,7 @@ int main(int argc,char *argv[]){
 
 
   struct world_t* world=world_init();
-  //test_show_world_and_position_init(world); 
+  test_show_world_and_position_init(world); 
   
   test_victoire(world,50);
   
