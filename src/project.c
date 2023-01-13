@@ -1,15 +1,5 @@
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include <unistd.h>
-#include <time.h>
-#include "limits.h"
 #include "project.h"
-#include <getopt.h>
+
 
 
 // Créé le monde et set les différents pions dans leur position initiale
@@ -34,14 +24,14 @@ int main(int argc,char *argv[]){
   }
   /*Initializing all the structures*/
   struct world_t* world=world_init();
-  //struct jail_t* prison=jail_init();
+  //struct jail_t* jail=jail_init();
   show_world_square(world);
   position_initialisation(PAWNS_TOWERS_ELEPHANTS,world);
 
   enum color_t current_player = get_random_player();//choosing a starting player
 
-  //imprison(world,0,prison); 
-  //imprison(world,WIDTH-1,prison); 
+  //imprison(world,0,jail); 
+  //imprison(world,WIDTH-1,jail); 
 
   init_neighbors(RNG); // Use seed 0 at the beginning of a game
   printf("\n-Turn  %d/%d :\n",0,MAX_TURNS);
@@ -73,7 +63,7 @@ int main(int argc,char *argv[]){
     nbr_turns++;
     current_player = next_player(current_player);
     show_world(world);
-    sleep(1);
+    //sleep(1); //Uncomment this line to have more random plays.(keep in mind that they will be slower)
     table_change_remote+=1;
   }
   

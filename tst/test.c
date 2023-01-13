@@ -1,15 +1,5 @@
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include <unistd.h>
-#include <time.h>
-#include "limits.h"
 #include "project.h"
-#include <getopt.h>
+
 
 //In this file we make random lines to test all the functions we make.
 

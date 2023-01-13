@@ -1,10 +1,3 @@
-#include "neighbors.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include <limits.h>
-#include <time.h>
 #include "project.h"
 
 unsigned int t_plateau;

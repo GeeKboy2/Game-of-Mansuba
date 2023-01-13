@@ -1,20 +1,11 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include <unistd.h>
-#include <time.h>
-#include "limits.h"
 #include "project.h"
 
 //Return the possible directions for the tower.
 struct neighbors_t cardinal_translation(struct world_t *world, unsigned int idx){
   struct neighbors_t mvt_tour;
   int j = 0;
-  for(int i = -3;i < 4; i = i + 2){  //Look all cardinal directions.
-    if(get_neighbor_in_table(idx,i,get_neighbors_seed())<UINT_MAX){
+  for(int i = -3;i < 4; i = i + 2){  //Going throgh all the cardinal directions.
+    if(get_neighbor_in_table(idx,i,get_neighbors_seed())<UINT_MAX){ //neighbor is a valid index
       if(get_neighbor_in_table(idx,i,get_neighbors_seed()) != UINT_MAX && world_get_sort(world, get_neighbor_in_table(idx,i,get_neighbors_seed())) == 0){ //Check the existence of a neighbor.
         mvt_tour.n[j].i = get_neighbor_in_table(idx,i,get_neighbors_seed());
         mvt_tour.n[j].d = i;
@@ -33,7 +24,7 @@ struct neighbors_t cardinal_translation(struct world_t *world, unsigned int idx)
 }
 
 //Return the end index of the tower.
-unsigned int move_tour(struct world_t *world, int index){
+unsigned int move_tower(struct world_t *world, int index){
     struct neighbors_t tour = cardinal_translation(world,index);
     if(tour.n[0].i == UINT_MAX){
       return index;

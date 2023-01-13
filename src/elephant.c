@@ -1,12 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include <unistd.h>
-#include <time.h>
-#include "limits.h"
 #include "project.h"
 
 //This file has all the functions related to the elephant piece.
@@ -28,7 +19,7 @@ struct elephant_set_t get_neighbors_elephant(unsigned int idx)
       {
         if(ind!=UINT_MAX){
           ind1=get_neighbor_in_table(ind,r,get_neighbors_seed());
-          if(ind1!=UINT_MAX && idx!=ind1) //No turning back.
+          if(ind1!=UINT_MAX && idx!=ind1) //No turning back.(going back to the initial position)
           {
             neighbors.n[k].i=ind1;
             neighbors.n[k].d=r;
@@ -55,23 +46,23 @@ struct elephant_set_t simple_movement_elephant(struct world_t* world, unsigned i
   unsigned int j =0;
   struct elephant_set_t neighbors = get_neighbors_elephant(idx);
   struct elephant_set_t simple_movement_list;
-  while(neighbors.n[k].i < UINT_MAX && k<13) //
+  while(neighbors.n[k].i < UINT_MAX && k<13) //going though the neighbors of the elephant.
   {
-    if(world_get_sort(world,neighbors.n[k].i)== 0)
+    if(world_get_sort(world,neighbors.n[k].i)== NO_SORT)//if the slot is empty.
     {
-      simple_movement_list.n[j].i = neighbors.n[k].i;
+      simple_movement_list.n[j].i = neighbors.n[k].i;//adding the slot to the list.
       simple_movement_list.n[j].d = neighbors.n[k].d;
       j++;
     }
     k++;
   }
   simple_movement_list.n[j].i=UINT_MAX;//Closing with an UINT_MAX.
-  simple_movement_list.n[j].d=0;
+  simple_movement_list.n[j].d=NO_DIR;
   j++;
   while(j<13)//Completing with zeros. 
   {
     simple_movement_list.n[j].i=0;
-    simple_movement_list.n[j].d=0;
+    simple_movement_list.n[j].d=NO_DIR;
     j++;
   }
   return simple_movement_list;

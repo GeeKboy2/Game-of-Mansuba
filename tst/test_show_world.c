@@ -1,15 +1,5 @@
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <stdlib.h>
-#include "geometry.h"
-#include "world.h"
-#include "neighbors.h"
-#include <unistd.h>
-#include <time.h>
-#include "limits.h"
 #include "project.h"
-#include <getopt.h>
+
 
 void test_show_world_and_position_init(struct world_t* world){
   show_world(world);
