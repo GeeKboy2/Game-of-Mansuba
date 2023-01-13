@@ -75,8 +75,8 @@ test_show_world.o: tst/test_show_world.c
 
 game:
 	./project -m 50 -t s -s 1
-
-tests:
+.PHONY: test
+test:
 	./test -m 50 -t s -s 0
 	./test_show_world -m 50 -t s -s 0
 
