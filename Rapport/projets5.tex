@@ -91,9 +91,9 @@ Afin de remporter la partie, les joueurs doivent avoir une de leurs pièces qui 
 \section{Gestion des fichiers et du travail en groupe}
 
 \subsection{Makefile}
-Le Makefile nous a permis d'automatiser des actions qui sans ce dernier auraient pris beaucoup de temps. Dans ce projet le Makefile à été utilisé pour automatiser la compilation de fichiers .c en fichiers .o puis la combinaison de fichiers .o pour créer des exécutables (projet, test, \ldots) qui servent à jouer le jeux et faire différents tests de fonctions.
+Le Makefile nous a permis d'automatiser des actions qui sans ce dernier auraient pris beaucoup de temps. Dans ce projet le Makefile à été utilisé pour automatiser la compilation de fichiers .c en fichiers .o puis la combinaison de fichiers .o pour créer des exécutables (projet, test, \ldots) qui servent à jouer le jeu et faire différents tests de fonctions.
 
-Nous avons rencontré un problème au cours de la création de ce fichier car les fichiers qui ont pour tache de tester les fonctions (dans ./tst) n'ont pas toutes les signatures et les bibliothèques nécessaires pour fonctionner correctement. Pour résoudre ce problème, on été obligé de faire une copie de tous les fichiers .h dans le répertoire ./tst/ et on les supprime par la suite avec tous les fichiers .o qui ont permis de construire l'exécutable.(On les ajoute et les supprime à chaque fois pour qu'il reste à jour avec toutes les modification qu'on fait dans les fichiers .h originaux qui se trouvent dans le répertoire ./src).\\
+Nous avons rencontré un problème au cours de la création de ce fichier car les fichiers qui ont pour tache de tester les fonctions (dans ./tst) n'ont pas toutes les signatures et les bibliothèques nécessaires pour fonctionner correctement. Pour résoudre ce problème, on a été obligé de faire une copie de tous les fichiers .h dans le répertoire ./tst/ et on les supprime par la suite avec tous les fichiers .o qui ont permis de construire l'exécutable.(On les ajoute et les supprime à chaque fois pour qu'il reste à jour avec toutes les modifications qu'on fait dans les fichiers .h originaux qui se trouvent dans le répertoire ./src).\\
 
 \begin{lstlisting}[]
     test.o: tst/test.c
@@ -126,8 +126,8 @@ Dans le graphe de dépendance les fichiers appelés source.c et test.c correspon
 
 Nous avons utilisé un dépôt git tout au long du projet. Ce dépôt a été un outil important notamment pour le travail en groupe car celui-ci permettait de déposer des bouts de codes et de récupérer les parties de son binôme. Pour se faire il a fallu commit notre code depuis le terminal de l'ordinateur. A certains moments, des conflits apparaissaient car nous avions modifié les mêmes parties du code. A ce moment là, il a fallu se concerter afin de déterminer ce que l'on devait garder et ce que l'on devait enlever.
 
-\subsection{Travail en binome}
-Le travail en binome a été une expérience intéressante et enrichissante car jusqu'à maintenant nous n'avions jamais été amené à travailler en groupe pour un projet de programmation. Coder à plusieurs est particulier car il est parfois nécessaire d'utiliser ou de modifier le code de son partenaire, ce qui fait qu'on est obligé de faire un code clair et de commenter les parties les plus complexes afin qu'il puisse comprendre comment la fonction marche. Le travail en groupe c'est plutôt bien passé car on était souvent sur la même longueur bien que parfois on était pas spécialement d'accord sur la façon de faire certaines fonctions.
+\subsection{Travail en binôme}
+Le travail en binôme a été une expérience intéressante et enrichissante car jusqu'à maintenant nous n'avions jamais été amené à travailler en groupe pour un projet de programmation. Coder à plusieurs est particulier car il est parfois nécessaire d'utiliser ou de modifier le code de son partenaire, ce qui fait qu'on est obligé de faire un code clair et de commenter les parties les plus complexes afin qu'il puisse comprendre comment la fonction marche. Le travail en groupe c'est plutôt bien passé car on était souvent sur la même longueur bien que parfois on était pas spécialement d'accord sur la façon de faire certaines fonctions.
 
 
 \section{Principe du jeu}
@@ -145,7 +145,7 @@ Création des fonctions qui agissent sur le monde : On a ensuite créé différe
 \subsection{Plateau de jeu et relations}
 
 
-Dans notre jeu de dames, on a créé 3 plateaux de jeu : le carré, le triangle et l'hexagone. Les 3 plateaux de jeu sont définis de la même manière, les indices vont de manière croissante de la gauche vers la droite et du haut vers le bas. Le fait que les indices des cases soit similaire entre les plateaux nous permet de changer de plateaux au cours de la partie de manière simplifiée. On change de plateau toutes les racines de MAX\_TURN où l'on change les relations selon le plateau de jeu grâce à la fonction get\_neighbor\_in\_table. 
+Dans notre jeu de mansuba, on a créé 3 plateaux de jeu : le carré, le triangle et l'hexagone. Les 3 plateaux de jeu sont définis de la même manière, les indices vont de manière croissante de la gauche vers la droite et du haut vers le bas. Le fait que les indices des cases soit similaire entre les plateaux nous permet de changer de plateaux au cours de la partie de manière simplifiée. On change de plateau toutes les racines de MAX\_TURN où l'on change les relations selon le plateau de jeu grâce à la fonction get\_neighbor\_in\_table. 
 
 \begin{figure}[h]
     \begin{minipage}[c]{.46\linewidth}
@@ -224,12 +224,12 @@ Pour le saut multiple on a décidé de faire un peu différemment car on renvoie
 
 \subsubsection{La tour}
 
-Le déplacement de la tour est similaire à celui d'un simple pion, on regarde si les 4 cases sont libres dans les 4 directions cardinales. Dans la fonction move\_tower on va choisir une direction aléatoire disponible et ensuite on va se déplacer aléatoirement sur l'une des cases libres qu'on trouve dans cette direction avant de rencontré un pion.
+Le déplacement de la tour est similaire à celui d'un simple pion, on regarde si les 4 cases sont libres dans les 4 directions cardinales. Dans la fonction move\_tower on va choisir une direction aléatoire disponible et ensuite on va se déplacer aléatoirement sur l'une des cases libres qu'on trouve dans cette direction avant de rencontrer un pion.
 
 
 \subsubsection{L'éléphant}
 
-Pour l'éléphant il fallait parcourir toutes les directions cardinales et puis parcourir les directions cardinales du voisin en supprimant le retour en arrière (get\_neighbors\_elephant), pour choisir un mouvement aléatoire il fallait éliminer toutes les case non vides (simple\_movement\_elephant) et compter le nombres de mouvements qu'il peut faire (ce calcul est fait par la fonction number\_semidiag).
+Pour l'éléphant il fallait parcourir toutes les directions cardinales et puis parcourir les directions cardinales du voisin en supprimant le retour en arrière (get\_neighbors\_elephant), pour choisir un mouvement aléatoire il fallait éliminer toutes les cases non vides (simple\_movement\_elephant) et compter le nombres de mouvements qu'il peut faire (ce calcul est fait par la fonction number\_semidiag).
 
 \subsection{Randomisation des coups}
 
@@ -250,7 +250,7 @@ Tout au long du projet, on a été confronté à différents problèmes qu'on a 
 
 \subsection{Les fichiers}
 
-Au début du projet, on inséré les différents bouts de codes dans les fichiers \textit{neighbors.c et neighbors.h} et \textit{world.c et world.h} ce qui a posé problème par la suite car la compilation dans la forge ce faisait avec les fichiers .h de la base du jeu et non les notres. On a par la suite stocké toutes nos fonctions dans un même .c ce qui posé beaucoup de problèmes de clarté car on avait plus de 450 lignes avec des fonctions qui n'étaient pas écrites dans un ordre logique. On a donc fini par créer des fichiers .c en rapport avec chaque élément de notre jeu. Par exemple, on a un .c pour chaque pièce (avec ses mouvements) et un .c par plateau de jeu.
+Au début du projet, on inséré les différents bouts de codes dans les fichiers \textit{neighbors.c et neighbors.h} et \textit{world.c et world.h} ce qui a posé problème par la suite car la compilation dans la forge se faisait avec les fichiers .h de la base du jeu et non les notres. On a par la suite stocké toutes nos fonctions dans un même .c ce qui posé beaucoup de problèmes de clarté car on avait plus de 450 lignes avec des fonctions qui n'étaient pas écrites dans un ordre logique. On a donc fini par créer des fichiers .c en rapport avec chaque élément de notre jeu. Par exemple, on a un .c pour chaque pièce (avec ses mouvements) et un .c par plateau de jeu.
 
 \subsection{Problème avec le random}
 
@@ -296,7 +296,7 @@ Pour tester les fonctions saut simple et sauts multiples, on a décidé de rédu
 
 \subsection{Test sur la tour et l'éléphant}
 
-Pour vérifier que l'éléphant et la tour avaient bien les comportements attendu, on a créé des plateaux de jeux avec uniquement des tours et des éléphants et on a regardé si le comportement des pions était bien celui qu'on attendait.
+Pour vérifier que l'éléphant et la tour avaient bien les comportements attendu, on a créé des plateaux de jeu avec uniquement des tours et des éléphants et on a regardé si le comportement des pions était bien celui qu'on attendait.
 
 \subsection{Test sur le déroulé de la partie}
 
@@ -308,9 +308,9 @@ Différentes fonctions nécessaires pour le bon déroulé de la partie ont été
 
 On a bien réussi à construire le jeu et à manipuler les différents type de variables structures et enum ainsi que la gestion des fichiers et des dépendences. Nous avons été confrontés à de plusieurs problèmes mais nous avons pu trouver des solutions altérnatives pour les résoudre. On peut aussi ajouter que maintenant qu'on a une vision globale sur le sujet on a plus d'idée d'optimisation et d'amélioration.
 
-\subsection{Ouverture sur le vrai monde de jeux}
+\subsection{Ouverture sur le vrai monde de jeu}
 
-Le type de jeu qu'on nous a proposé est un jeu non coopératifs (chacun pour soi) et séquentiel (le mouvement choisi dépend des mouvements des autres joueurs et il y a une récompense à la fin du jeu), exactement comme le célèbre jeu d'échecs d'après les définitions fournies dans document [1]. L'idée naïve serais de crée l'arbre de toutes les parties possible mais ceci est mauvais à cause de sa complexité exponentielle, c'est pour cela qu'on va plutôt utiliser des algorithmes comme celui de Monte-Carlo, min-max \ldots \ [2] pour essayer de crée réellement un programme où les deux joueurs veulent gagner. \\
+Le type de jeu qu'on nous a proposé est un jeu non coopératif (chacun pour soi) et séquentiel (le mouvement choisi dépend des mouvements des autres joueurs et il y a une récompense à la fin du jeu), exactement comme le célèbre jeu d'échecs d'après les définitions fournies dans document [1]. L'idée naïve serais de crée l'arbre de toutes les parties possible mais ceci est mauvais à cause de sa complexité exponentielle, c'est pour cela qu'on va plutôt utiliser des algorithmes comme celui de Monte-Carlo, min-max \ldots \ [2] pour essayer de crée réellement un programme où les deux joueurs veulent gagner. \\
 
 \newpage
 
