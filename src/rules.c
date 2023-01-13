@@ -104,7 +104,7 @@ unsigned int choose_random_move_for_piece(struct world_t *world,int index)
 //Move a piece from a starting position to an end position.
 void move_piece(struct world_t* world,unsigned int end_index,unsigned int start_index) 
 {
-  printf("%d -> %d\n\n",start_index,end_index);
+  printf("%d -> %d\n\n\n\n\n\n\n",start_index,end_index);
    if(end_index == UINT_MAX){ 
    }
    else{
