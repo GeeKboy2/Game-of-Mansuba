@@ -1,3 +1,10 @@
+# Files Structure
+
+The directory src has all the files necessary for the execution.
+The directory tst has all the files that helped us test the functions we used.
+
+# How To Use
+
 make -WIDTH=10 -HEIGHT=6: To compile all files with world size (6x10) option. By default "make" compiles all files with world size (4x5).
 
 make test: to execute all the files in the tst directory
